@@ -222,7 +222,7 @@ def strategie_PA(PA_ACTUEL_FIN):
 
 if __name__=='__main__':
     data = get_data(CHEMIN_ODS)
-    print(json.dumps(data, sort_keys=False, indent=4))
+    # print(json.dumps(data, sort_keys=False, indent=4))
     TOUR = data['Test'][0][1]
     SANTE_ACTUELLE_DEBUT = data['Test'][2][1]
     SANTE_TOTALE_DEBUT = data['Test'][2][2]
@@ -314,6 +314,9 @@ if __name__=='__main__':
     DEPENSE_PHYSIQUE_OFF = LISTES_PHYSIQUE_SPIRITUELLE_OFF[0]
     DEPENSE_SPIRITUELLE_OFF = LISTES_PHYSIQUE_SPIRITUELLE_OFF[1]
 
+    SOMME_DEPENSE_PHYSIQUE = int(DEPENSE_PHYSIQUE_DEF) + int(DEPENSE_PHYSIQUE_OFF)
+    SOMME_DEPENSE_SPIRITUELLE = int(DEPENSE_SPIRITUELLE_DEF) + int(DEPENSE_SPIRITUELLE_OFF)
+
     ENERGIE_PHYSIQUE_ACTUELLE_FIN = int(ENERGIE_PHYSIQUE_ACTUELLE_DEBUT) - int(DEPENSE_PHYSIQUE_DEF) - int(DEPENSE_PHYSIQUE_OFF)
     ENERGIE_SPIRITUELLE_ACTUELLE_FIN = int(ENERGIE_SPIRITUELLE_ACTUELLE_DEBUT) - int(DEPENSE_SPIRITUELLE_DEF) - int(DEPENSE_SPIRITUELLE_OFF)
 
@@ -329,7 +332,7 @@ if __name__=='__main__':
 
     print('[b]' + str(PA_ACTUEL_FIN) + '/' + str(PA_TOTAL) +  " Points d'Action[/b] (+" + str(PA_REGEN) + ' PA au prochain tour)')
     print('\n')
-    COMBO_EP_FIN = int(COMBO_EP_DEBUT) + int(COMBO_EP_CHANGE)
-    COMBO_ES_FIN = int(COMBO_ES_DEBUT) + int(COMBO_ES_CHANGE)
+    COMBO_EP_FIN = int(COMBO_EP_DEBUT) + int(SOMME_DEPENSE_PHYSIQUE)
+    COMBO_ES_FIN = int(COMBO_ES_DEBUT) + int(SOMME_DEPENSE_SPIRITUELLE)
     print('[b][color=#953734]Combo EP : '+ str(COMBO_EP_FIN) + '[/color][/b]')
     print('[b][color=#366092]Combo ES : '+ str(COMBO_ES_FIN) + '[/color][/b]')
