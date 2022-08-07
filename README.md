@@ -8,5 +8,5 @@ Programmes pour le forum Bleach Tomorrow Comes
 * Etape 3 : ouvrir le fichier ods et faire correspondre les différentes statistiques (attention à ne pas déplacer les cellules)
 * Etape 4 : ouvrir le fichier python et changer le chemin absolu du fichier ods (avec les tableaux) => il s'agit de pouvoir accéder au fichier ods rangé dans le dossier du bureau dans l'étape 1
 * Etape 5 : taper "pip install pyexcel_ods" sur le shell du logiciel pyzo ou whatever
-* Etape 5 : appuyer sur "F5" ou le bouton run du logiciel pyzo
-* Etape 6 : répondre aux questions dans la partie "Shells", à la fin du processus, le récapitulatif du tour est sorti
+* Etape 6 : appuyer sur "F5" ou le bouton run du logiciel pyzo
+* Etape 7 : répondre aux questions dans la partie "Shells", à la fin du processus, le récapitulatif du tour est sorti
