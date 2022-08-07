@@ -1,6 +1,7 @@
 from pyexcel_ods import get_data
 import json
 
+# CHEMIN_ODS = "TON_CHEMIN_ABSOLU_VERS_LE_DOC_ODS"
 CHEMIN_ODS = "E:\python\BTC\TestsRepartition.ods"
 
 def liste_tech_def(NOMBRE_TECH_DEF,LISTE_LEVEL_TECH_DEF,LISTE_ID_TECH_DEF,data,state):
