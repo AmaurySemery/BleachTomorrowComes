@@ -225,7 +225,7 @@ if __name__=='__main__':
     ENERGIE_SPIRITUELLE_TOTALE_DEBUT = data['Test'][3][2]
     PA_ACTUEL = data['Test'][5][1]
     PA_TOTAL = data['Test'][5][2]
-    PA_REGEN = data['Test'][5][3]
+    PA_REGEN = 15
     COMBO_EP_DEBUT = data['Test'][5][1]
     COMBO_ES_DEBUT = data['Test'][6][1]
     MAINTENU = data['Test'][1][6]
