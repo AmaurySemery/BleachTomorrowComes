@@ -1,5 +1,5 @@
 # BleachTomorrowComes
-Programmes pour le forum Bleach Tomorrow Comes
+Programmes pour le forum Before Tomorrow Comes
 
 # Configuration
 
