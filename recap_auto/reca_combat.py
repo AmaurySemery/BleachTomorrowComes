@@ -212,6 +212,13 @@ def liste_tech_off(NOMBRE_TECH_OFF,LISTE_LEVEL_TECH_OFF,LISTE_ID_TECH_OFF,data,s
         print('erreur liste_tech_off')
         pass
 
+def strategie_PA(PA_ACTUEL_FIN):
+    PA_REGEN_UP = 0
+    if int(PA_ACTUEL_FIN) > 0 and int(PA_ACTUEL_FIN) <= 2:
+        PA_REGEN_UP = 1
+    elif int(PA_ACTUEL_FIN) > 2 and int(PA_ACTUEL_FIN) <= 4:
+        PA_REGEN_UP = 2
+    return int(PA_REGEN_UP)
 
 if __name__=='__main__':
     data = get_data(CHEMIN_ODS)
@@ -315,6 +322,11 @@ if __name__=='__main__':
     print('[b][color=#3E75A4]Énergie Spirituelle : '+ str(ENERGIE_SPIRITUELLE_ACTUELLE_FIN) + '/' + str(ENERGIE_SPIRITUELLE_TOTALE_DEBUT) + '[/color][/b]')
     print('\n')
     PA_ACTUEL_FIN = int(PA_ACTUEL) - int(PA_CHANGE)
+
+    ECONOMIE_PA = strategie_PA(PA_ACTUEL_FIN)
+
+    PA_REGEN = PA_REGEN + ECONOMIE_PA
+
     print('[b]' + str(PA_ACTUEL_FIN) + '/' + str(PA_TOTAL) +  " Points d'Action[/b] (+" + str(PA_REGEN) + ' PA au prochain tour)')
     print('\n')
     COMBO_EP_FIN = int(COMBO_EP_DEBUT) + int(COMBO_EP_CHANGE)
