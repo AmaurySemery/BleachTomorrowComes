@@ -250,8 +250,6 @@ if __name__=='__main__':
     LISTE_LEVEL_TECH_OFF = []
     LISTE_ID_TECH_OFF = []
     PA_CHANGE = input("Combien de points d'actions veux tu dépenser ? ")
-    COMBO_EP_CHANGE = input("Combien de points combo EP gagnes tu ? ")
-    COMBO_ES_CHANGE = input("Combien de points combo ES gagnes tu ? ")
     NOMBRE_TECH_DEF = input("Combien de techniques défensives veux-tu utiliser ? ")
     i = 1
     for i in range(int(NOMBRE_TECH_DEF)):
