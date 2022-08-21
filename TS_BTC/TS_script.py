@@ -1,6 +1,10 @@
 import csv
 import pandas as pd
 
+# current working directory
+chemin_csv = 'E:\python\BleachTomorrowComes\TS_BTC\classement_BTC.csv'
+
+
 def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep):
     try:
         COLOR_GOTEI_13 = '[color=#344b99]'
@@ -22,7 +26,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         pass
 
 if __name__=='__main__':
-    f=open(r"E:\python\BleachTomorrowComes\TS_BTC\classement_BTC.csv")
+
+    f=open(chemin_csv,'r')
 
     r = csv.DictReader(filter(lambda row: row[0]!='#',f), fieldnames = ["Pseudo", "Classement", "IDmark", "IDmark2", "Total"], delimiter = ";")
 
