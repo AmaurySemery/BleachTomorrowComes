@@ -1,9 +1,16 @@
 import csv
 import pandas as pd
+from datetime import datetime, timedelta
 
-# current working directory
+
+# Chemin à éditer
 chemin_csv = 'E:\python\BleachTomorrowComes\TS_BTC\classement_BTC.csv'
 
+# Liste joueurs à éditer suivant le groupe
+LISTE_MEMBRES_GOTEI_13 = ['Alastair','Celestia']
+LISTE_MEMBRES_ACUERDO = ['Endymion','Silas']
+LISTE_MEMBRES_ULTIMA_NECAT = ['Esther','Ryme']
+LISTE_MEMBRES_INDEP = ['Nessius','Rudjek']
 
 def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep):
     try:
@@ -11,7 +18,6 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         COLOR_ACUERDO = '[color=#929291]'
         COLOR_ULTIMA_NECAT = '[color=#a23d3c]'
         COLOR_INDEP = '[color=#a2783c]'
-        data = 'membre absent dans la liste'
         if membre in liste_membre_gotei:
             data = '[*][b]' + str(COLOR_GOTEI_13) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_acuerdo:
@@ -20,48 +26,41 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             data = '[*][b]' + str(COLOR_ULTIMA_NECAT) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_indep:
             data = '[*][b]' + str(COLOR_INDEP) + str(membre) + '[/color][/b]'
+        else:
+            data = '[*][b]' + str(membre) + '[/b]'
         return data
     except:
         print('erreur change')
         pass
 
 if __name__=='__main__':
-
     f=open(chemin_csv,'r')
-
     r = csv.DictReader(filter(lambda row: row[0]!='#',f), fieldnames = ["Pseudo", "Classement", "IDmark", "IDmark2", "Total"], delimiter = ";")
-
-    LISTE_MEMBRES_GOTEI_13 = ['Alastair','Celestia']
-    LISTE_MEMBRES_ACUERDO = ['Endymion','Silas']
-    LISTE_MEMBRES_ULTIMA_NECAT = ['Esther','Ryme']
-    LISTE_MEMBRES_INDEP = ['Nessius','Rudjek']
 
     Name = []
     Votes = []
     XP = []
     Final = []
     for row in r:
-        print(row)
         a = row['Pseudo']
         b = int(row['Total'])
         Name.append(a)
         Votes.append(b)
-        if b < 60:
+        if b < 50:
             result = 0
-        if b >= 60 and b < 119:
+        if b >= 50 and b < 100:
             result = 3
-        if b >= 120 and b < 179:
-            result = 5
-        if b >= 180:
-            result = 8
+        if b >= 100 and b < 150:
+            result = 6
+        if b >= 150:
+            result = 9
         XP.append(result)
 
-    datedebut = input("Date début de requête (ex: 22/06): ")
-    datefin = input("Date fin de requête (ex: 28/06): ")
+    current_date = date.today()
+    old_date = current_date - timedelta(7)
 
-    print("<blockquote>[center][b]Récompenses du "+datedebut+" au "+datefin+"[/b][/center]")
-    print("Pour rappel, vous gagnez 3 XP par semaine si vous effectuez au moins <b>50</b> votes sur celle-ci.")
-    print("Vous gagnez 5 XP au total si vous êtes parmi les 5 meilleurs votants ou que vous avez réalisé plus de 100 votes.")
+    print("<blockquote>[center][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/center]")
+    print("Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b].")
     print("Les récompensés sont donc les suivants :[list=1]")
 
     for x,y in zip(Name,XP):
@@ -75,3 +74,4 @@ if __name__=='__main__':
 
     print("BTC compte", len(Votes),"votants pour cette session.")
     print("Merci à vous et bon jeu sur BTC !")
+    print('<blockquote>')
