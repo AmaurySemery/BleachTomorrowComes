@@ -22,20 +22,21 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         pass
 
 if __name__=='__main__':
-    f=open(r"C:\Divers\Python codes\Projet-top-sites-AoG\Dossiers-CSV\classement_SSAoG_CSV.csv")
+    f=open(r"E:\python\BleachTomorrowComes\TS_BTC\classement_BTC.csv")
 
     r = csv.DictReader(filter(lambda row: row[0]!='#',f), fieldnames = ["Pseudo", "Classement", "IDmark", "IDmark2", "Total"], delimiter = ";")
 
-    LISTE_MEMBRES_GOTEI_13 = []
-    LISTE_MEMBRES_ACUERDO = []
-    LISTE_MEMBRES_ULTIMA_NECAT = []
-    LISTE_MEMBRES_INDEP = []
+    LISTE_MEMBRES_GOTEI_13 = ['Alastair','Celestia']
+    LISTE_MEMBRES_ACUERDO = ['Endymion','Silas']
+    LISTE_MEMBRES_ULTIMA_NECAT = ['Esther','Ryme']
+    LISTE_MEMBRES_INDEP = ['Nessius','Rudjek']
 
     Name = []
     Votes = []
     XP = []
     Final = []
     for row in r:
+        print(row)
         a = row['Pseudo']
         b = int(row['Total'])
         Name.append(a)
@@ -63,9 +64,9 @@ if __name__=='__main__':
         b = y
         Final.append(a)
         Final.append(b)
-        print("[*][b]"+change(x)+"[/color][/b]",":", y,"XP")
+        print("[*][b]"+change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP)+"[/color][/b]",":", y,"XP")
 
     print("[/list]")
 
     print("BTC compte", len(Votes),"votants pour cette session.")
-    print("Merci à vous et bon jeu sur AoG !")
+    print("Merci à vous et bon jeu sur BTC !")
