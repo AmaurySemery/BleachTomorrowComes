@@ -1,8 +1,13 @@
 {"attributs":{
-    "PV":"NC",
-    "EP":"NC",
-    "ES":"NC",
-    "PA":"NC"
+    "PV_debut":"NC",
+    "EP_debut":"NC",
+    "ES_debut":"NC",
+    "PA_debut":"NC",
+    
+    "PV_fin":"NC",
+    "EP_fin":"NC",
+    "ES_fin":"NC",
+    "PA_fin":"NC"
 },
 "phase_defensive":{
     "maintenu":"NC",
