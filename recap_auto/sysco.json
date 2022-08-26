@@ -15,9 +15,6 @@
         "defensif":{
                 "defense_pure":{
                     "bonus":50,
-                    "malus_PA":"none",
-                    "malus_PV":"none",
-                    "diviseur":"none",
                     "optionnel":"vitesse,multicibles,multitours,sacrifice"
                 }
         },
