@@ -1,29 +1,34 @@
-{"attributs":{
-    "PV_debut":"NC",
-    "EP_debut":"NC",
-    "ES_debut":"NC",
-    "PA_debut":"NC",
-    
-    "PV_fin":"NC",
-    "EP_fin":"NC",
-    "ES_fin":"NC",
-    "PA_fin":"NC"
-},
-"phase_defensive":{
-    "maintenu":"NC",
-    "negatif":"NC",
-    "positif":"NC"
-},
-"phase_offensive":{
-    "negatif":"NC",
-    "positif":"NC"
-},
-"synthese":{
-    "total_defendu":"NC",
-    "total_subi":"NC"
-},
-"combo":{
-    "combo_EP":"NC",
-    "combo_ES":"NC"
-}
+{
+    "attributs": {
+        "PV_total": 1500,
+        "EP_total": 1000,
+        "ES_total": 1100,
+        "PV_debut": 1500,
+        "EP_debut": 1000,
+        "ES_debut": 1100,
+        "PA_debut": 15,
+        "PV_fin": "NC",
+        "EP_fin": "NC",
+        "ES_fin": "NC",
+        "PA_fin": "NC"
+    },
+    "phase_defensive": {
+        "maintenu": 0,
+        "negatif": 0,
+        "positif": 0
+    },
+    "phase_offensive": {
+        "negatif": "NC",
+        "positif": "NC"
+    },
+    "synthese": {
+        "total_defendu": "NC",
+        "total_subi": "NC"
+    },
+    "combo": {
+        "combo_EP_debut": "NC",
+        "combo_ES_debut": "NC",
+        "combo_EP_fin": "NC",
+        "combo_ES_fin": "NC"
+    }
 }

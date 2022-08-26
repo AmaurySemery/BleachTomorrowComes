@@ -2,7 +2,26 @@ from pyexcel_ods import get_data
 import json
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
+CHEMIN_COMBAT_JSON = 'E:\python\BleachTomorrowComes\recap_auto\combat.json'
 
+def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
+MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        data_dict["attributs"][0]["PV_total"] = PV_TOTAL
+        data_dict["attributs"][0]["EP_total"] = EP_TOTAL
+        data_dict["attributs"][0]["ES_total"] = ES_TOTAL
+        data_dict["attributs"][0]["PV_debut"] = PV_DEBUT
+        data_dict["attributs"][0]["EP_debut"] = EP_DEBUT
+        data_dict["attributs"][0]["ES_debut"] = ES_DEBUT
+        data_dict["attributs"][0]["PA_debut"] = PA_DEBUT
+        data_dict["phase_defensive"][0]["maintenu"] = MAINTENU_SOMME
+        data_dict["phase_defensive"][0]["negatif"] = NEGATIF_SOMME_DEBUT
+        data_dict["phase_defensive"][0]["positif"] = POSITIF_SOMME_DEBUT
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(file_json_edit,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 if __name__=='__main__':
     data = get_data(CHEMIN_ODS)
