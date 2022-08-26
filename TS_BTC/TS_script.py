@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import date
+from datetime import timedelta
 
 
 # Chemin à éditer
