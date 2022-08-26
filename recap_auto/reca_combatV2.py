@@ -2,24 +2,24 @@ from pyexcel_ods import get_data
 import json
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
-CHEMIN_COMBAT_JSON = 'E:\python\BleachTomorrowComes\recap_auto\combat.json'
+CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
 
 def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
 MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
-        data_dict["attributs"][0]["PV_total"] = PV_TOTAL
-        data_dict["attributs"][0]["EP_total"] = EP_TOTAL
-        data_dict["attributs"][0]["ES_total"] = ES_TOTAL
-        data_dict["attributs"][0]["PV_debut"] = PV_DEBUT
-        data_dict["attributs"][0]["EP_debut"] = EP_DEBUT
-        data_dict["attributs"][0]["ES_debut"] = ES_DEBUT
-        data_dict["attributs"][0]["PA_debut"] = PA_DEBUT
-        data_dict["phase_defensive"][0]["maintenu"] = MAINTENU_SOMME
-        data_dict["phase_defensive"][0]["negatif"] = NEGATIF_SOMME_DEBUT
-        data_dict["phase_defensive"][0]["positif"] = POSITIF_SOMME_DEBUT
+        data_dict["attributs"]["PV_total"] = PV_TOTAL
+        data_dict["attributs"]["EP_total"] = EP_TOTAL
+        data_dict["attributs"]["ES_total"] = ES_TOTAL
+        data_dict["attributs"]["PV_debut"] = PV_DEBUT
+        data_dict["attributs"]["EP_debut"] = EP_DEBUT
+        data_dict["attributs"]["ES_debut"] = ES_DEBUT
+        data_dict["attributs"]["PA_debut"] = PA_DEBUT
+        data_dict["phase_defensive"]["maintenu"] = MAINTENU_SOMME
+        data_dict["phase_defensive"]["negatif"] = NEGATIF_SOMME_DEBUT
+        data_dict["phase_defensive"]["positif"] = POSITIF_SOMME_DEBUT
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
-        fichier = open(file_json_edit,'wt')
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
         fichier.close()
 
@@ -39,6 +39,10 @@ if __name__=='__main__':
     MAINTENU_SOMME = data['Combat'][11][1]
     NEGATIF_SOMME_DEBUT = data['Combat'][12][1]
     POSITIF_SOMME_DEBUT = data['Combat'][13][1]
+
+    maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
+MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
+
     TOTAL_DEFENDU = 0
     TOTAL_SUBI = 0
     NEGATIF_SOMME_FIN = 0
