@@ -1,0 +1,24 @@
+{"attributs":{
+    "PV":"NC",
+    "EP":"NC",
+    "ES":"NC",
+    "PA":"NC"
+},
+"phase_defensive":{
+    "maintenu":"NC",
+    "negatif":"NC",
+    "positif":"NC"
+},
+"phase_offensive":{
+    "negatif":"NC",
+    "positif":"NC"
+},
+"synthese":{
+    "total_defendu":"NC",
+    "total_subi":"NC"
+},
+"combo":{
+    "combo_EP":"NC",
+    "combo_ES":"NC"
+}
+}
