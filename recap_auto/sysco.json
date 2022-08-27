@@ -114,8 +114,7 @@
     },
     "liberation":{
         "niveau_1":{
-            "cout_PA":1,
-            "bonus":"acces techniques branche base"
+            "cout_PA":1
         },
         "niveau_2":{
             "cout_PA":5,
