@@ -7,10 +7,11 @@
         "EP_debut": 1000,
         "ES_debut": 1100,
         "PA_debut": 15,
-        "PV_fin": "NC",
-        "EP_fin": "NC",
-        "ES_fin": "NC",
-        "PA_fin": "NC"
+        "PV_fin": 0,
+        "EP_fin": 0,
+        "ES_fin": 0,
+        "PA_depenses": 0,
+        "PA_restants": 0
     },
     "phase_defensive": {
         "maintenu": 0,
@@ -18,17 +19,17 @@
         "positif": 0
     },
     "phase_offensive": {
-        "negatif": "NC",
-        "positif": "NC"
+        "negatif": 0,
+        "positif": 0
     },
     "synthese": {
-        "total_defendu": "NC",
-        "total_subi": "NC"
+        "total_defendu": 0,
+        "total_subi": 0
     },
     "combo": {
-        "combo_EP_debut": "NC",
-        "combo_ES_debut": "NC",
-        "combo_EP_fin": "NC",
-        "combo_ES_fin": "NC"
+        "combo_EP_debut": 0,
+        "combo_ES_debut": 0,
+        "combo_EP_fin": 0,
+        "combo_ES_fin": 0
     }
 }
