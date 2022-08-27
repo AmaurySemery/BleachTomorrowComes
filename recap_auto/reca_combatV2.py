@@ -3,7 +3,7 @@ import json
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
 CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
-CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto\sysco.json"'
+CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto/sysco.json"'
 
 def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
 MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
@@ -212,17 +212,18 @@ def techniques_offensives():
 def first_liberation():
     data = get_data(CHEMIN_ODS)
     ETAT = data['Combat'][26][1]
+    print(ETAT)
     if ETAT == 0:
         pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 1[/b]')
         with open(CHEMIN_SYSCO_JSON,'r') as json_data:
             data_dict = json.load(json_data)
-            COUT_PA = data_dict["techniques"]["liberation"]["niveau_1"]["cout_PA"]
+            COUT_PA = data_dict["liberation"]["niveau_1"]["cout_PA"]
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
-            PA_DEPENSES = int(PA_DEPENSES) + COUT_PA
+            PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
@@ -250,13 +251,13 @@ def check_second_liberation_on():
             if TYPE_MAIN == 'att' or TYPE_MAIN == 'boostof':
                 NEGATIF_OFFENSIF = int(NEGATIF_OFFENSIF) + int(VALEUR)
                 if TYPE_SECOND != 0:
-                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof';
+                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof':
                         # mettre à jour
                         pass
             if TYPE_MAIN == 'def' or TYPE_MAIN == 'boostdef':
                 POSITIF_DEFENSIF = int(POSITIF_DEFENSIF) + int(VALEUR)
                 if TYPE_SECOND != 0:
-                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof';
+                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof':
                         # mettre à jour
                         pass
             EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
@@ -280,6 +281,9 @@ def check_second_liberation_on():
 def second_liberation():
     data = get_data(CHEMIN_ODS)
     ETAT = data['Combat'][27][1]
+    print(ETAT)
+    if ETAT == 0:
+        pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 2[/b]')
         with open(CHEMIN_SYSCO_JSON,'r') as json_data:
@@ -396,6 +400,8 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[u][b][color=#a2783c]Techniques offensives :[/color][/b][/u]')
     print('[list]')
 
+    first_liberation()
+    second_liberation()
     techniques_offensives()
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
