@@ -15,7 +15,7 @@
     },
     "phase_defensive": {
         "maintenu": 0,
-        "negatif": 600,
+        "negatif": 0,
         "positif": 0
     },
     "phase_offensive": {
