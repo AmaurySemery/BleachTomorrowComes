@@ -35,7 +35,7 @@ def techniques_defensives():
         if DEPENSE_PV != 0:
             print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES')
         if DEPENSE_PV == 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + 'PV')
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV')
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
 
     def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA):
@@ -69,95 +69,107 @@ def techniques_defensives():
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
+    print(NOMBRE_TECH)
     a = 2
     b = 0
     for i in range(int(NOMBRE_TECH)):
-        print(a)
-        NIV_TECH = data['Combat'][0][a]
-        print(NIV_TECH)
-        ID_TECH = data['Combat'][1][a]
-        print(ID_TECH)
+        NIV_TECH = data['Combat'][a][0]
+        ID_TECH = data['Combat'][a][1]
         if NIV_TECH == 1:
             c = b + 0
             POSITION = int(c) + int(ID_TECH)
-            NOM_TECH = data['Liste_techniques'][1][POSITION]
-            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][2][POSITION]
-            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][3][POSITION]
-            TYPE = data['Liste_techniques'][4][POSITION]
-            EFFET = data['Liste_techniques'][5][POSITION]
-            DEPENSE_EP = data['Liste_techniques'][6][POSITION]
-            DEPENSE_ES = data['Liste_techniques'][7][POSITION]
-            DEPENSE_PV = data['Liste_techniques'][8][POSITION]
-            DESCRIPTION = data['Liste_techniques'][9][POSITION]
-            COUT_PA = data['Liste_techniques'][12][POSITION]
+            NOM_TECH = data['Liste_techniques'][POSITION][1]
+            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][POSITION][2]
+            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][POSITION][3]
+            TYPE = data['Liste_techniques'][POSITION][4]
+            EFFET = data['Liste_techniques'][POSITION][5]
+            DEPENSE_EP = data['Liste_techniques'][POSITION][6]
+            DEPENSE_ES = data['Liste_techniques'][POSITION][7]
+            DEPENSE_PV = data['Liste_techniques'][POSITION][8]
+            DESCRIPTION = data['Liste_techniques'][POSITION][9]
+            COUT_PA = data['Liste_techniques'][POSITION][12]
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
+            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
         elif NIV_TECH == 2:
-            c = b + 10
+            c = b + 9
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
-            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][2][POSITION]
-            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][3][POSITION]
-            TYPE = data['Liste_techniques'][4][POSITION]
-            EFFET = data['Liste_techniques'][5][POSITION]
-            DEPENSE_EP = data['Liste_techniques'][6][POSITION]
-            DEPENSE_ES = data['Liste_techniques'][7][POSITION]
-            DEPENSE_PV = data['Liste_techniques'][8][POSITION]
-            DESCRIPTION = data['Liste_techniques'][9][POSITION]
-            COUT_PA = data['Liste_techniques'][12][POSITION]
+            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][POSITION][2]
+            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][POSITION][3]
+            TYPE = data['Liste_techniques'][POSITION][4]
+            EFFET = data['Liste_techniques'][POSITION][5]
+            DEPENSE_EP = data['Liste_techniques'][POSITION][6]
+            DEPENSE_ES = data['Liste_techniques'][POSITION][7]
+            DEPENSE_PV = data['Liste_techniques'][POSITION][8]
+            DESCRIPTION = data['Liste_techniques'][POSITION][9]
+            COUT_PA = data['Liste_techniques'][POSITION][12]
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
+            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
         elif NIV_TECH == 3:
-            c = b + 20
+            c = b + 19
             POSITION = int(c) + int(ID_TECH)
-            NOM_TECH = data['Liste_techniques'][1][POSITION]
-            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][2][POSITION]
-            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][3][POSITION]
-            TYPE = data['Liste_techniques'][4][POSITION]
-            EFFET = data['Liste_techniques'][5][POSITION]
-            DEPENSE_EP = data['Liste_techniques'][6][POSITION]
-            DEPENSE_ES = data['Liste_techniques'][7][POSITION]
-            DEPENSE_PV = data['Liste_techniques'][8][POSITION]
-            DESCRIPTION = data['Liste_techniques'][9][POSITION]
-            COUT_PA = data['Liste_techniques'][12][POSITION]
+            NOM_TECH = data['Liste_techniques'][POSITION][1]
+            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][POSITION][2]
+            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][POSITION][3]
+            TYPE = data['Liste_techniques'][POSITION][4]
+            EFFET = data['Liste_techniques'][POSITION][5]
+            DEPENSE_EP = data['Liste_techniques'][POSITION][6]
+            DEPENSE_ES = data['Liste_techniques'][POSITION][7]
+            DEPENSE_PV = data['Liste_techniques'][POSITION][8]
+            DESCRIPTION = data['Liste_techniques'][POSITION][9]
+            COUT_PA = data['Liste_techniques'][POSITION][12]
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
+            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
         elif NIV_TECH == 4:
-            c = b + 30
+            c = b + 29
             POSITION = int(c) + int(ID_TECH)
-            NOM_TECH = data['Liste_techniques'][1][POSITION]
-            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][2][POSITION]
-            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][3][POSITION]
-            TYPE = data['Liste_techniques'][4][POSITION]
-            EFFET = data['Liste_techniques'][5][POSITION]
-            DEPENSE_EP = data['Liste_techniques'][6][POSITION]
-            DEPENSE_ES = data['Liste_techniques'][7][POSITION]
-            DEPENSE_PV = data['Liste_techniques'][8][POSITION]
-            DESCRIPTION = data['Liste_techniques'][9][POSITION]
-            COUT_PA = data['Liste_techniques'][12][POSITION]
+            NOM_TECH = data['Liste_techniques'][POSITION][1]
+            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][POSITION][2]
+            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][POSITION][3]
+            TYPE = data['Liste_techniques'][POSITION][4]
+            EFFET = data['Liste_techniques'][POSITION][5]
+            DEPENSE_EP = data['Liste_techniques'][POSITION][6]
+            DEPENSE_ES = data['Liste_techniques'][POSITION][7]
+            DEPENSE_PV = data['Liste_techniques'][POSITION][8]
+            DESCRIPTION = data['Liste_techniques'][POSITION][9]
+            COUT_PA = data['Liste_techniques'][POSITION][12]
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
+            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
         elif NIV_TECH == 5:
-            c = b + 40
+            c = b + 39
             POSITION = int(c) + int(ID_TECH)
-            NOM_TECH = data['Liste_techniques'][1][POSITION]
-            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][2][POSITION]
-            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][3][POSITION]
-            TYPE = data['Liste_techniques'][4][POSITION]
-            EFFET = data['Liste_techniques'][5][POSITION]
-            DEPENSE_EP = data['Liste_techniques'][6][POSITION]
-            DEPENSE_ES = data['Liste_techniques'][7][POSITION]
-            DEPENSE_PV = data['Liste_techniques'][8][POSITION]
-            DESCRIPTION = data['Liste_techniques'][9][POSITION]
-            COUT_PA = data['Liste_techniques'][12][POSITION]
+            NOM_TECH = data['Liste_techniques'][POSITION][1]
+            BRANCHE_PRINCIPALE_TECH = data['Liste_techniques'][POSITION][2]
+            BRANCHE_SECONDAIRE_TECH = data['Liste_techniques'][POSITION][3]
+            TYPE = data['Liste_techniques'][POSITION][4]
+            EFFET = data['Liste_techniques'][POSITION][5]
+            DEPENSE_EP = data['Liste_techniques'][POSITION][6]
+            DEPENSE_ES = data['Liste_techniques'][POSITION][7]
+            DEPENSE_PV = data['Liste_techniques'][POSITION][8]
+            DESCRIPTION = data['Liste_techniques'][POSITION][9]
+            COUT_PA = data['Liste_techniques'][POSITION][12]
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
+            save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
         a += 1
+        c = 0
+
+def clean_json_combat():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        data_dict["synthese"]["total_defendu"] = 0
+        data_dict["synthese"]["total_subi"] = 0
+        data_dict["attributs"]["PA_depenses"] = 0
+        data_dict["attributs"]["PA_restants"] = 0
+        data_dict["phase_defensive"]["positif"] = 0
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 if __name__=='__main__':
     data = get_data(CHEMIN_ODS)
@@ -212,7 +224,8 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
 
     techniques_defensives()
 
-    print('[/list][u][b][color=#a2783c]Résumé phase défensive :[/color][/b][/u]')
+    print('[/list]')
+    print('[u][b][color=#a2783c]Résumé phase défensive :[/color][/b][/u]')
     print('[list][*][b]Défendu :[/b] ' + str(TOTAL_DEFENDU))
     print('[*][b]Subi :[/b] ' + str(TOTAL_SUBI) + ' [/list]')
     print('[h3][color=#929291]Phase [color=#a23d3c]Offensive[/color][/color][/h3]')
@@ -236,3 +249,5 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('\n')
     print('[b][color=#c83737]Combo EP : ' + str(COMBO_EP_FIN) + '[/color][/b]')
     print('[b][color=#2a4cbc]Combo ES : ' + str(COMBO_ES_FIN) + '[/color][/b][/spoiler][/hide]')
+
+    clean_json_combat()

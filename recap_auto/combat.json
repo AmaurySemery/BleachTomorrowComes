@@ -10,13 +10,13 @@
         "PV_fin": 0,
         "EP_fin": 0,
         "ES_fin": 0,
-        "PA_depenses": 2,
-        "PA_restants": 13
+        "PA_depenses": 0,
+        "PA_restants": 0
     },
     "phase_defensive": {
         "maintenu": 0,
         "negatif": 0,
-        "positif": 100
+        "positif": 0
     },
     "phase_offensive": {
         "negatif": 0,
@@ -24,7 +24,7 @@
     },
     "synthese": {
         "total_defendu": 0,
-        "total_subi": 100
+        "total_subi": 0
     },
     "combo": {
         "combo_EP_debut": 0,
