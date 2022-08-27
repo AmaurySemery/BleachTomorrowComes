@@ -32,9 +32,9 @@ def techniques_defensives():
         if BRANCHE_SECONDAIRE_TECH == 0:
             print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['+str(TYPE)+']')
         print('[u]Effets :[/u] '+str(EFFET))
-        if DEPENSE_PV != 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES')
         if DEPENSE_PV == 0:
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES')
+        if DEPENSE_PV != 0:
             print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV')
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
 
@@ -49,7 +49,7 @@ def techniques_defensives():
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
             PA_RESTANTS = data_dict["attributs"]["PA_restants"]
             POSITIF = int(POSITIF) + int(EFFET)
-            TOTAL_DEFENDU = int(NEGATIF) - int(POSITIF)
+            TOTAL_DEFENDU = int(POSITIF)
             if int(TOTAL_DEFENDU) < 0 :
                 TOTAL_DEFENDU = 0
             TOTAL_SUBI = int(POSITIF) - int(NEGATIF)
@@ -69,7 +69,6 @@ def techniques_defensives():
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
-    print(NOMBRE_TECH)
     a = 2
     b = 0
     for i in range(int(NOMBRE_TECH)):
@@ -220,9 +219,15 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[*][b]Maintenu :[/b] ' + str(MAINTENU_SOMME))
     print('[*][b]Valeurs négatives :[/b] ' + str(NEGATIF_SOMME_DEBUT))
     print('[*][b]Valeurs positives :[/b] ' + str(POSITIF_SOMME_DEBUT))
-    print('[/list][u][b][color=#a2783c]Techniques défensives :[/color][/b][/u][list]')
+    print('[/list][u][b][color=#a2783c]Techniques défensives :[/color][/b][/u]')
+    print('[list]')
 
     techniques_defensives()
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
+        TOTAL_SUBI =data_dict["synthese"]["total_subi"]
+
 
     print('[/list]')
     print('[u][b][color=#a2783c]Résumé phase défensive :[/color][/b][/u]')
