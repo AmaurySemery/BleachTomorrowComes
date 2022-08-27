@@ -113,17 +113,18 @@
         }
     },
     "liberation":{
-        "niveau1":{
+        "niveau_1":{
             "cout_PA":1,
             "bonus":"acces techniques branche base"
         },
-        "niveau2":{
+        "niveau_2":{
             "cout_PA":5,
             "bonus_PT_N2":1,
             "bonus_PT_N3":2,
             "bonus_PT_N4":4,
             "bonus_PT_N5":6,
-            "cout_passif":300,
+            "cout_EP":150,
+            "cout_ES":150,
             "PT_passif_N3":4
         }
     },
