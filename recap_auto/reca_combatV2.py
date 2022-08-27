@@ -3,6 +3,7 @@ import json
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
 CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
+CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto\sysco.json"'
 
 def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
 MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
@@ -208,6 +209,103 @@ def techniques_offensives():
             integrate_value(NIV_TECH,POSITION)
         a += 1
 
+def first_liberation():
+    data = get_data(CHEMIN_ODS)
+    ETAT = data['Combat'][26][1]
+    if ETAT == 0:
+        pass
+    elif ETAT == 1:
+        print('[*][b]Activation libération niveau 1[/b]')
+        with open(CHEMIN_SYSCO_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            COUT_PA = data_dict["techniques"]["liberation"]["niveau_1"]["cout_PA"]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
+            PA_DEPENSES = int(PA_DEPENSES) + COUT_PA
+            data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+    elif ETAT == 2:
+        pass
+
+def check_second_liberation_on():
+    data = get_data(CHEMIN_ODS)
+    ETAT = data['Combat'][27][1]
+    VALEUR = data['Liste_techniques'][20][5]
+    TYPE_MAIN = data['Liste_techniques'][20][14]
+    TYPE_SECOND = data['Liste_techniques'][20][15]
+    if ETAT == 2:
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            MAINTIEN = data_dict["phase_defensive"]["maintenu"]
+            POSITIF_DEFENSIF = data_dict["phase_defensive"]["positif"]
+            POSITIF_OFFENSIF = data_dict["phase_offensive"]["positif"]
+            NEGATIF_OFFENSIF = data_dict["phase_offensive"]["negatif"]
+            EP_DEPENSES = data_dict["attributs"]["EP_fin"]
+            ES_DEPENSES = data_dict["attributs"]["ES_fin"]
+            # intégrer entrave
+            if TYPE_MAIN == 'att' or TYPE_MAIN == 'boostof':
+                NEGATIF_OFFENSIF = int(NEGATIF_OFFENSIF) + int(VALEUR)
+                if TYPE_SECOND != 0:
+                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof';
+                        # mettre à jour
+                        pass
+            if TYPE_MAIN == 'def' or TYPE_MAIN == 'boostdef':
+                POSITIF_DEFENSIF = int(POSITIF_DEFENSIF) + int(VALEUR)
+                if TYPE_SECOND != 0:
+                    if TYPE_SECOND == 'sac' or TYPE_SECOND == 'att' or TYPE_SECOND == 'boostof';
+                        # mettre à jour
+                        pass
+            EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
+            ES_DEPENSES = int(ES_DEPENSES) + int(COUT_ES)
+            MAINTIEN = int(MAINTIEN) + VALEUR
+            data_dict["attributs"]["EP_fin"] = EP_DEPENSES
+            data_dict["attributs"]["ES_fin"] = ES_DEPENSES
+            data_dict["phase_defensive"]["maintenu"] = MAINTIEN
+            data_dict["phase_defensive"]["positif"] = POSITIF_DEFENSIF
+            data_dict["phase_offensive"]["positif"] = POSITIF_OFFENSIF
+            data_dict["phase_offensive"]["negatif"] = NEGATIF_OFFENSIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+        return MAINTIEN
+    else:
+        MAINTIEN = 0
+        return MAINTIEN
+
+def second_liberation():
+    data = get_data(CHEMIN_ODS)
+    ETAT = data['Combat'][27][1]
+    elif ETAT == 1:
+        print('[*][b]Activation libération niveau 2[/b]')
+        with open(CHEMIN_SYSCO_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            COUT_PA = data_dict["techniques"]["liberation"]["niveau_2"]["cout_PA"]
+            COUT_EP = data_dict["techniques"]["liberation"]["niveau_2"]["cout_EP"]
+            COUT_ES = data_dict["techniques"]["liberation"]["niveau_2"]["cout_ES"]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
+            EP_DEPENSES = data_dict["attributs"]["EP_fin"]
+            ES_DEPENSES = data_dict["attributs"]["ES_fin"]
+            PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
+            EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
+            ES_DEPENSES = int(ES_DEPENSES) + int(COUT_ES)
+            data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
+            data_dict["attributs"]["EP_fin"] = EP_DEPENSES
+            data_dict["attributs"]["ES_fin"] = ES_DEPENSES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+    elif ETAT == 2:
+        print('[*][b]Libération niveau 2 maintenue[/b]')
+
+
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
@@ -272,6 +370,10 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[h3][color=#929291]Phase [color=#344b99]Défensive[/color][/color][/h3]')
     print('\n')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u][list]')
+
+    MAINTENU_SECOND_LIBERATION = check_second_liberation_on()
+    MAINTENU_SOMME = int(MAINTENU_SOMME) + int(MAINTENU_SECOND_LIBERATION)
+
     print('[*][b]Maintenu :[/b] ' + str(MAINTENU_SOMME))
     print('[*][b]Valeurs négatives :[/b] ' + str(NEGATIF_SOMME_DEBUT))
     print('[*][b]Valeurs positives :[/b] ' + str(POSITIF_SOMME_DEBUT))
