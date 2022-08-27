@@ -28,7 +28,7 @@ def techniques_defensives():
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
         print('[*][b][Niveau '+str(NIV_TECH)+'] '+str(NOM_TECH)+'[/b]')
         if BRANCHE_SECONDAIRE_TECH != 0:
-            print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['str(BRANCHE_SECONDAIRE_TECH)'] ['+str(TYPE)+']')
+            print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['+str(BRANCHE_SECONDAIRE_TECH)+'] ['+str(TYPE)+']')
         if BRANCHE_SECONDAIRE_TECH == 0:
             print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['+str(TYPE)+']')
         print('[u]Effets :[/u] '+str(EFFET))
@@ -69,12 +69,15 @@ def techniques_defensives():
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
-    i = 2
+    a = 2
     b = 0
     for i in range(int(NOMBRE_TECH)):
-        NIV_TECH = data['Combat'][0][i]
-        ID_TECH = data['Combat'][1][i]
-        if int(NIV_TECH) == 1:
+        print(a)
+        NIV_TECH = data['Combat'][0][a]
+        print(NIV_TECH)
+        ID_TECH = data['Combat'][1][a]
+        print(ID_TECH)
+        if NIV_TECH == 1:
             c = b + 0
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
@@ -90,7 +93,7 @@ def techniques_defensives():
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
-        if int(NIV_TECH) == 2:
+        elif NIV_TECH == 2:
             c = b + 10
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
@@ -106,7 +109,7 @@ def techniques_defensives():
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
-        if int(NIV_TECH) == 3:
+        elif NIV_TECH == 3:
             c = b + 20
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
@@ -122,7 +125,7 @@ def techniques_defensives():
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
-        if int(NIV_TECH) == 4:
+        elif NIV_TECH == 4:
             c = b + 30
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
@@ -138,7 +141,7 @@ def techniques_defensives():
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
-        if int(NIV_TECH) == 5:
+        elif NIV_TECH == 5:
             c = b + 40
             POSITION = int(c) + int(ID_TECH)
             NOM_TECH = data['Liste_techniques'][1][POSITION]
@@ -154,11 +157,11 @@ def techniques_defensives():
             print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV)
-        i += 1
+        a += 1
 
 if __name__=='__main__':
     data = get_data(CHEMIN_ODS)
-#     print(json.dumps(data, sort_keys=False, indent=4))
+    # print(json.dumps(data, sort_keys=False, indent=4))
     TOUR = data['Combat'][0][4]
     PV_DEBUT = data['Combat'][2][4]
     PV_TOTAL = data['Combat'][2][5]
