@@ -23,7 +23,9 @@
         "positif": 0,
         "guerison": 0,
         "entrave": 0,
-        "immobilisation": 0
+        "immobilisation": 0,
+        "drain": 0,
+        "don_rei": 0
     },
     "synthese": {
         "total_defendu": 0,
@@ -35,10 +37,10 @@
         "combo_EP_fin": 0,
         "combo_ES_fin": 0
     },
-    "multicibles":{
-        "count":0
+    "multicibles": {
+        "count": 0
     },
-    "multitours":{
-        "count":0
+    "multitours": {
+        "count": 0
     }
 }
