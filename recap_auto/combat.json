@@ -20,7 +20,10 @@
     },
     "phase_offensive": {
         "negatif": 0,
-        "positif": 0
+        "positif": 0,
+        "guerison": 0,
+        "entrave": 0,
+        "immobilisation": 0
     },
     "synthese": {
         "total_defendu": 0,
@@ -31,5 +34,11 @@
         "combo_ES_debut": 0,
         "combo_EP_fin": 0,
         "combo_ES_fin": 0
+    },
+    "multicibles":{
+        "count":0
+    },
+    "multitours":{
+        "count":0
     }
 }

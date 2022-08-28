@@ -109,6 +109,30 @@ def optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES):
                     fichier.write(data_str)
                     fichier.close()
 
+def effet_off(EFFET,CODE_TYPE_EFFET):
+    if CODE_TYPE_EFFET == 'att' or CODE_TYPE_EFFET == 'boostof':
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            NEGATIF = data_dict["phase_offensive"]["negatif"]
+            NEGATIF = int(NEGATIF) + int(EFFET)
+            data_dict["phase_offensive"]["negatif"] = NEGATIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
+def effet_regen(EFFET,CODE_TYPE_EFFET):
+    if CODE_TYPE_EFFET == 'regen':
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            POSITIF = data_dict["phase_offensive"]["positif"]
+            POSITIF = int(POSITIF) + int(EFFET)
+            data_dict["phase_offensive"]["positif"] = POSITIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
 def techniques_defensives():
     def print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
@@ -241,6 +265,8 @@ def techniques_offensives():
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
+            effet_off(EFFET,CODE_TYPE_EFFET)
+            effet_regen(EFFET,CODE_TYPE_EFFET)
             optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES)
             data_dict["phase_offensive"]["positif"] = POSITIF
             data_dict["phase_offensive"]["negatif"] = NEGATIF
