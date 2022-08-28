@@ -3,7 +3,7 @@ import json
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
 CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
-CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto/sysco.json"'
+# CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto/sysco.json"'
 
 def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
 MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
@@ -128,6 +128,8 @@ def techniques_defensives():
     def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
+            COMBO_EP = data_dict["combo"]["combo_EP_fin"]
+            COMBO_ES = data_dict["combo"]["combo_ES_fin"]
             POSITIF = data_dict["phase_defensive"]["positif"]
             NEGATIF = data_dict["phase_defensive"]["negatif"]
             TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
@@ -147,6 +149,8 @@ def techniques_defensives():
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
+            COMBO_EP = int(COMBO_EP) + int(EP_DEPENSES)
+            COMBO_ES = int(COMBO_ES) + int(ES_DEPENSES)
             data_dict["phase_defensive"]["positif"] = POSITIF
             data_dict["phase_defensive"]["negatif"] = NEGATIF
             data_dict["synthese"]["total_defendu"] = TOTAL_DEFENDU
@@ -155,6 +159,8 @@ def techniques_defensives():
             data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_dict["attributs"]["EP_fin"] = EP_DEPENSES
             data_dict["attributs"]["ES_fin"] = ES_DEPENSES
+            data_dict["combo"]["combo_EP_fin"] = COMBO_EP
+            data_dict["combo"]["combo_ES_fin"] = COMBO_ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -309,6 +315,8 @@ def techniques_offensives():
     def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
+            COMBO_EP = data_dict["combo"]["combo_EP_fin"]
+            COMBO_ES = data_dict["combo"]["combo_ES_fin"]
             POSITIF = data_dict["phase_offensive"]["positif"]
             NEGATIF = data_dict["phase_offensive"]["negatif"]
             PA_DEBUT = data_dict["attributs"]["PA_debut"]
@@ -322,10 +330,14 @@ def techniques_offensives():
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
+            COMBO_EP = int(COMBO_EP) + int(EP_DEPENSES)
+            COMBO_ES = int(COMBO_ES) + int(ES_DEPENSES)
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
             data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_dict["attributs"]["EP_fin"] = EP_DEPENSES
             data_dict["attributs"]["ES_fin"] = ES_DEPENSES
+            data_dict["combo"]["combo_EP_fin"] = COMBO_EP
+            data_dict["combo"]["combo_ES_fin"] = COMBO_ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -433,15 +445,21 @@ def second_liberation():
         print('\n')
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
+            COMBO_EP = data_dict["combo"]["combo_EP_fin"]
+            COMBO_ES = data_dict["combo"]["combo_ES_fin"]
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
             EP_DEPENSES = data_dict["attributs"]["EP_fin"]
             ES_DEPENSES = data_dict["attributs"]["ES_fin"]
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
             EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
             ES_DEPENSES = int(ES_DEPENSES) + int(COUT_ES)
+            COMBO_EP = int(COMBO_EP) + int(EP_DEPENSES)
+            COMBO_ES = int(COMBO_ES) + int(ES_DEPENSES)
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
             data_dict["attributs"]["EP_fin"] = EP_DEPENSES
             data_dict["attributs"]["ES_fin"] = ES_DEPENSES
+            data_dict["combo"]["combo_EP_fin"] = COMBO_EP
+            data_dict["combo"]["combo_ES_fin"] = COMBO_ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -505,6 +523,115 @@ def valeur_negatives_positives_somme():
         print(TEXT_VALEURS_POSITIVES)
         print('[/list]')
 
+def combo_somme_fin():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        COMBO_EP_DEBUT = data_dict["combo"]["combo_EP_debut"]
+        COMBO_ES_DEBUT = data_dict["combo"]["combo_ES_debut"]
+        COMBO_EP_FIN = data_dict["combo"]["combo_EP_fin"]
+        COMBO_ES_FIN = data_dict["combo"]["combo_ES_fin"]
+        COMBO_EP = int(COMBO_EP_DEBUT) + int(COMBO_EP_FIN)
+        COMBO_ES = int(COMBO_ES_DEBUT) + int(COMBO_ES_FIN)
+        print('[b][color=#c83737]Combo EP : ' + str(COMBO_EP) + '[/color][/b]')
+        print('[b][color=#2a4cbc]Combo ES : ' + str(COMBO_ES) + '[/color][/b][/spoiler][/hide]')
+
+def aptitudes():
+    def id_aptitude(ID,RANG):
+        data = get_data(CHEMIN_ODS)
+        NAME = data['Sysco'][21][int(ID)]
+        TYPE = data['Sysco'][23][int(ID)]
+        VALUE = data['Sysco'][23+int(RANG)][int(ID)]
+        if ID == 1 or ID == 2:
+            REIRYOKU = int(VALUE) / 2
+            with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                data_dict = json.load(json_data)
+                EP = data_dict["attributs"]["EP_fin"]
+                ES = data_dict["attributs"]["ES_fin"]
+                EP = int(REIRYOKU) + int(EP)
+                ES = int(REIRYOKU) + int(ES)
+                data_dict["attributs"]["EP_fin"] = EP
+                data_dict["attributs"]["ES_fin"] = ES
+                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                fichier.write(data_str)
+                fichier.close()
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+')')
+        if ID == 3 or ID == 4:
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+')')
+        if ID == 5:
+            with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                data_dict = json.load(json_data)
+                NEGATIF = data_dict["phase_offensive"]["negatif"]
+                NEGATIF = int(NEGATIF) + int(VALUE)
+                data_dict["phase_offensive"]["negatif"] = NEGATIF
+                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                fichier.write(data_str)
+                fichier.close()
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+')')
+        if ID == 6:
+            with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                data_dict = json.load(json_data)
+                POSITIF = data_dict["phase_defensive"]["positif"]
+                POSITIF = int(POSITIF) + int(VALUE)
+                data_dict["phase_defensive"]["positif"] = POSITIF
+                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                fichier.write(data_str)
+                fichier.close()
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+')')
+        if ID == 7:
+            with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                data_dict = json.load(json_data)
+                PA = data_dict["attributs"]["PA_restants"]
+                PA = int(PA) + int(VALUE)
+                data_dict["attributs"]["PA_restants"] = PA
+                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                fichier.write(data_str)
+                fichier.close()
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+')')
+        if ID == 8:
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+') => [rentrer la valeur manuellement à partir du résultat du D10 sur forum]')
+        if ID == 9:
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+") => [rentrer la valeur manuellement à partir de l'attaque renvoyée")
+        if ID == 10:
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+") => [rentrer la valeur manuellement à partir de la valeur de transfert souhaitée")
+        if ID == 11:
+            print('[*][b]Activation aptitude '+str(NAME)+' niveau '+str(RANG)+'[/b]')
+            print('[u]Effet :[/u] '+str(VALUE) + ' ('+str(TYPE)+") => [rentrer la valeur manuellement à partir de la valeur de transfert souhaitée")
+
+    data = get_data(CHEMIN_ODS)
+    ETAT_N1 = data['Combat'][39][1]
+    ID_N1 = data['Combat'][39][2]
+    ETAT_N2 = data['Combat'][40][1]
+    ID_N2 = data['Combat'][40][2]
+    ETAT_N3 = data['Combat'][41][1]
+    ID_N3 = data['Combat'][41][2]
+    if ETAT_N1 == 1:
+        RANG = 1
+        id_aptitude(ID_N1,RANG)
+    elif ETAT_N2 == 1:
+        RANG = 2
+        id_aptitude(ID_N2,RANG)
+    elif ETAT_N3 == 1:
+        RANG = 3
+        id_aptitude(ID_N3,RANG)
+
+def calcul_PA_bonus(PA_FIN):
+    if PA_FIN > 3:
+        PA_FIN = 3
+    return PA_FIN
+
+
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
@@ -523,6 +650,10 @@ def clean_json_combat():
         data_dict["phase_offensive"]["immobilisation"] = 0
         data_dict["phase_offensive"]["drain"] = 0
         data_dict["phase_offensive"]["don_rei"] = 0
+        data_dict["combo"]["combo_EP_debut"] = 0
+        data_dict["combo"]["combo_ES_debut"] = 0
+        data_dict["combo"]["combo_EP_fin"] = 0
+        data_dict["combo"]["combo_ES_fin"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
@@ -539,6 +670,7 @@ if __name__=='__main__':
     ES_DEBUT = data['Combat'][4][4]
     ES_TOTAL = data['Combat'][4][5]
     PA_DEBUT = data['Combat'][5][4]
+    PA_TOTAL = data['Combat'][5][5]
     COMBO_EP_DEBUT = data['Combat'][21][1]
     COMBO_ES_DEBUT = data['Combat'][22][1]
     MAINTENU_SOMME = data['Combat'][11][1]
@@ -556,7 +688,6 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     EP_FIN = 0
     ES_FIN = 0
     PA_FIN = 0
-    PA_BONUS = 0
     COMBO_EP_FIN = 0
     COMBO_ES_FIN = 0
 
@@ -601,6 +732,8 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     first_liberation()
     second_liberation()
     techniques_offensives()
+    aptitudes()
+
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
         TOTAL_SUBI = data_dict["synthese"]["total_subi"]
@@ -623,9 +756,12 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[b][color=#c83737]Énergie Physique : [color=#f9f9f9]' + str(EP_FIN) + '[/color]/' + str(EP_TOTAL) + '[/color][/b]')
     print('[b][color=#2a4cbc]Énergie Spirituelle : [color=#f9f9f9]' + str(ES_FIN) + '[/color]/' + str(ES_TOTAL) + '[/color][/b]')
     print('\n')
-    print("[b][color=#783da2]Points d'Action : [color=#f9f9f9]" + str(PA_FIN) + "[/color]/X[/color][/b] (+" + str(PA_BONUS) + " PA au prochain tour)")
+
+    PA_BONUS = calcul_PA_bonus(PA_FIN)
+
+    print("[b][color=#783da2]Points d'Action : [color=#f9f9f9]" + str(PA_FIN) + "[/color]/"+str(PA_TOTAL)+"[/color][/b] (+" + str(PA_BONUS) + " PA au prochain tour)")
     print('\n')
-    print('[b][color=#c83737]Combo EP : ' + str(COMBO_EP_FIN) + '[/color][/b]')
-    print('[b][color=#2a4cbc]Combo ES : ' + str(COMBO_ES_FIN) + '[/color][/b][/spoiler][/hide]')
+
+    combo_somme_fin()
 
     clean_json_combat()
