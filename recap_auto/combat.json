@@ -8,10 +8,10 @@
         "ES_debut": 1100,
         "PA_debut": 15,
         "PV_fin": 0,
-        "EP_fin": 342,
-        "ES_fin": 108,
-        "PA_depenses": 18,
-        "PA_restants": -3
+        "EP_fin": 418,
+        "ES_fin": 132,
+        "PA_depenses": 22,
+        "PA_restants": -7
     },
     "phase_defensive": {
         "maintenu": 0,

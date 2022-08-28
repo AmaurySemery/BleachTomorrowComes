@@ -28,7 +28,7 @@
                 "optionnel":"vitesse,multitours"
             },
             "don_reiryoku":{
-                "bonus":50,
+                "bonus":25,
                 "optionnel":"none"
             },
             "boost_offensif":{
@@ -108,7 +108,7 @@
     "deferlement_de_reiryoku":{
         "type":"offensif",
         "branche":"Techniques spirituelles - Offensif",
-        "multiplicateur":1,
+        "multiplicateur":2,
         "maximum":100
     }
 },
