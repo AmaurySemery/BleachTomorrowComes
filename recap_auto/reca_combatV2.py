@@ -187,6 +187,8 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     NOMBRE_TECH = data['Combat'][0][1]
     a = 2
     b = 0
+    if NOMBRE_TECH == 0:
+
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][0]
         ID_TECH = data['Combat'][a][1]
@@ -399,7 +401,7 @@ def techniques_offensives():
 
 def first_liberation():
     data = get_data(CHEMIN_ODS)
-    ETAT = data['Combat'][25][1]
+    ETAT = data['Combat'][26][1]
     if ETAT == 0:
         pass
     elif ETAT == 1:
