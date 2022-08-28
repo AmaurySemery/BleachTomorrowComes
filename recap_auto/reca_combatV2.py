@@ -211,15 +211,12 @@ def techniques_offensives():
 
 def first_liberation():
     data = get_data(CHEMIN_ODS)
-    ETAT = data['Combat'][26][1]
-    print(ETAT)
+    ETAT = data['Combat'][25][1]
     if ETAT == 0:
         pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 1[/b]')
-        with open(CHEMIN_SYSCO_JSON,'r') as json_data:
-            data_dict = json.load(json_data)
-            COUT_PA = data_dict["liberation"]["niveau_1"]["cout_PA"]
+        COUT_PA = data['Sysco'][11][8]
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
@@ -234,7 +231,7 @@ def first_liberation():
 
 def check_second_liberation_on():
     data = get_data(CHEMIN_ODS)
-    ETAT = data['Combat'][27][1]
+    ETAT = data['Combat'][26][1]
     VALEUR = data['Liste_techniques'][20][5]
     TYPE_MAIN = data['Liste_techniques'][20][14]
     TYPE_SECOND = data['Liste_techniques'][20][15]
@@ -280,17 +277,16 @@ def check_second_liberation_on():
 
 def second_liberation():
     data = get_data(CHEMIN_ODS)
-    ETAT = data['Combat'][27][1]
-    print(ETAT)
+    ETAT = data['Combat'][26][1]
     if ETAT == 0:
         pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 2[/b]')
-        with open(CHEMIN_SYSCO_JSON,'r') as json_data:
-            data_dict = json.load(json_data)
-            COUT_PA = data_dict["techniques"]["liberation"]["niveau_2"]["cout_PA"]
-            COUT_EP = data_dict["techniques"]["liberation"]["niveau_2"]["cout_EP"]
-            COUT_ES = data_dict["techniques"]["liberation"]["niveau_2"]["cout_ES"]
+        COUT_PA = data['Sysco'][11][10]
+        COUT_EP = data['Sysco'][16][10]
+        COUT_ES = data['Sysco'][17][10]
+        print('[u]Dépense :[/u] '+str(COUT_PA)+' PA & '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
+        print('\n')
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
@@ -308,6 +304,10 @@ def second_liberation():
             fichier.close()
     elif ETAT == 2:
         print('[*][b]Libération niveau 2 maintenue[/b]')
+        COUT_EP = data['Sysco'][16][10]
+        COUT_ES = data['Sysco'][17][10]
+        print('[u]Dépense :[/u] '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
+        print('\n')
 
 
 def clean_json_combat():
@@ -375,8 +375,8 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('\n')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u][list]')
 
-    MAINTENU_SECOND_LIBERATION = check_second_liberation_on()
-    MAINTENU_SOMME = int(MAINTENU_SOMME) + int(MAINTENU_SECOND_LIBERATION)
+    # MAINTENU_SECOND_LIBERATION = check_second_liberation_on()
+    # MAINTENU_SOMME = int(MAINTENU_SOMME) + int(MAINTENU_SECOND_LIBERATION)
 
     print('[*][b]Maintenu :[/b] ' + str(MAINTENU_SOMME))
     print('[*][b]Valeurs négatives :[/b] ' + str(NEGATIF_SOMME_DEBUT))

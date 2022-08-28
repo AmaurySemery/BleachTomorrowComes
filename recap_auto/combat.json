@@ -8,23 +8,23 @@
         "ES_debut": 1100,
         "PA_debut": 15,
         "PV_fin": 0,
-        "EP_fin": 418,
-        "ES_fin": 132,
-        "PA_depenses": 22,
-        "PA_restants": -7
+        "EP_fin": 0,
+        "ES_fin": 0,
+        "PA_depenses": 0,
+        "PA_restants": 0
     },
     "phase_defensive": {
         "maintenu": 0,
-        "negatif": 600,
-        "positif": 100
+        "negatif": 0,
+        "positif": 0
     },
     "phase_offensive": {
         "negatif": 0,
         "positif": 0
     },
     "synthese": {
-        "total_defendu": 100,
-        "total_subi": 500
+        "total_defendu": 0,
+        "total_subi": 0
     },
     "combo": {
         "combo_EP_debut": 0,
