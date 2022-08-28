@@ -24,6 +24,91 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
         fichier.write(data_str)
         fichier.close()
 
+def optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES):
+    if CODE_TYPE_EFFET == 'multcib':
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            COUNT = data_dict["multicibles"]["count"]
+            COUNT = int(COUNT) + 1
+            data_dict["multicibles"]["count"] = COUNT
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+        data = get_data(CHEMIN_ODS)
+        if COUNT == 1:
+            MULTICIBLES = data['Combat'][34][1]
+            if MULTICIBLES != 0:
+                CONVERT_DEPENSE_EP = (int(DEPENSE_EP) * 1) - int(DEPENSE_EP)
+                CONVERT_DEPENSE_ES = (int(DEPENSE_ES) * 1) - int(DEPENSE_ES)
+                with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                    data_dict = json.load(json_data)
+                    EP = data_dict["attributs"]["EP_fin"]
+                    ES = data_dict["attributs"]["ES_fin"]
+                    CONVERT_EP =  int(EP) + int(CONVERT_DEPENSE_EP)
+                    CONVERT_ES = int(ES) + int(CONVERT_DEPENSE_ES)
+                    COUNT = int(COUNT) + 1
+                    data_dict["attributs"]["EP_fin"] = CONVERT_EP
+                    data_dict["attributs"]["ES_fin"] = CONVERT_ES
+                    data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                    fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                    fichier.write(data_str)
+                    fichier.close()
+        elif COUNT == 2:
+            MULTICIBLES = data['Combat'][35][1]
+            if MULTICIBLES != 0:
+                CONVERT_DEPENSE_EP = (int(DEPENSE_EP) * 2) - int(DEPENSE_EP)
+                CONVERT_DEPENSE_ES = (int(DEPENSE_ES) * 2) - int(DEPENSE_ES)
+                with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                    data_dict = json.load(json_data)
+                    EP = data_dict["attributs"]["EP_fin"]
+                    ES = data_dict["attributs"]["ES_fin"]
+                    CONVERT_EP =  int(EP) + int(CONVERT_DEPENSE_EP)
+                    CONVERT_ES = int(ES) + int(CONVERT_DEPENSE_ES)
+                    COUNT = int(COUNT) + 1
+                    data_dict["attributs"]["EP_fin"] = CONVERT_EP
+                    data_dict["attributs"]["ES_fin"] = CONVERT_ES
+                    data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                    fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                    fichier.write(data_str)
+                    fichier.close()
+        elif COUNT == 3:
+            MULTICIBLES = data['Combat'][36][1]
+            if MULTICIBLES != 0:
+                CONVERT_DEPENSE_EP = (int(DEPENSE_EP) * 3) - int(DEPENSE_EP)
+                CONVERT_DEPENSE_ES = (int(DEPENSE_ES) * 3) - int(DEPENSE_ES)
+                with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                    data_dict = json.load(json_data)
+                    EP = data_dict["attributs"]["EP_fin"]
+                    ES = data_dict["attributs"]["ES_fin"]
+                    CONVERT_EP =  int(EP) + int(CONVERT_DEPENSE_EP)
+                    CONVERT_ES = int(ES) + int(CONVERT_DEPENSE_ES)
+                    COUNT = int(COUNT) + 1
+                    data_dict["attributs"]["EP_fin"] = CONVERT_EP
+                    data_dict["attributs"]["ES_fin"] = CONVERT_ES
+                    data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                    fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                    fichier.write(data_str)
+                    fichier.close()
+        elif COUNT == 4:
+            MULTICIBLES = data['Combat'][37][1]
+            if MULTICIBLES != 0:
+                CONVERT_DEPENSE_EP = (int(DEPENSE_EP) * 4) - int(DEPENSE_EP)
+                CONVERT_DEPENSE_ES = (int(DEPENSE_ES) * 4) - int(DEPENSE_ES)
+                with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+                    data_dict = json.load(json_data)
+                    EP = data_dict["attributs"]["EP_fin"]
+                    ES = data_dict["attributs"]["ES_fin"]
+                    CONVERT_EP =  int(EP) + int(CONVERT_DEPENSE_EP)
+                    CONVERT_ES = int(ES) + int(CONVERT_DEPENSE_ES)
+                    COUNT = int(COUNT) + 1
+                    data_dict["attributs"]["EP_fin"] = CONVERT_EP
+                    data_dict["attributs"]["ES_fin"] = CONVERT_ES
+                    data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                    fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                    fichier.write(data_str)
+                    fichier.close()
+
 def techniques_defensives():
     def print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
@@ -40,7 +125,7 @@ def techniques_defensives():
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
         print('\n')
 
-    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA):
+    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             POSITIF = data_dict["phase_defensive"]["positif"]
@@ -51,6 +136,7 @@ def techniques_defensives():
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
             EP = data_dict["attributs"]["EP_fin"]
             ES = data_dict["attributs"]["ES_fin"]
+            CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
             POSITIF = int(POSITIF) + int(EFFET)
             TOTAL_DEFENDU = int(POSITIF)
             if int(TOTAL_DEFENDU) < 0 :
@@ -61,6 +147,7 @@ def techniques_defensives():
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
+            optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES)
             data_dict["phase_defensive"]["positif"] = POSITIF
             data_dict["phase_defensive"]["negatif"] = NEGATIF
             data_dict["synthese"]["total_defendu"] = TOTAL_DEFENDU
@@ -85,9 +172,10 @@ def techniques_defensives():
         DEPENSE_PV = data['Liste_techniques'][POSITION][8]
         DESCRIPTION = data['Liste_techniques'][POSITION][9]
         COUT_PA = data['Liste_techniques'][POSITION][12]
+        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
         print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
 EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA)
+        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET)
 
 
     data = get_data(CHEMIN_ODS)
@@ -135,7 +223,7 @@ def techniques_offensives():
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
         print('\n')
 
-    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS):
+    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             POSITIF = data_dict["phase_offensive"]["positif"]
@@ -153,6 +241,7 @@ def techniques_offensives():
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
+            optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES)
             data_dict["phase_offensive"]["positif"] = POSITIF
             data_dict["phase_offensive"]["negatif"] = NEGATIF
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
@@ -176,9 +265,10 @@ def techniques_offensives():
         DESCRIPTION = data['Liste_techniques'][POSITION][9]
         BONUS = data['Liste_techniques'][POSITION][10]
         COUT_PA = data['Liste_techniques'][POSITION][12]
+        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
         print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS)
+        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET)
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][8]
@@ -244,6 +334,7 @@ def check_second_liberation_on():
             NEGATIF_OFFENSIF = data_dict["phase_offensive"]["negatif"]
             EP_DEPENSES = data_dict["attributs"]["EP_fin"]
             ES_DEPENSES = data_dict["attributs"]["ES_fin"]
+            optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES)
             # intégrer entrave
             if TYPE_MAIN == 'att' or TYPE_MAIN == 'boostof':
                 NEGATIF_OFFENSIF = int(NEGATIF_OFFENSIF) + int(VALEUR)
