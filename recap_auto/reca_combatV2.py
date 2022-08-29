@@ -580,14 +580,18 @@ def valeur_negatives_positives_somme():
 def combo_somme_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
-        COMBO_EP_DEBUT = data_dict["combo"]["combo_EP_debut"]
-        COMBO_ES_DEBUT = data_dict["combo"]["combo_ES_debut"]
-        COMBO_EP_FIN = data_dict["combo"]["combo_EP_fin"]
-        COMBO_ES_FIN = data_dict["combo"]["combo_ES_fin"]
-        COMBO_EP = int(COMBO_EP_DEBUT) + int(COMBO_EP_FIN)
-        COMBO_ES = int(COMBO_ES_DEBUT) + int(COMBO_ES_FIN)
-        print('[b][color=#c83737]Combo EP : ' + str(COMBO_EP) + '[/color][/b]')
-        print('[b][color=#2a4cbc]Combo ES : ' + str(COMBO_ES) + '[/color][/b][/spoiler][/hide]')
+        EP_DEBUT = data_dict["combo"]["combo_EP_debut"]
+        ES_DEBUT = data_dict["combo"]["combo_ES_debut"]
+        EP_FIN = data_dict["combo"]["combo_EP_fin"]
+        ES_FIN = data_dict["combo"]["combo_ES_fin"]
+        SOMME_EP = int(EP_DEBUT) + int(EP_FIN)
+        SOMME_ES = int(ES_DEBUT) + int(ES_FIN)
+        data_dict["combo"]["combo_EP_fin"] = SOMME_EP
+        data_dict["combo"]["combo_ES_fin"] = SOMME_ES
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 def aptitudes(mode):
     def id_aptitude(ID,RANG,mode):
@@ -702,6 +706,19 @@ def calcul_PA_bonus(PA_FIN):
         PA_FIN = 3
     return PA_FIN
 
+def calcul_combo(DEPENSE_EP,DEPENSE_ES):
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        BASE_COMBO_EP = data_dict["combo"]["combo_EP_fin"]
+        BASE_COMBO_ES = data_dict["combo"]["combo_ES_fin"]
+        SOMME_EP = int(BASE_COMBO_EP) + int(DEPENSE_EP)
+        SOMME_ES = int(BASE_COMBO_ES) + int(DEPENSE_ES)
+        data_dict["combo"]["combo_EP_fin"] = SOMME_EP
+        data_dict["combo"]["combo_ES_fin"] = SOMME_ES
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
