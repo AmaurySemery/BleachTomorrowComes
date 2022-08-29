@@ -121,9 +121,9 @@ def techniques_defensives():
             print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['+str(TYPE)+']')
         print('[u]Effets :[/u] '+str(EFFET))
         if DEPENSE_PV == 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES')
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES ' +str(COUT_PA) + ' PA')
         if DEPENSE_PV != 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV')
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV ' +str(COUT_PA) + ' PA')
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
         print('\n')
 
@@ -319,9 +319,9 @@ def techniques_offensives():
             print('['+str(BRANCHE_PRINCIPALE_TECH)+'] ['+str(TYPE)+']')
         print('[u]Effets :[/u] '+str(EFFET))
         if DEPENSE_PV == 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES')
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES ' +str(COUT_PA) + ' PA')
         if DEPENSE_PV != 0:
-            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV')
+            print('[u]Dépense :[/u] '+str(DEPENSE_EP)+' EP & ' +str(DEPENSE_ES)+' ES & '+ str(DEPENSE_PV) + ' PV ' +str(COUT_PA) + ' PA')
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
         print('\n')
 
@@ -415,6 +415,7 @@ def first_liberation():
         pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 1[/b]')
+        print('[u]Dépense :[/u] '+str(COUT_PA)+' PA')
         COUT_PA = data['Sysco'][11][8]
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
@@ -740,6 +741,30 @@ def calcul_combo_ES(DEPENSE_ES):
         SOMME_ES = int(BASE_COMBO_ES) + int(DEPENSE_ES)
     return SOMME_ES
 
+def calcul_EP_fin():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        EP_OFF = data_dict["phase_defensive"]["EP_depenses"]
+        EP_DEF = data_dict["phase_offensive"]["EP_depenses"]
+        SOMME_EP = int(EP_OFF) + int(EP_DEF)
+    return SOMME_EP
+
+def calcul_ES_fin():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        ES_OFF = data_dict["phase_defensive"]["ES_depenses"]
+        ES_DEF = data_dict["phase_offensive"]["ES_depenses"]
+        SOMME_ES = int(ES_OFF) + int(ES_DEF)
+    return SOMME_ES
+
+def calcul_PV_fin():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        TOTAL_SUBI = data_dict["synthese"]["total_subi"]
+        PA_FIN = data_dict["attributs"]["PA_restants"]
+        PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI)
+    return PV_FIN
+
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
@@ -850,16 +875,9 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     second_liberation(mode)
     techniques_offensives()
 
-    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
-        data_dict = json.load(json_data)
-        TOTAL_SUBI = data_dict["synthese"]["total_subi"]
-        EP_FIN = data_dict["attributs"]["EP_fin"]
-        ES_FIN = data_dict["attributs"]["ES_fin"]
-        PA_FIN = data_dict["attributs"]["PA_restants"]
-
-    PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI)
-    EP_FIN = int(EP_DEBUT) - int(EP_FIN)
-    ES_FIN = int(ES_DEBUT) - int(ES_FIN)
+    EP_FIN = calcul_EP_fin()
+    ES_FIN = calcul_ES_fin()
+    PV_FIN = calcul_PV_fin()
 
     print('[/list]')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u]')
@@ -880,4 +898,4 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
 
     combo_somme_fin()
 
-    clean_json_combat()
+    # clean_json_combat()
