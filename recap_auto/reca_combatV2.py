@@ -415,8 +415,8 @@ def first_liberation():
         pass
     elif ETAT == 1:
         print('[*][b]Activation libération niveau 1[/b]')
-        print('[u]Dépense :[/u] '+str(COUT_PA)+' PA')
         COUT_PA = data['Sysco'][11][8]
+        print('[u]Dépense :[/u] '+str(COUT_PA)+' PA')
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
@@ -431,7 +431,7 @@ def first_liberation():
 
 def check_maintien():
     data = get_data(CHEMIN_ODS)
-    ETAT_SECOND_LIBERATION = data['Combat'][26][1]
+    ETAT_SECOND_LIBERATION = data['Combat'][27][1]
     VALUE_SECOND_LIBERATION = data['Liste_techniques'][20][5]
     TYPE_SECOND_LIBERATION = data['Liste_techniques'][20][4]
     TEXT_MAINTENU = '[*][b]Maintenu :[/b] '
@@ -443,7 +443,7 @@ def check_maintien():
 
 def second_liberation(mode):
     data = get_data(CHEMIN_ODS)
-    ETAT = data['Combat'][26][1]
+    ETAT = data['Combat'][27][1]
     COUT_PA = data['Sysco'][11][10]
     COUT_EP = data['Sysco'][16][10]
     COUT_ES = data['Sysco'][17][10]
@@ -744,17 +744,19 @@ def calcul_combo_ES(DEPENSE_ES):
 def calcul_EP_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
+        EP_DEBUT = data_dict["attributs"]["EP_debut"]
         EP_OFF = data_dict["phase_defensive"]["EP_depenses"]
         EP_DEF = data_dict["phase_offensive"]["EP_depenses"]
-        SOMME_EP = int(EP_OFF) + int(EP_DEF)
+        SOMME_EP = int(ES_DEBUT) - (int(EP_OFF) + int(EP_DEF))
     return SOMME_EP
 
 def calcul_ES_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
+        ES_DEBUT = data_dict["attributs"]["ES_debut"]
         ES_OFF = data_dict["phase_defensive"]["ES_depenses"]
         ES_DEF = data_dict["phase_offensive"]["ES_depenses"]
-        SOMME_ES = int(ES_OFF) + int(ES_DEF)
+        SOMME_ES = int(ES_DEBUT) - (int(ES_OFF) + int(ES_DEF))
     return SOMME_ES
 
 def calcul_PV_fin():
@@ -764,6 +766,12 @@ def calcul_PV_fin():
         PA_FIN = data_dict["attributs"]["PA_restants"]
         PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI)
     return PV_FIN
+
+def calcul_PA_fin():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        PA_FIN = data_dict["attributs"]["PA_restants"]
+    return PA_FIN
 
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -817,16 +825,6 @@ if __name__=='__main__':
     maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
 MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
 
-    TOTAL_DEFENDU = 0
-    TOTAL_SUBI = 0
-    NEGATIF_SOMME_FIN = 0
-    POSITIF_SOMME_FIN = 0
-    PV_FIN = 0
-    EP_FIN = 0
-    ES_FIN = 0
-    PA_FIN = 0
-    COMBO_EP_FIN = 0
-    COMBO_ES_FIN = 0
 
     print('[hide][spoiler="Tour '+ str(TOUR) + '"][h3][color=#929291]Stats de[/color] début de tour[/h3]')
     print('\n')
@@ -843,8 +841,6 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('\n')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u][list]')
 
-    mode = 'defensif'
-    aptitudes(mode)
     check_maintien()
 
     print('[*][b]Valeurs négatives :[/b] ' + str(NEGATIF_SOMME_DEBUT))
@@ -852,6 +848,9 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[/list][u][b][color=#a2783c]Techniques défensives :[/color][/b][/u]')
     print('[list]')
 
+
+    mode = 'defensif'
+    aptitudes(mode)
     second_liberation(mode)
     techniques_defensives()
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -875,10 +874,6 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     second_liberation(mode)
     techniques_offensives()
 
-    EP_FIN = calcul_EP_fin()
-    ES_FIN = calcul_ES_fin()
-    PV_FIN = calcul_PV_fin()
-
     print('[/list]')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u]')
 
@@ -886,6 +881,12 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
 
     print('[h3][color=#929291]Stats de[/color] fin de tour[/h3]')
     print('\n')
+
+    EP_FIN = calcul_EP_fin()
+    ES_FIN = calcul_ES_fin()
+    PV_FIN = calcul_PV_fin()
+    PA_FIN = calcul_PA_fin()
+
     print('[b][color=#92d050]Santé : [color=#f9f9f9]' + str(PV_FIN) + '[/color]/' + str(PV_TOTAL) + '[/color][/b]')
     print('[b][color=#c83737]Énergie Physique : [color=#f9f9f9]' + str(EP_FIN) + '[/color]/' + str(EP_TOTAL) + '[/color][/b]')
     print('[b][color=#2a4cbc]Énergie Spirituelle : [color=#f9f9f9]' + str(ES_FIN) + '[/color]/' + str(ES_TOTAL) + '[/color][/b]')
@@ -898,4 +899,4 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
 
     combo_somme_fin()
 
-    # clean_json_combat()
+    clean_json_combat()

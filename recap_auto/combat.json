@@ -3,28 +3,28 @@
         "PV_total": 1500,
         "EP_total": 1000,
         "ES_total": 1100,
-        "PV_debut": 1500,
-        "EP_debut": 1000,
-        "ES_debut": 1100,
-        "PA_debut": 9,
+        "PV_debut": 900,
+        "EP_debut": 675,
+        "ES_debut": 675,
+        "PA_debut": 18,
         "PV_fin": 0,
         "EP_fin": 0,
         "ES_fin": 0,
-        "PA_depenses": 24,
-        "PA_restants": -15
+        "PA_depenses": 0,
+        "PA_restants": 0
     },
     "phase_defensive": {
         "maintenu": 0,
-        "negatif": 500,
-        "EP_depenses": 150,
-        "ES_depenses": 150,
-        "positif": 200
+        "negatif": 0,
+        "EP_depenses": 0,
+        "ES_depenses": 0,
+        "positif": 0
     },
     "phase_offensive": {
-        "negatif": 600,
+        "negatif": 0,
         "positif": 0,
-        "EP_depenses": 225,
-        "ES_depenses": 75,
+        "EP_depenses": 0,
+        "ES_depenses": 0,
         "guerison": 0,
         "entrave": 0,
         "immobilisation": 0,
@@ -32,14 +32,14 @@
         "don_rei": 0
     },
     "synthese": {
-        "total_defendu": 200,
-        "total_subi": 300
+        "total_defendu": 0,
+        "total_subi": 0
     },
     "combo": {
         "combo_EP_debut": 0,
         "combo_ES_debut": 0,
-        "combo_EP_fin": 375,
-        "combo_ES_fin": 225
+        "combo_EP_fin": 0,
+        "combo_ES_fin": 0
     },
     "multicibles": {
         "count": 0
