@@ -156,7 +156,10 @@ def techniques_defensives():
             TOTAL_DEFENDU = int(POSITIF)
             if int(TOTAL_DEFENDU) < 0 :
                 TOTAL_DEFENDU = 0
-            TOTAL_SUBI = int(POSITIF) - int(DEPENSE_PV) - int(NEGATIF)
+            if NEGATIF <  POSITIF:
+                TOTAL_SUBI = 0
+            if NEGATIF >  POSITIF:
+                TOTAL_SUBI = int(POSITIF) - int(NEGATIF)
             TOTAL_SUBI = abs(TOTAL_SUBI)
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
@@ -168,6 +171,7 @@ def techniques_defensives():
             data_dict["combo"]["combo_ES_fin"] = COMBO_ES
             data_dict["phase_defensive"]["positif"] = POSITIF
             data_dict["phase_defensive"]["negatif"] = NEGATIF
+            data_dict["phase_defensive"]["sacrifice"] = DEPENSE_PV
             data_dict["synthese"]["total_defendu"] = TOTAL_DEFENDU
             data_dict["synthese"]["total_subi"] = TOTAL_SUBI
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
@@ -365,8 +369,6 @@ def techniques_offensives():
             PA_RESTANTS = data_dict["attributs"]["PA_restants"]
             EP = data_dict["phase_offensive"]["EP_depenses"]
             ES = data_dict["phase_offensive"]["ES_depenses"]
-            TOTAL_SUBI = data_dict["synthese"]["total_subi"]
-            TOTAL_SUBI = int(TOTAL_SUBI) + int(DEPENSE_PV)
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
@@ -375,6 +377,7 @@ def techniques_offensives():
             COMBO_ES = calcul_combo_ES(DEPENSE_ES)
             data_dict["combo"]["combo_EP_fin"] = COMBO_EP
             data_dict["combo"]["combo_ES_fin"] = COMBO_ES
+            data_dict["phase_offensive"]["sacrifice"] = DEPENSE_PV
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
             data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_dict["phase_offensive"]["EP_depenses"] = EP_DEPENSES
@@ -812,12 +815,28 @@ def calcul_ES_fin():
         SOMME_ES = int(ES_DEBUT) - (int(ES_OFF) + int(ES_DEF))
     return SOMME_ES
 
+def calcul_subi_phase_defensive():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        TOTAL_SUBI = data_dict["synthese"]["total_subi"]
+        SACRIFICE = data_dict["phase_defensive"]["sacrifice"]
+        SOMME_SUBI = int(TOTAL_SUBI) + int(SACRIFICE)
+    return SOMME_SUBI
+
+def calcul_defendu_phase_defensive():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
+    return TOTAL_DEFENDU
+
 def calcul_PV_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
         TOTAL_SUBI = data_dict["synthese"]["total_subi"]
+        SACRIFICE_DEFENSIF = data_dict["phase_defensive"]["sacrifice"]
+        SACRIFICE_OFFENSIF = data_dict["phase_offensive"]["sacrifice"]
         PV_DEBUT = data_dict["attributs"]["PV_debut"]
-        PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI)
+        PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI) - int(SACRIFICE_DEFENSIF) - int(SACRIFICE_OFFENSIF)
     return PV_FIN
 
 def calcul_PA_fin():
@@ -852,6 +871,8 @@ def clean_json_combat():
         data_dict["phase_defensive"]["ES_depenses"] = 0
         data_dict["phase_offensive"]["EP_depenses"] = 0
         data_dict["phase_offensive"]["ES_depenses"] = 0
+        data_dict["phase_defensive"]["sacrifice"] = 0
+        data_dict["phase_offensive"]["sacrifice"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
@@ -901,17 +922,13 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     print('[/list][u][b][color=#a2783c]Techniques défensives :[/color][/b][/u]')
     print('[list]')
 
-
     mode = 'defensif'
     second_liberation(mode)
     techniques_defensives()
     aptitudes(mode)
 
-    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
-        data_dict = json.load(json_data)
-        TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
-        TOTAL_SUBI = data_dict["synthese"]["total_subi"]
-
+    TOTAL_DEFENDU = calcul_defendu_phase_defensive()
+    TOTAL_SUBI = calcul_subi_phase_defensive()
 
     print('[/list]')
     print('[u][b][color=#a2783c]Résumé phase défensive :[/color][/b][/u]')

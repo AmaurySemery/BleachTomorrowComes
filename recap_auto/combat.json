@@ -16,6 +16,7 @@
     "phase_defensive": {
         "maintenu": 0,
         "negatif": 0,
+        "sacrifice": 0,
         "EP_depenses": 0,
         "ES_depenses": 0,
         "positif": 0
@@ -23,6 +24,7 @@
     "phase_offensive": {
         "negatif": 0,
         "positif": 0,
+        "sacrifice": 0,
         "EP_depenses": 0,
         "ES_depenses": 0,
         "guerison": 0,
