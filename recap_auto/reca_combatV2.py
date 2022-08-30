@@ -162,7 +162,6 @@ def techniques_defensives():
                 TOTAL_SUBI = int(POSITIF) - int(NEGATIF)
             TOTAL_SUBI = abs(TOTAL_SUBI)
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
-            PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
             COMBO_EP = calcul_combo_EP(DEPENSE_EP)
@@ -175,7 +174,6 @@ def techniques_defensives():
             data_dict["synthese"]["total_defendu"] = TOTAL_DEFENDU
             data_dict["synthese"]["total_subi"] = TOTAL_SUBI
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
-            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_dict["phase_defensive"]["EP_depenses"] = EP_DEPENSES
             data_dict["phase_defensive"]["ES_depenses"] = ES_DEPENSES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
@@ -370,7 +368,6 @@ def techniques_offensives():
             EP = data_dict["phase_offensive"]["EP_depenses"]
             ES = data_dict["phase_offensive"]["ES_depenses"]
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
-            PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
             COMBO_EP = calcul_combo_EP(DEPENSE_EP)
@@ -379,7 +376,6 @@ def techniques_offensives():
             data_dict["combo"]["combo_ES_fin"] = COMBO_ES
             data_dict["phase_offensive"]["sacrifice"] = DEPENSE_PV
             data_dict["attributs"]["PA_depenses"] = PA_DEPENSES
-            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_dict["phase_offensive"]["EP_depenses"] = EP_DEPENSES
             data_dict["phase_offensive"]["ES_depenses"] = ES_DEPENSES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
@@ -571,10 +567,8 @@ def second_liberation(mode):
                     ES_DEPENSES = data_dict["phase_defensive"]["ES_depenses"]
                     EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
                     ES_DEPENSES = int(ES_DEPENSES) + int(COUT_ES)
-                    COMBO_EP = calcul_combo_EP(EP_DEPENSES)
-                    COMBO_ES = calcul_combo_ES(ES_DEPENSES)
-                    data_dict["combo"]["combo_EP_fin"] = COMBO_EP
-                    data_dict["combo"]["combo_ES_fin"] = COMBO_ES
+                    data_dict["phase_defensive"]["EP_depenses"] = EP_DEPENSES
+                    data_dict["phase_defensive"]["ES_depenses"] = ES_DEPENSES
                     data_str = json.dumps(data_dict, sort_keys=False, indent=4)
                     fichier = open(CHEMIN_COMBAT_JSON,'wt')
                     fichier.write(data_str)
@@ -600,10 +594,8 @@ def second_liberation(mode):
                     ES_DEPENSES = data_dict["phase_offensive"]["ES_depenses"]
                     EP_DEPENSES = int(EP_DEPENSES) + int(COUT_EP)
                     ES_DEPENSES = int(ES_DEPENSES) + int(COUT_ES)
-                    COMBO_EP = calcul_combo_EP(EP_DEPENSES)
-                    COMBO_ES = calcul_combo_ES(ES_DEPENSES)
-                    data_dict["combo"]["combo_EP_fin"] = COMBO_EP
-                    data_dict["combo"]["combo_ES_fin"] = COMBO_ES
+                    data_dict["phase_offensive"]["EP_depenses"] = EP_DEPENSES
+                    data_dict["phase_offensive"]["ES_depenses"] = ES_DEPENSES
                     data_str = json.dumps(data_dict, sort_keys=False, indent=4)
                     fichier = open(CHEMIN_COMBAT_JSON,'wt')
                     fichier.write(data_str)
@@ -842,7 +834,9 @@ def calcul_PV_fin():
 def calcul_PA_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
-        PA_FIN = data_dict["attributs"]["PA_restants"]
+        PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
+        PA_RESTANTS = data_dict["attributs"]["PA_restants"]
+        PA_FIN = int(PA_RESTANTS) - int(PA_DEPENSES)
     return PA_FIN
 
 def clean_json_combat():
