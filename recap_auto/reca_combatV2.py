@@ -112,6 +112,19 @@ def optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES):
                     fichier.close()
 
 def techniques_defensives():
+    def technique_none():
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            PA_DEBUT = data_dict["attributs"]["PA_debut"]
+            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
+            PA_RESTANTS = data_dict["attributs"]["PA_restants"]
+            PA_RESTANTS = int(PA_DEBUT) - int(PA_RESTANTS)
+            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
     def print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
         print('[*][b][Niveau '+str(NIV_TECH)+'] '+str(NOM_TECH)+'[/b]')
@@ -147,6 +160,7 @@ def techniques_defensives():
             TOTAL_SUBI = abs(TOTAL_SUBI)
             PA_DEPENSES = int(PA_DEPENSES) + int(COUT_PA)
             PA_RESTANTS = int(PA_DEBUT) - int(PA_DEPENSES)
+            print(PA_RESTANTS)
             EP_DEPENSES = int(EP) + int(DEPENSE_EP)
             ES_DEPENSES = int(ES) + int(DEPENSE_ES)
             COMBO_EP = calcul_combo_EP(DEPENSE_EP)
@@ -200,6 +214,7 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     b = 0
     if NOMBRE_TECH == 0:
         full_encaisse()
+        technique_none()
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][0]
         ID_TECH = data['Combat'][a][1]
@@ -310,6 +325,22 @@ def don_rei(EFFET,CODE_TYPE_EFFET):
             fichier.close()
 
 def techniques_offensives():
+    def technique_none():
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            PA_DEBUT = data_dict["attributs"]["PA_debut"]
+            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
+            PA_RESTANTS = data_dict["attributs"]["PA_restants"]
+            if PA_RESTANTS != 0:
+                pass
+            if PA_RESTANTS == 0:
+                PA_RESTANTS = int(PA_DEBUT) - int(PA_RESTANTS)
+            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
     def print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
         print('[*][b][Niveau '+str(NIV_TECH)+'] '+str(NOM_TECH)+'[/b]')
@@ -383,6 +414,9 @@ def techniques_offensives():
     NOMBRE_TECH = data['Combat'][0][8]
     a = 2
     b = 0
+    if NOMBRE_TECH == 0:
+        technique_none()
+
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][7]
         ID_TECH = data['Combat'][a][8]
@@ -447,6 +481,7 @@ def second_liberation(mode):
     COUT_PA = data['Sysco'][11][10]
     COUT_EP = data['Sysco'][16][10]
     COUT_ES = data['Sysco'][17][10]
+    TYPE_SECOND_LIBERATION = data['Liste_techniques'][20][4]
     EFFET = data['Liste_techniques'][20][5]
     CODE_TYPE_EFFET = data['Liste_techniques'][20][14]
     if ETAT == 0:
@@ -455,6 +490,7 @@ def second_liberation(mode):
         if mode == 'defensif':
             if CODE_TYPE_EFFET == 'def' or CODE_TYPE_EFFET == 'boost_def':
                 print('[*][b]Activation libération niveau 2[/b]')
+                print('[u]Effets :[/u] '+str(EFFET) + ' (' + str(TYPE_SECOND_LIBERATION) + ')')
                 print('[u]Dépense :[/u] '+str(COUT_PA)+' PA & '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
                 print('\n')
                 with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -488,6 +524,7 @@ def second_liberation(mode):
         if mode == 'offensif':
             if CODE_TYPE_EFFET != 'def' or CODE_TYPE_EFFET != 'boost_def':
                 print('[*][b]Activation libération niveau 2[/b]')
+                print('[u]Effets :[/u] '+str(EFFET) + ' (' + str(TYPE_SECOND_LIBERATION) + ')')
                 print('[u]Dépense :[/u] '+str(COUT_PA)+' PA & '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
                 print('\n')
                 with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -523,6 +560,7 @@ def second_liberation(mode):
         if mode == 'defensif':
             if CODE_TYPE_EFFET == 'def' or CODE_TYPE_EFFET == 'boost_def':
                 print('[*][b]Libération niveau 2 maintenue[/b]')
+                print('[u]Effets :[/u] '+str(EFFET) + ' (' + str(TYPE_SECOND_LIBERATION) + ')')
                 print('[u]Dépense :[/u] '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
                 print('\n')
                 with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -551,6 +589,7 @@ def second_liberation(mode):
         if mode == 'offensif':
             if CODE_TYPE_EFFET != 'def' or CODE_TYPE_EFFET != 'boost_def':
                 print('[*][b]Libération niveau 2 maintenue[/b]')
+                print('[u]Effets :[/u] '+str(EFFET) + ' (' + str(TYPE_SECOND_LIBERATION) + ')')
                 print('[u]Dépense :[/u] '+str(COUT_EP)+' EP & '+str(COUT_ES)+' ES')
                 print('\n')
                 with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -763,7 +802,7 @@ def calcul_PV_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
         TOTAL_SUBI = data_dict["synthese"]["total_subi"]
-        PA_FIN = data_dict["attributs"]["PA_restants"]
+        PV_DEBUT = data_dict["attributs"]["PV_debut"]
         PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI)
     return PV_FIN
 
