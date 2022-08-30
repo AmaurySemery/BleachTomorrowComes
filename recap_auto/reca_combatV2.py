@@ -718,8 +718,14 @@ def aptitudes(mode):
             with open(CHEMIN_COMBAT_JSON,'r') as json_data:
                 data_dict = json.load(json_data)
                 POSITIF = data_dict["phase_defensive"]["positif"]
+                NEGATIF = data_dict["phase_defensive"]["negatif"]
                 POSITIF = int(POSITIF) + int(VALUE)
-                data_dict["phase_defensive"]["positif"] = POSITIF
+                TOTAL_DEFENDU = int(POSITIF)
+                TOTAL_SUBI = int(NEGATIF) - int(POSITIF)
+                if TOTAL_SUBI < 0:
+                    TOTAL_SUBI = 0
+                data_dict["synthese"]["total_defendu"] = TOTAL_DEFENDU
+                data_dict["synthese"]["total_subi"] = TOTAL_SUBI
                 data_str = json.dumps(data_dict, sort_keys=False, indent=4)
                 fichier = open(CHEMIN_COMBAT_JSON,'wt')
                 fichier.write(data_str)
