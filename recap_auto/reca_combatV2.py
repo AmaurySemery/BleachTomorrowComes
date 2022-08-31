@@ -619,6 +619,9 @@ def valeur_negatives_positives_somme():
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
         DRAIN = data_dict["phase_offensive"]["drain"]
         DON_REI = data_dict["phase_offensive"]["don_rei"]
+        SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
+        MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        MULTICIBLES_IMPARABLES = data_dict["phase_offensive"]["degats_multicibles_imparables"]
         TEXT_VALEURS_NEGATIVES = '[list][*][b]Valeurs négatives :[/b] '+ str(NEGATIF) + ' dommages '
         TEXT_VALEURS_POSITIVES = '[*][b]Valeurs positives :[/b] '+ str(POSITIF) + ' regen '
         if ENTRAVE != 0:
@@ -631,6 +634,12 @@ def valeur_negatives_positives_somme():
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON) + ' guerison '
         if DON_REI != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI) + ' don reiryoku '
+        if SACRIFICE != 0:
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
+        if MULTICIBLES != 0:
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
+        if MULTICIBLES_IMPARABLES != 0:
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(MULTICIBLES_IMPARABLES) + ' dommages multicibles imparables '
         print(TEXT_VALEURS_NEGATIVES)
         print(TEXT_VALEURS_POSITIVES)
         print('[/list]')
@@ -848,7 +857,7 @@ def lancement_combo():
         NEGATIF = data_dict["phase_offensive"]["negatif"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
         ECO_PA = data_dict["phase_offensive"]["PA_restants"]
-        DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles_imparables"]
         DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain"]
         NEGATIF_SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         data = get_data(CHEMIN_ODS)
@@ -922,6 +931,13 @@ def lancement_combo():
                     print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
             EP = 0
             ES = 0
+            data_dict["phase_offensive"]["entrave"] = ENTRAVE
+            data_dict["phase_offensive"]["negatif"] = NEGATIF
+            data_dict["phase_offensive"]["immobilisation"] = IMMOBILISATION
+            data_dict["phase_offensive"]["PA_restants"] = ECO_PA
+            data_dict["phase_offensive"]["degats_multicibles_imparables"] = DEGATS_MULTICIBLES
+            data_dict["phase_offensive"]["drain"] = DRAIN_IMPARABLE
+            data_dict["phase_offensive"]["sacrifice"] = NEGATIF_SACRIFICE
             data_dict["combo"]["combo_EP_fin"] = EP
             data_dict["combo"]["combo_ES_fin"] = ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
