@@ -1045,6 +1045,7 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     second_liberation(mode)
     techniques_offensives()
     aptitudes(mode)
+    lancement_combo()
 
     print('[/list]')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u]')
