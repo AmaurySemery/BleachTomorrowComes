@@ -839,6 +839,97 @@ def calcul_PA_fin():
         PA_FIN = int(PA_RESTANTS) - int(PA_DEPENSES)
     return PA_FIN
 
+def lancement_combo():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        EP = data_dict["combo"]["combo_EP_fin"]
+        ES = data_dict["combo"]["combo_ES_fin"]
+        ENTRAVE = data_dict["phase_offensive"]["entrave"]
+        NEGATIF = data_dict["phase_offensive"]["negatif"]
+        IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
+        ECO_PA = data_dict["phase_offensive"]["PA_restants"]
+        DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain"]
+        NEGATIF_SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
+        data = get_data(CHEMIN_ODS)
+        BONUS_1 = data['Sysco'][13][13]
+        BONUS_2 = data['Sysco'][13][14]
+        BONUS_3 = data['Sysco'][13][15]
+        BONUS_4 = data['Sysco'][13][16]
+        BONUS_5 = data['Sysco'][13][17]
+        BONUS_6 = data['Sysco'][13][18]
+        BONUS_7 = data['Sysco'][13][19]
+        MALUS_7 = data['Sysco'][14][19]
+        ETAT = data['Combat'][51][1]
+        ID = data['Combat'][51][2]
+        if ETAT == 1:
+            if ID == 1:
+                SEUIL_EP = 350
+                SEUIL_ES = 150
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    ENTRAVE = int(ENTRAVE) + int(BONUS_1)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_1)+ ' entrave)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 2:
+                SEUIL_EP = 250
+                SEUIL_ES = 250
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    NEGATIF = int(NEGATIF) + int(BONUS_2)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_2)+ ' dommages)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 3:
+                SEUIL_EP = 150
+                SEUIL_ES = 350
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    IMMOBILISATION = int(IMMOBILISATION) + int(BONUS_3)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_3)+ ' immobilisation)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 4:
+                SEUIL_EP = 450
+                SEUIL_ES = 250
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    ECO_PA = int(ECO_PA) + int(BONUS_4)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_4)+ ' économie PA)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 5:
+                SEUIL_EP = 350
+                SEUIL_ES = 350
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    DEGATS_MULTICIBLES = int(DEGATS_MULTICIBLES) + int(BONUS_5)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_5)+ ' dommages multicibles)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 6:
+                SEUIL_EP = 250
+                SEUIL_ES = 450
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    DRAIN_IMPARABLE = int(DRAIN_IMPARABLE) + int(BONUS_6)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_6)+ ' drain imparable)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            if ID == 7:
+                SEUIL_EP = 450
+                SEUIL_ES = 450
+                if EP > SEUIL_EP and ES > SEUIL_ES:
+                    NEGATIF = int(NEGATIF) + int(BONUS_7)
+                    NEGATIF_SACRIFICE = int(NEGATIF_SACRIFICE) + int(MALUS_7)
+                    print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_7)+ ' dommages & ' + str(MALUS_7) + ' sacrifiés)')
+                else:
+                    print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
+            EP = 0
+            ES = 0
+            data_dict["combo"]["combo_EP_fin"] = EP
+            data_dict["combo"]["combo_ES_fin"] = ES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
+
 def clean_json_combat():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
