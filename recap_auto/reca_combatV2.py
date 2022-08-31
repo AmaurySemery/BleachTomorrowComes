@@ -635,13 +635,13 @@ def valeur_negatives_positives_somme():
         if DON_REI != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI) + ' don reiryoku '
         if SACRIFICE != 0:
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
         if MULTICIBLES != 0:
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
         if DRAIN_IMPARABLE != 0:
             DRAIN_EP_ES = int(DRAIN_IMPARABLE) / 2
             DRAIN_EP_ES = int(DRAIN_EP_ES)
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DRAIN_IMPARABLE) + ' drain imparable ('+str(DRAIN_EP_ES) + ' EP & ' + str(DRAIN_EP_ES) + ' ES)'
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DRAIN_IMPARABLE) + ' drain imparable ('+str(DRAIN_EP_ES) + ' EP & ' + str(DRAIN_EP_ES) + ' ES)'
         print(TEXT_VALEURS_NEGATIVES)
         print(TEXT_VALEURS_POSITIVES)
         print('[/list]')
