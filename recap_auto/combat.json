@@ -11,7 +11,7 @@
         "EP_fin": 0,
         "ES_fin": 0,
         "PA_depenses": 0,
-        "PA_restants": 0
+        "PA_restants": 15
     },
     "phase_defensive": {
         "maintenu": 0,
@@ -38,8 +38,8 @@
         "total_subi": 0
     },
     "combo": {
-        "combo_EP_debut": 0,
-        "combo_ES_debut": 0,
+        "combo_EP_debut": 600,
+        "combo_ES_debut": 600,
         "combo_EP_fin": 0,
         "combo_ES_fin": 0
     },

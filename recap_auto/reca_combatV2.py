@@ -856,7 +856,7 @@ def lancement_combo():
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
         NEGATIF = data_dict["phase_offensive"]["negatif"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
-        ECO_PA = data_dict["phase_offensive"]["PA_restants"]
+        ECO_PA = data_dict["attributs"]["PA_restants"]
         DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles_imparables"]
         DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain"]
         NEGATIF_SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
@@ -934,7 +934,7 @@ def lancement_combo():
             data_dict["phase_offensive"]["entrave"] = ENTRAVE
             data_dict["phase_offensive"]["negatif"] = NEGATIF
             data_dict["phase_offensive"]["immobilisation"] = IMMOBILISATION
-            data_dict["phase_offensive"]["PA_restants"] = ECO_PA
+            data_dict["attributs"]["PA_restants"] = ECO_PA
             data_dict["phase_offensive"]["degats_multicibles_imparables"] = DEGATS_MULTICIBLES
             data_dict["phase_offensive"]["drain"] = DRAIN_IMPARABLE
             data_dict["phase_offensive"]["sacrifice"] = NEGATIF_SACRIFICE
