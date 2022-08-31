@@ -618,10 +618,10 @@ def valeur_negatives_positives_somme():
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
         DRAIN = data_dict["phase_offensive"]["drain"]
+        DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain_imparable"]
         DON_REI = data_dict["phase_offensive"]["don_rei"]
         SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
-        MULTICIBLES_IMPARABLES = data_dict["phase_offensive"]["degats_multicibles_imparables"]
         TEXT_VALEURS_NEGATIVES = '[list][*][b]Valeurs négatives :[/b] '+ str(NEGATIF) + ' dommages '
         TEXT_VALEURS_POSITIVES = '[*][b]Valeurs positives :[/b] '+ str(POSITIF) + ' regen '
         if ENTRAVE != 0:
@@ -638,8 +638,10 @@ def valeur_negatives_positives_somme():
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
         if MULTICIBLES != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
-        if MULTICIBLES_IMPARABLES != 0:
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(MULTICIBLES_IMPARABLES) + ' dommages multicibles imparables '
+        if DRAIN_IMPARABLE != 0:
+            DRAIN_EP_ES = int(DRAIN_IMPARABLE) / 2
+            DRAIN_EP_ES = int(DRAIN_EP_ES)
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DRAIN_IMPARABLE) + ' drain imparable ('+str(DRAIN_EP_ES) + ' EP & ' + str(DRAIN_EP_ES) + ' ES)'
         print(TEXT_VALEURS_NEGATIVES)
         print(TEXT_VALEURS_POSITIVES)
         print('[/list]')
@@ -851,14 +853,18 @@ def calcul_PA_fin():
 def lancement_combo():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
-        EP = data_dict["combo"]["combo_EP_fin"]
-        ES = data_dict["combo"]["combo_ES_fin"]
+        EP_DEBUT = data_dict["combo"]["combo_EP_debut"]
+        ES_DEBUT = data_dict["combo"]["combo_ES_debut"]
+        EP_FIN = data_dict["combo"]["combo_EP_fin"]
+        ES_FIN = data_dict["combo"]["combo_ES_fin"]
+        EP = int(EP_DEBUT) + int(EP_FIN)
+        ES = int(ES_DEBUT) + int(ES_FIN)
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
         NEGATIF = data_dict["phase_offensive"]["negatif"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
         ECO_PA = data_dict["attributs"]["PA_restants"]
-        DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles_imparables"]
-        DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain"]
+        DEGATS_MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain_imparable"]
         NEGATIF_SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         data = get_data(CHEMIN_ODS)
         BONUS_1 = data['Sysco'][13][13]
@@ -917,6 +923,7 @@ def lancement_combo():
                 SEUIL_ES = 450
                 if EP > SEUIL_EP and ES > SEUIL_ES:
                     DRAIN_IMPARABLE = int(DRAIN_IMPARABLE) + int(BONUS_6)
+                    DRAIN_IMPARABLE = int(DRAIN_IMPARABLE)
                     print('Déclenchement combo '+str(SEUIL_EP) + '-'+str(SEUIL_ES) + ' ('+str(BONUS_6)+ ' drain imparable)')
                 else:
                     print('JAUGES COMBO INSUFFISANTES ('+str(EP)+'/' + str(SEUIL_EP) +' EP combo & ' + str(ES) + '/' + str(SEUIL_ES)+' ES)')
@@ -935,11 +942,13 @@ def lancement_combo():
             data_dict["phase_offensive"]["negatif"] = NEGATIF
             data_dict["phase_offensive"]["immobilisation"] = IMMOBILISATION
             data_dict["attributs"]["PA_restants"] = ECO_PA
-            data_dict["phase_offensive"]["degats_multicibles_imparables"] = DEGATS_MULTICIBLES
-            data_dict["phase_offensive"]["drain"] = DRAIN_IMPARABLE
+            data_dict["phase_offensive"]["degats_multicibles"] = DEGATS_MULTICIBLES
+            data_dict["phase_offensive"]["drain_imparable"] = DRAIN_IMPARABLE
             data_dict["phase_offensive"]["sacrifice"] = NEGATIF_SACRIFICE
             data_dict["combo"]["combo_EP_fin"] = EP
             data_dict["combo"]["combo_ES_fin"] = ES
+            data_dict["combo"]["combo_EP_debut"] = EP
+            data_dict["combo"]["combo_ES_debut"] = ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -974,6 +983,8 @@ def clean_json_combat():
         data_dict["phase_offensive"]["ES_depenses"] = 0
         data_dict["phase_defensive"]["sacrifice"] = 0
         data_dict["phase_offensive"]["sacrifice"] = 0
+        data_dict["phase_offensive"]["degats_multicibles"] = 0
+        data_dict["phase_offensive"]["drain_imparable"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)

@@ -11,7 +11,7 @@
         "EP_fin": 0,
         "ES_fin": 0,
         "PA_depenses": 0,
-        "PA_restants": 15
+        "PA_restants": 0
     },
     "phase_defensive": {
         "maintenu": 0,
@@ -31,15 +31,17 @@
         "entrave": 0,
         "immobilisation": 0,
         "drain": 0,
-        "don_rei": 0
+        "don_rei": 0,
+        "degats_multicibles": 0,
+        "drain_imparable": 0
     },
     "synthese": {
         "total_defendu": 0,
         "total_subi": 0
     },
     "combo": {
-        "combo_EP_debut": 600,
-        "combo_ES_debut": 600,
+        "combo_EP_debut": 0,
+        "combo_ES_debut": 0,
         "combo_EP_fin": 0,
         "combo_ES_fin": 0
     },
