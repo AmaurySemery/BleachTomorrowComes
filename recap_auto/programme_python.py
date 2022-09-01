@@ -6,11 +6,9 @@ __file__ = 'programme_python.py'
 CHEMIN = os.path.dirname(os.path.realpath(__file__))
 CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
-CHEMIN_ODS = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/FT.ods'
-CHEMIN_COMBAT_JSON = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/combat.json'
+CHEMIN_ODS = str(CHEMIN_CONVERT) + '/Documents/python/BTC/recap_auto/FT.ods'
+CHEMIN_COMBAT_JSON = str(CHEMIN_CONVERT) + '/Documents/python/BTC/recap_auto/combat.json'
 
-CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
-CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
 # CHEMIN_SYSCO_JSON = '"E:/python/BleachTomorrowComes/recap_auto/sysco.json"'
 
 def maj_json_lancement(PV_DEBUT,PV_TOTAL,EP_DEBUT,EP_TOTAL,ES_DEBUT,ES_TOTAL,PA_DEBUT,COMBO_EP_DEBUT,COMBO_ES_DEBUT,
@@ -346,32 +344,26 @@ def techniques_offensives():
             DEFERLEMENT_SEUIL = (int(DEPENSE_EP) + int(DEPENSE_ES))
             if DEFERLEMENT_SEUIL <= 100:
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
-                print('[*][b][Déferlement Reiryoku][/b]')
-                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) +' reiryokus dépensés')
-                print('\n')
                 DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
+                print('[*][b][Déferlement Reiryoku][/b]')
+                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) +' reiryokus dépensés')
+                print('\n')
             if DEFERLEMENT_SEUIL > 100 and DEFERLEMENT_SEUIL <= 200:
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
-                print('[*][b][Déferlement Reiryoku][/b]')
-                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES)+ ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
-                print('\n')
                 DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
+                print('[*][b][Déferlement Reiryoku][/b]')
+                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_FINAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES)+ ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
+                print('\n')
             if DEFERLEMENT_SEUIL > 200:
                 print('[SEUIL REIRYOKU MAXIMUM DEPASSE POUR LE DEFERLEMENT REIRYOKU ('+str(DEFERLEMENT_SEUIL)+')]')
                 print('\n')
                 DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL)
                 DEPENSE_ES_FINAL = int(DEPENSE_ES_INITIAL)
                 DEFERLEMENT_DOMMAGES = 0
-            else:
-                DEFERLEMENT_DOMMAGES = 0
-                DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL)
-                DEPENSE_ES_FINAL = int(DEPENSE_ES_INITIAL)
-                DEFERLEMENT_DOMMAGES = 0
-                print('[ERREUR DEFERLEMENT REIRYOKU]')
             COMBO_EP = calcul_combo_EP(DEPENSE_EP_FINAL)
             COMBO_ES = calcul_combo_ES(DEPENSE_ES_FINAL)
             data_dict["combo"]["combo_EP_fin"] = COMBO_EP
@@ -1152,6 +1144,7 @@ def clean_json_combat():
         data_dict["phase_offensive"]["sacrifice"] = 0
         data_dict["phase_offensive"]["degats_multicibles"] = 0
         data_dict["phase_offensive"]["drain_imparable"] = 0
+        data_dict["phase_offensive"]["deferlement_reiryoku"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
@@ -1224,6 +1217,7 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     techniques_offensives()
     aptitudes(mode)
     lancement_combo()
+    specialites()
 
     print('[/list]')
     print('[u][b][color=#a2783c]Récapitulatif :[/color][/b][/u]')
