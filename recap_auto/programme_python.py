@@ -334,6 +334,56 @@ def don_rei(EFFET,CODE_TYPE_EFFET):
             fichier.close()
 
 def techniques_offensives():
+    def technique_deferlement_reiryoku():
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            DEFERLEMENT = data_dict["phase_offensive"]["deferlement_reiryoku"]
+            data = get_data(CHEMIN_ODS)
+            DEPENSE_EP = data['Combat'][10][8]
+            DEPENSE_ES = data['Combat'][10][9]
+            DEPENSE_EP_INITIAL = data_dict["phase_offensive"]["EP_depenses"]
+            DEPENSE_ES_INITIAL = data_dict["phase_offensive"]["ES_depenses"]
+            DEFERLEMENT_SEUIL = (int(DEPENSE_EP) + int(DEPENSE_ES))
+            if DEFERLEMENT_SEUIL <= 100:
+                DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
+                print('[*][b][Déferlement Reiryoku][/b]')
+                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) ' reiryokus dépensés')
+                print('\n')
+                DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
+                DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
+            if DEFERLEMENT_SEUIL > 100 and DEFERLEMENT_SEUIL <= 200:
+                DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
+                print('[*][b][Déferlement Reiryoku][/b]')
+                print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
+                print('\n')
+                DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
+                DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
+            if DEFERLEMENT_SEUIL > 200:
+                print('[SEUIL REIRYOKU MAXIMUM DEPASSE POUR LE DEFERLEMENT REIRYOKU ('+str(DEFERLEMENT_SEUIL)+')]')
+                print('\n')
+                DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL)
+                DEPENSE_ES_FINAL = int(DEPENSE_ES_INITIAL)
+                DEFERLEMENT_DOMMAGES = 0
+            else:
+                DEFERLEMENT_DOMMAGES = 0
+                DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL)
+                DEPENSE_ES_FINAL = int(DEPENSE_ES_INITIAL)
+                DEFERLEMENT_DOMMAGES = 0
+                print('[ERREUR DEFERLEMENT REIRYOKU]')
+            COMBO_EP = calcul_combo_EP(DEPENSE_EP_FINAL)
+            COMBO_ES = calcul_combo_ES(DEPENSE_ES_FINAL)
+            data_dict["combo"]["combo_EP_fin"] = COMBO_EP
+            data_dict["combo"]["combo_ES_fin"] = COMBO_ES
+            data_dict["phase_offensive"]["EP_depenses"] = DEPENSE_EP_FINAL
+            data_dict["phase_offensive"]["ES_depenses"] = DEPENSE_ES_FINAL
+            data_dict["phase_offensive"]["deferlement_reiryoku"] = DEFERLEMENT_DOMMAGES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
     def technique_none():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
@@ -418,8 +468,12 @@ def techniques_offensives():
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][8]
+    DEFERLEMENT_REIRYOKU = data['Combat'][10][7]
     a = 2
     b = 0
+    if DEFERLEMENT_REIRYOKU == 1:
+        technique_deferlement_reiryoku()
+
     if NOMBRE_TECH == 0:
         technique_none()
 
@@ -630,6 +684,7 @@ def valeur_negatives_positives_somme():
         DON_REI = data_dict["phase_offensive"]["don_rei"]
         SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        DEFERLEMENT_REIRYOKU = data_dict["phase_offensive"]["deferlement_reiryoku"]
         TEXT_VALEURS_NEGATIVES = '[list][*][b]Valeurs négatives :[/b] '+ str(NEGATIF) + ' dommages '
         TEXT_VALEURS_POSITIVES = '[*][b]Valeurs positives :[/b] '+ str(POSITIF) + ' regen '
         if ENTRAVE != 0:
@@ -646,6 +701,8 @@ def valeur_negatives_positives_somme():
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
         if MULTICIBLES != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
+        if DEFERLEMENT_REIRYOKU != 0:
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DEFERLEMENT_REIRYOKU) + ' dommages déferlement reiryoku '
         if DRAIN_IMPARABLE != 0:
             DRAIN_EP_ES = int(DRAIN_IMPARABLE) / 2
             DRAIN_EP_ES = int(DRAIN_EP_ES)
@@ -961,6 +1018,37 @@ def lancement_combo():
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
             fichier.close()
+
+def specialites():
+    data = get_data(CHEMIN_ODS)
+    GENERALES = data['Combat'][43][1]
+    GENERALES_ID = data['Combat'][43][2]
+    SHINIGAMI = data['Combat'][44][1]
+    SHINIGAMI_ID = data['Combat'][44][2]
+    HOLLOW_ARRANCAR = data['Combat'][45][1]
+    HOLLOW_ARRANCAR_ID = data['Combat'][45][2]
+    HOLLOW = data['Combat'][46][1]
+    HOLLOW_ID = data['Combat'][46][2]
+    ARRANCAR = data['Combat'][47][1]
+    ARRANCAR_ID = data['Combat'][47][2]
+    FULLBRINGER = data['Combat'][48][1]
+    FULLBRINGER_ID = data['Combat'][48][2]
+    QUINCY = data['Combat'][49][1]
+    QUINCY_ID = data['Combat'][49][2]
+    if GENERALES == 1:
+
+    if SHINIGAMI == 1:
+
+    if HOLLOW_ARRANCAR == 1:
+
+    if HOLLOW == 1:
+
+    if ARRANCAR == 1:
+
+    if FULLBRINGER == 1:
+
+    if QUINCY == 1:
+
 
 
 def clean_json_combat():
