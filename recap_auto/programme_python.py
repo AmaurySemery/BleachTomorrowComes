@@ -1,13 +1,13 @@
 from pyexcel_ods import get_data
 import json
+import os
 
-# import os
-# __file__ = 'programme_python.py'
-# CHEMIN = os.path.dirname(os.path.realpath(__file__))
-# CHEMIN_CONVERT = A.replace('\\','/')
-#
-# CHEMIN_ODS = str(CHEMIN_CONVERT) + '/Documents/recap_auto/FT.ods'
-# CHEMIN_COMBAT_JSON = str(CHEMIN_CONVERT) + '/Documents/recap_auto/combat.json'
+__file__ = 'programme_python.py'
+CHEMIN = os.path.dirname(os.path.realpath(__file__))
+CHEMIN_CONVERT = A.replace('\\','/')
+
+CHEMIN_ODS = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/FT.ods'
+CHEMIN_COMBAT_JSON = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/combat.json'
 
 CHEMIN_ODS = 'E:/python/BleachTomorrowComes/recap_auto/FT.ods'
 CHEMIN_COMBAT_JSON = 'E:/python/BleachTomorrowComes/recap_auto/combat.json'
