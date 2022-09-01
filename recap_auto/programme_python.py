@@ -1020,34 +1020,46 @@ def lancement_combo():
             fichier.close()
 
 def specialites():
-    data = get_data(CHEMIN_ODS)
-    GENERALES = data['Combat'][43][1]
-    GENERALES_ID = data['Combat'][43][2]
-    SHINIGAMI = data['Combat'][44][1]
-    SHINIGAMI_ID = data['Combat'][44][2]
-    HOLLOW_ARRANCAR = data['Combat'][45][1]
-    HOLLOW_ARRANCAR_ID = data['Combat'][45][2]
-    HOLLOW = data['Combat'][46][1]
-    HOLLOW_ID = data['Combat'][46][2]
-    ARRANCAR = data['Combat'][47][1]
-    ARRANCAR_ID = data['Combat'][47][2]
-    FULLBRINGER = data['Combat'][48][1]
-    FULLBRINGER_ID = data['Combat'][48][2]
-    QUINCY = data['Combat'][49][1]
-    QUINCY_ID = data['Combat'][49][2]
-    if GENERALES == 1:
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        PA_RESTANTS = data_dict["attributs"]["PA_restants"]
+        data = get_data(CHEMIN_ODS)
+        GENERALES = data['Combat'][43][1]
+        GENERALES_ID = data['Combat'][43][2]
+        SHINIGAMI = data['Combat'][44][1]
+        SHINIGAMI_ID = data['Combat'][44][2]
+        HOLLOW_ARRANCAR = data['Combat'][45][1]
+        HOLLOW_ARRANCAR_ID = data['Combat'][45][2]
+        HOLLOW = data['Combat'][46][1]
+        HOLLOW_ID = data['Combat'][46][2]
+        ARRANCAR = data['Combat'][47][1]
+        ARRANCAR_ID = data['Combat'][47][2]
+        FULLBRINGER = data['Combat'][48][1]
+        FULLBRINGER_ID = data['Combat'][48][2]
+        QUINCY = data['Combat'][49][1]
+        QUINCY_ID = data['Combat'][49][2]
+        if GENERALES == 1:
+            if GENERALES_ID == 4:
+                print('Déclenchement Spécialité Revanchard (double les dégâts maximum pour la technique Déferlement de Reiryoku)')
+            if GENERALES_ID == 5:
+                print("Déclenchement Spécialité Opportuniste  (Malus de 2 sur le jet d'initiative, bonus d'1 PA sur le premier tour si ne joue pas en premier')")
+                PA_BONUS = int(PA_RESTANTS) + 1
+                data_dict["attributs"]["PA_restants"] = PA_BONUS
+                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+                fichier = open(CHEMIN_COMBAT_JSON,'wt')
+                fichier.write(data_str)
+                fichier.close()
+        if SHINIGAMI == 1:
 
-    if SHINIGAMI == 1:
+        if HOLLOW_ARRANCAR == 1:
 
-    if HOLLOW_ARRANCAR == 1:
+        if HOLLOW == 1:
 
-    if HOLLOW == 1:
+        if ARRANCAR == 1:
 
-    if ARRANCAR == 1:
+        if FULLBRINGER == 1:
 
-    if FULLBRINGER == 1:
-
-    if QUINCY == 1:
+        if QUINCY == 1:
 
 
 
