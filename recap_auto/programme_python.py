@@ -4,7 +4,7 @@ import os
 
 __file__ = 'programme_python.py'
 CHEMIN = os.path.dirname(os.path.realpath(__file__))
-CHEMIN_CONVERT = A.replace('\\','/')
+CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
 CHEMIN_ODS = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/FT.ods'
 CHEMIN_COMBAT_JSON = str(CHEMIN_CONVERT) + '/Python/Documents/recap_auto/combat.json'
@@ -348,7 +348,7 @@ def techniques_offensives():
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
                 print('[*][b][Déferlement Reiryoku][/b]')
                 print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) ' reiryokus dépensés')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) +' reiryokus dépensés')
                 print('\n')
                 DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
@@ -356,7 +356,7 @@ def techniques_offensives():
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
                 print('[*][b][Déferlement Reiryoku][/b]')
                 print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_INITIAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES)+ ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
                 print('\n')
                 DEPENSE_EP_FINAL = int(DEPENSE_EP_INITIAL) + int(DEPENSE_EP)
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
@@ -1028,6 +1028,7 @@ def specialites():
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
         POSITIF = data_dict["phase_offensive"]["positif"]
+        NEGATIF = data_dict["phase_offensive"]["negatif"]
         data = get_data(CHEMIN_ODS)
         GENERALES = data['Combat'][43][1]
         GENERALES_ID = data['Combat'][43][2]
@@ -1076,24 +1077,44 @@ def specialites():
                 print("Déclenchement Spécialité Altruiste (Les interventions ne coûtent qu'1 PA que la technique adverse ait vitesse ou non [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if SHINIGAMI == 1:
             if SHINIGAMI_ID == 30:
-                print("Déclenchement Spécialité Nécromancien (Une fois par tour, une technique de se Kido peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+                print("Déclenchement Spécialité Nécromancien (Une fois par tour, une technique de Kido peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
             if SHINIGAMI_ID == 31:
-                print("Déclenchement Spécialité Jikken Shikai (Une fois par tour, une technique de se Shikai peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+                print("Déclenchement Spécialité Jikken Shikai (Une fois par tour, une technique de Shikai peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
             if SHINIGAMI_ID == 32:
-                print("Déclenchement Spécialité Shunshin (Une fois par combat, une technique de se Shunpo défensive peut bénéficier d'un bonus de 200 [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+                print("Déclenchement Spécialité Shunshin (Une fois par combat, une technique de Shunpo défensive peut bénéficier d'un bonus de 200 [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if HOLLOW_ARRANCAR == 1:
             if HOLLOW_ARRANCAR_ID == 40:
                 print("Déclenchement Spécialité Régénération instantanée (Bonus de 50 sur une régénération par tour)")
                 POSITIF = int(POSITIF) + 50
                 data_dict["phase_offensive"]["positif"] = POSITIF
         if HOLLOW == 1:
-
+            if HOLLOW_ID == 50:
+                print("Déclenchement Spécialité Negación (Une fois par combat, une technique de Negación défensive peut bénéficier d'un bonus de 200 [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if HOLLOW_ID == 50:
+                print("Déclenchement Spécialité Vasto Lorde (Bonus de 50 sur une attaque par tour)")
+                NEGATIF = int(NEGATIF) + 50
+                data_dict["phase_offensive"]["negatif"] = NEGATIF
         if ARRANCAR == 1:
-
+            if ARRANCAR_ID == 60:
+                print("Déclenchement Spécialité Mutilación (Une fois par tour, une technique de Resurrecion peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if ARRANCAR_ID == 61:
+                print("Déclenchement Spécialité Hierro (Une fois par combat, une technique de Hierro défensive peut bénéficier d'un bonus de 200 [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if FULLBRINGER == 1:
-
+            if FULLBRINGER_ID == 70:
+                print("Déclenchement Spécialité Soul Eater (Une fois par tour, une technique de manipulation d'âme peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if FULLBRINGER_ID == 71:
+                print("Déclenchement Spécialité Complete Fullbring (Une fois par tour, une technique de Fullbring peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if FULLBRINGER_ID == 72:
+                print("Déclenchement Spécialité Hitech (Une fois par combat, une technique de Science peut bénéficier d'un bonus de 150 et 75 s'il s'agit d'un Don/Drain reiryoku' [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if QUINCY == 1:
-
+            if QUINCY_ID == 80:
+                print("Déclenchement Spécialité Heilig Bogen (Bonus de 50 sur une attaque de tir d'énergie spirituelle par tour)")
+                NEGATIF = int(NEGATIF) + 50
+                data_dict["phase_offensive"]["negatif"] = NEGATIF
+            if QUINCY_ID == 81:
+                print("Déclenchement Spécialité Letzt Stil (Une fois par combat, une technique de Leiden Hant peut bénéficier d'un bonus de 150 et 75 s'il s'agit d'un Don/Drain reiryoku' [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if QUINCY_ID == 82:
+                print("Déclenchement Spécialité Blut (Une fois par combat, une technique de Blut peut bénéficier d'un bonus de 175 sur son effet principal (Blut Arterie (boost offensif) ou Blut Vene (défense)) [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
