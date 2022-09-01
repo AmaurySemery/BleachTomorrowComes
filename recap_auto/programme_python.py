@@ -1075,9 +1075,17 @@ def specialites():
             if GENERALES_ID == 12:
                 print("Déclenchement Spécialité Altruiste (Les interventions ne coûtent qu'1 PA que la technique adverse ait vitesse ou non [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if SHINIGAMI == 1:
-
+            if SHINIGAMI_ID == 30:
+                print("Déclenchement Spécialité Nécromancien (Une fois par tour, une technique de se Kido peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if SHINIGAMI_ID == 31:
+                print("Déclenchement Spécialité Jikken Shikai (Une fois par tour, une technique de se Shikai peut bénéficier d'un bonus de 50 sur son effet principal, 25 s'il s'agit d'un don/drain reiryoku [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
+            if SHINIGAMI_ID == 32:
+                print("Déclenchement Spécialité Shunshin (Une fois par combat, une technique de se Shunpo défensive peut bénéficier d'un bonus de 200 [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if HOLLOW_ARRANCAR == 1:
-
+            if HOLLOW_ARRANCAR_ID == 40:
+                print("Déclenchement Spécialité Régénération instantanée (Bonus de 50 sur une régénération par tour)")
+                POSITIF = int(POSITIF) + 50
+                data_dict["phase_offensive"]["positif"] = POSITIF
         if HOLLOW == 1:
 
         if ARRANCAR == 1:
