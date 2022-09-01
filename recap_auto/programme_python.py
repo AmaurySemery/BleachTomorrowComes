@@ -1023,6 +1023,11 @@ def specialites():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
         data_dict = json.load(json_data)
         PA_RESTANTS = data_dict["attributs"]["PA_restants"]
+        DRAIN = data_dict["phase_offensive"]["drain"]
+        DON_REIRYOKU = data_dict["phase_offensive"]["don_rei"]
+        IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
+        ENTRAVE = data_dict["phase_offensive"]["entrave"]
+        POSITIF = data_dict["phase_offensive"]["positif"]
         data = get_data(CHEMIN_ODS)
         GENERALES = data['Combat'][43][1]
         GENERALES_ID = data['Combat'][43][2]
@@ -1045,10 +1050,30 @@ def specialites():
                 print("Déclenchement Spécialité Opportuniste  (Malus de 2 sur le jet d'initiative, bonus d'1 PA sur le premier tour si ne joue pas en premier')")
                 PA_BONUS = int(PA_RESTANTS) + 1
                 data_dict["attributs"]["PA_restants"] = PA_BONUS
-                data_str = json.dumps(data_dict, sort_keys=False, indent=4)
-                fichier = open(CHEMIN_COMBAT_JSON,'wt')
-                fichier.write(data_str)
-                fichier.close()
+            if GENERALES_ID == 6:
+                print("Déclenchement Spécialité Manipulateur (Bonus de 50 sur un drain par combat)")
+                DRAIN = int(DRAIN) + 50
+                data_dict["phase_offensive"]["drain"] = DRAIN
+            if GENERALES_ID == 7:
+                print("Déclenchement Spécialité Manipulateur (Bonus de 50 sur un don reiryoku par combat)")
+                DON_REIRYOKU = int(DON_REIRYOKU) + 50
+                data_dict["phase_offensive"]["don_rei"] = DON_REIRYOKU
+            if GENERALES_ID == 8:
+                print("Déclenchement Spécialité Lutteur (Bonus de 100 sur une immobilisation par combat)")
+                IMMOBILISATION = int(IMMOBILISATION) + 100
+                data_dict["phase_offensive"]["immobilisation"] = IMMOBILISATION
+            if GENERALES_ID == 9:
+                print("Déclenchement Spécialité Lutteur (Bonus de 100 sur une entrave par combat)")
+                ENTRAVE = int(ENTRAVE) + 100
+                data_dict["phase_offensive"]["entrave"] = ENTRAVE
+            if GENERALES_ID == 10:
+                print("Déclenchement Spécialité Partenaire (Bonus de 100 sur un boost destiné à un allié [EDITER MANUELLEMENT LE RECAP DE PHASE OFFENSIVE POUR PRECISER TYPE DE BOOST])")
+            if GENERALES_ID == 11:
+                print("Déclenchement Spécialité Guérisseur (Bonus de 100 sur une guérison par combat)")
+                POSITIF = int(POSITIF) + 100
+                data_dict["phase_offensive"]["positif"] = POSITIF
+            if GENERALES_ID == 12:
+                print("Déclenchement Spécialité Altruiste (Les interventions ne coûtent qu'1 PA que la technique adverse ait vitesse ou non [EDITER MANUELLEMENT LE RECAPITULATIF POUR L'INTEGRER])")
         if SHINIGAMI == 1:
 
         if HOLLOW_ARRANCAR == 1:
@@ -1060,6 +1085,11 @@ def specialites():
         if FULLBRINGER == 1:
 
         if QUINCY == 1:
+
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 
 
