@@ -125,16 +125,14 @@ def techniques_defensives():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
-            POSITIF = data_dict["phase_defensive"]["positif"]
-            SUBI = int(IMMOBILISATION_SUBI) - int(DEFENSE_INVESTI)
-            if SUBI < 0:
-                SUBI = 0
-            IMMOBILISATION = int(IMMOBILISATION) + int(SUBI)
-            POSITIF = int(POSITIF) - int(IMMOBILISATION)
-            if POSITIF < 0:
-                POSITIF = 0
+            DEFENDU = data_dict["synthese"]["total_defendu"]
+            if DEFENSE_INVESTI > 0:
+                IMMOBILISATION = int(IMMOBILISATION_SUBI) - int(DEFENSE_INVESTI)
+                if IMMOBILISATION < 0:
+                    IMMOBILISATION = 0
+            if DEFENSE_INVESTI == 0:
+                IMMOBILISATION = 0
             data_dict["phase_defensive"]["immobilisation"] = IMMOBILISATION
-            data_dict["phase_defensive"]["positif"] = POSITIF
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -1040,7 +1038,7 @@ def calcul_subi_phase_defensive():
         data_dict = json.load(json_data)
         TOTAL_SUBI = data_dict["synthese"]["total_subi"]
         SACRIFICE = data_dict["phase_defensive"]["sacrifice"]
-        SOMME_SUBI = int(TOTAL_SUBI) + int(SACRIFICE)
+        SOMME_SUBI = int(TOTAL_SUBI) - int(SACRIFICE)
     return SOMME_SUBI
 
 def calcul_defendu_phase_defensive():
@@ -1048,6 +1046,7 @@ def calcul_defendu_phase_defensive():
         data_dict = json.load(json_data)
         TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
     return TOTAL_DEFENDU
+
 
 def calcul_PV_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:

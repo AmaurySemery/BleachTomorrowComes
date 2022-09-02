@@ -10,21 +10,21 @@
         "PV_fin": 0,
         "EP_fin": 0,
         "ES_fin": 0,
-        "PA_depenses": 0,
-        "PA_restants": 0
+        "PA_depenses": 12,
+        "PA_restants": 15
     },
     "phase_defensive": {
         "maintenu": 0,
-        "negatif": 0,
+        "negatif": 1000,
         "sacrifice": 0,
-        "EP_depenses": 0,
+        "EP_depenses": 72,
         "entrave": 0,
-        "immobilisation": 0,
+        "immobilisation": 100,
         "guerison": 0,
         "drain": 0,
         "don_reiryoku": 0,
-        "ES_depenses": 0,
-        "positif": 0
+        "ES_depenses": 228,
+        "positif": 200
     },
     "phase_offensive": {
         "negatif": 0,
@@ -43,14 +43,14 @@
         "drain_imparable": 0
     },
     "synthese": {
-        "total_defendu": 0,
-        "total_subi": 0
+        "total_defendu": 200,
+        "total_subi": 800
     },
     "combo": {
         "combo_EP_debut": 0,
         "combo_ES_debut": 0,
-        "combo_EP_fin": 0,
-        "combo_ES_fin": 0
+        "combo_EP_fin": 72,
+        "combo_ES_fin": 228
     },
     "multicibles": {
         "count": 0
