@@ -348,7 +348,7 @@ def techniques_offensives():
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
                 print('[*][b][Déferlement Reiryoku][/b]')
                 print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES) +' reiryokus dépensés')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_SEUIL) +' reiryokus dépensés')
                 print('\n')
             if DEFERLEMENT_SEUIL > 100 and DEFERLEMENT_SEUIL <= 200:
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
@@ -356,7 +356,7 @@ def techniques_offensives():
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
                 print('[*][b][Déferlement Reiryoku][/b]')
                 print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_FINAL)+' ES soit '+str(DEFERLEMENT_DOMMAGES)+ ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_FINAL)+' ES soit '+str(DEFERLEMENT_SEUIL)+ ' reiryokus dépensés (nécessite activation de la spécialité Revanchard)')
                 print('\n')
             if DEFERLEMENT_SEUIL > 200:
                 print('[SEUIL REIRYOKU MAXIMUM DEPASSE POUR LE DEFERLEMENT REIRYOKU ('+str(DEFERLEMENT_SEUIL)+')]')
@@ -896,7 +896,11 @@ def calcul_PV_fin():
         SACRIFICE_DEFENSIF = data_dict["phase_defensive"]["sacrifice"]
         SACRIFICE_OFFENSIF = data_dict["phase_offensive"]["sacrifice"]
         PV_DEBUT = data_dict["attributs"]["PV_debut"]
-        PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI) - int(SACRIFICE_DEFENSIF) - int(SACRIFICE_OFFENSIF)
+        POSITIF = data_dict["phase_offensive"]["positif"]
+        PV_TOTAL = data_dict["attributs"]["PV_total"]
+        PV_FIN = int(PV_DEBUT) - int(TOTAL_SUBI) - int(SACRIFICE_DEFENSIF) - int(SACRIFICE_OFFENSIF) + int(POSITIF)
+        if PV_FIN > PV_TOTAL:
+            PV_FIN = PV_TOTAL
     return PV_FIN
 
 def calcul_PA_fin():
