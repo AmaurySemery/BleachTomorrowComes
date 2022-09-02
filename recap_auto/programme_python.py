@@ -192,8 +192,37 @@ def techniques_defensives():
             fichier.write(data_str)
             fichier.close()
 
+    def guerison():
+        data = get_data(CHEMIN_ODS)
+        GUERISON_BONUS = data['Combat'][20][4]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            POSITIF = data_dict["phase_defensive"]["positif"]
+            POSITIF = int(POSITIF) + int(GUERISON_BONUS)
+            data_dict["phase_defensive"]["positif"] = POSITIF
+            data_dict["phase_defensive"]["guerison"] = GUERISON_BONUS
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
 
-
+    def don_reiryoku():
+        data = get_data(CHEMIN_ODS)
+        REIRYOKU_BONUS = data['Combat'][20][5]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            EP = data_dict["attributs"]["EP_fin"]
+            ES = data_dict["attributs"]["ES_fin"]
+            EP_BONUS = int(REIRYOKU_BONUS) / 2
+            ES_BONUS = int(REIRYOKU_BONUS) / 2
+            SOMME_EP = int(EP) + int(EP_BONUS)
+            SOMME_ES = int(ES) + int(ES_BONUS)
+            data_dict["attributs"]["EP_fin"] = SOMME_EP
+            data_dict["attributs"]["ES_fin"] = SOMME_ES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
 
     def technique_none():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
