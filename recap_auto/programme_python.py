@@ -118,6 +118,83 @@ def optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES):
                     fichier.close()
 
 def techniques_defensives():
+    def immobilisation():
+        data = get_data(CHEMIN_ODS)
+        IMMOBILISATION_SUBI = data['Combat'][15][4]
+        DEFENSE_INVESTI = data['Combat'][16][4]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
+            POSITIF = data_dict["phase_defensive"]["positif"]
+            SUBI = int(IMMOBILISATION_SUBI) - int(DEFENSE_INVESTI)
+            if SUBI < 0:
+                SUBI = 0
+            IMMOBILISATION = int(IMMOBILISATION) + int(SUBI)
+            POSITIF = int(POSITIF) - int(IMMOBILISATION)
+            if POSITIF < 0:
+                POSITIF = 0
+            data_dict["phase_defensive"]["immobilisation"] = IMMOBILISATION
+            data_dict["phase_defensive"]["positif"] = POSITIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
+    def entrave():
+        data = get_data(CHEMIN_ODS)
+        ENTRAVE_SUBI = data['Combat'][15][5]
+        DEFENSE_INVESTI = data['Combat'][16][5]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            ENTRAVE = data_dict["phase_defensive"]["entrave"]
+            POSITIF = data_dict["phase_defensive"]["positif"]
+            SUBI = int(ENTRAVE_SUBI) - int(DEFENSE_INVESTI)
+            if SUBI < 0:
+                SUBI = 0
+            ENTRAVE = int(ENTRAVE) + int(SUBI)
+            POSITIF = int(POSITIF) - int(DEFENSE_INVESTI)
+            if POSITIF < 0:
+                POSITIF = 0
+            data_dict["phase_offensive"]["entrave_subi"] = ENTRAVE
+            data_dict["phase_defensive"]["positif"] = POSITIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
+    def drain():
+        data = get_data(CHEMIN_ODS)
+        DRAIN_SUBI = data['Combat'][15][4]
+        DEFENSE_INVESTI = data['Combat'][16][4]
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            DRAIN = data_dict["phase_defensive"]["drain"]
+            POSITIF = data_dict["phase_defensive"]["positif"]
+            EP = data_dict["attributs"]["EP_fin"]
+            ES = data_dict["attributs"]["ES_fin"]
+            SUBI = int(DRAIN_SUBI) - int(DEFENSE_INVESTI)
+            if SUBI < 0:
+                SUBI = 0
+            DRAIN = int(DRAIN) + int(SUBI)
+            EP_SUBI = int(SUBI) / 2
+            ES_SUBI = int(SUBI) / 2
+            SOMME_EP = int(EP) + int(EP_SUBI)
+            SOMME_ES = int(ES) + int(ES_SUBI)
+            POSITIF = int(POSITIF) - int(DEFENSE_INVESTI)
+            if POSITIF < 0:
+                POSITIF = 0
+            data_dict["phase_defensive"]["drain"] = DRAIN
+            data_dict["phase_defensive"]["positif"] = POSITIF
+            data_dict["attributs"]["EP_fin"] = SOMME_EP
+            data_dict["attributs"]["ES_fin"] = SOMME_ES
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
+
+
+
     def technique_none():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
@@ -217,6 +294,11 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
+    IMMOBILISATION = data['Combat'][14][4]
+    ENTRAVE = data['Combat'][14][5]
+    DRAIN = data['Combat'][14][6]
+    GUERISON = data['Combat'][19][4]
+    DON_REIRYOKU = data['Combat'][19][5]
     a = 2
     b = 0
     if NOMBRE_TECH == 0:
@@ -246,6 +328,11 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             POSITION = int(c) + int(ID_TECH)
             integrate_value(NIV_TECH,POSITION)
         a += 1
+    if IMMOBILISATION == 1:
+    if ENTRAVE == 1:
+    if DRAIN == 1:
+    if GUERISON == 1:
+    if DON_REIRYOKU == 1:
 
 def effet_off(EFFET,CODE_TYPE_EFFET):
     if CODE_TYPE_EFFET == 'att' or CODE_TYPE_EFFET == 'boostof':

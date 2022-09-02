@@ -18,6 +18,11 @@
         "negatif": 0,
         "sacrifice": 0,
         "EP_depenses": 0,
+        "entrave": 0,
+        "immobilisation": 0,
+        "guerison": 0,
+        "drain": 0,
+        "don_reiryoku": 0,
         "ES_depenses": 0,
         "positif": 0
     },
