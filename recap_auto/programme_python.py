@@ -358,10 +358,15 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             integrate_value(NIV_TECH,POSITION)
         a += 1
     if IMMOBILISATION == 1:
+        immobilisation()
     if ENTRAVE == 1:
+        entrave()
     if DRAIN == 1:
+        drain()
     if GUERISON == 1:
+        guerison()
     if DON_REIRYOKU == 1:
+        don_reiryoku()
 
 def effet_off(EFFET,CODE_TYPE_EFFET):
     if CODE_TYPE_EFFET == 'att' or CODE_TYPE_EFFET == 'boostof':
@@ -448,6 +453,20 @@ def don_rei(EFFET,CODE_TYPE_EFFET):
             fichier.close()
 
 def techniques_offensives():
+    def entrave():
+        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+            data_dict = json.load(json_data)
+            ENTRAVE = data_dict["phase_offensive"]["entrave_subi"]
+            NEGATIF = data_dict["phase_offensive"]["negatif"]
+            NEGATIF = int(NEGATIF) - int(ENTRAVE)
+            if NEGATIF < 0:
+                NEGATIF = 0
+            data_dict["phase_offensive"]["negatif"] = NEGATIF
+            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+            fichier = open(CHEMIN_COMBAT_JSON,'wt')
+            fichier.write(data_str)
+            fichier.close()
+
     def technique_deferlement_reiryoku():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
@@ -574,41 +593,48 @@ def techniques_offensives():
         don_rei(EFFET,CODE_TYPE_EFFET)
         optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES)
 
-    data = get_data(CHEMIN_ODS)
-    NOMBRE_TECH = data['Combat'][0][8]
-    DEFERLEMENT_REIRYOKU = data['Combat'][10][7]
-    a = 2
-    b = 0
-    if DEFERLEMENT_REIRYOKU == 1:
-        technique_deferlement_reiryoku()
 
-    if NOMBRE_TECH == 0:
-        technique_none()
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        ENTRAVE = data_dict["phase_offensive"]["entrave_subi"]
+        data = get_data(CHEMIN_ODS)
+        NOMBRE_TECH = data['Combat'][0][8]
+        DEFERLEMENT_REIRYOKU = data['Combat'][10][7]
+        a = 2
+        b = 0
+        if ENTRAVE > 0:
+            entrave()
 
-    for i in range(int(NOMBRE_TECH)):
-        NIV_TECH = data['Combat'][a][7]
-        ID_TECH = data['Combat'][a][8]
-        if NIV_TECH == 1:
-            c = b + 0
-            POSITION = int(c) + int(ID_TECH)
-            integrate_value(NIV_TECH,POSITION)
-        elif NIV_TECH == 2:
-            c = b + 9
-            POSITION = int(c) + int(ID_TECH)
-            integrate_value(NIV_TECH,POSITION)
-        elif NIV_TECH == 3:
-            c = b + 19
-            POSITION = int(c) + int(ID_TECH)
-            integrate_value(NIV_TECH,POSITION)
-        elif NIV_TECH == 4:
-            c = b + 29
-            POSITION = int(c) + int(ID_TECH)
-            integrate_value(NIV_TECH,POSITION)
-        elif NIV_TECH == 5:
-            c = b + 39
-            POSITION = int(c) + int(ID_TECH)
-            integrate_value(NIV_TECH,POSITION)
-        a += 1
+        if DEFERLEMENT_REIRYOKU == 1:
+            technique_deferlement_reiryoku()
+
+        if NOMBRE_TECH == 0:
+            technique_none()
+
+        for i in range(int(NOMBRE_TECH)):
+            NIV_TECH = data['Combat'][a][7]
+            ID_TECH = data['Combat'][a][8]
+            if NIV_TECH == 1:
+                c = b + 0
+                POSITION = int(c) + int(ID_TECH)
+                integrate_value(NIV_TECH,POSITION)
+            elif NIV_TECH == 2:
+                c = b + 9
+                POSITION = int(c) + int(ID_TECH)
+                integrate_value(NIV_TECH,POSITION)
+            elif NIV_TECH == 3:
+                c = b + 19
+                POSITION = int(c) + int(ID_TECH)
+                integrate_value(NIV_TECH,POSITION)
+            elif NIV_TECH == 4:
+                c = b + 29
+                POSITION = int(c) + int(ID_TECH)
+                integrate_value(NIV_TECH,POSITION)
+            elif NIV_TECH == 5:
+                c = b + 39
+                POSITION = int(c) + int(ID_TECH)
+                integrate_value(NIV_TECH,POSITION)
+            a += 1
 
 def first_liberation():
     data = get_data(CHEMIN_ODS)
@@ -785,32 +811,50 @@ def valeur_negatives_positives_somme():
         NEGATIF = data_dict["phase_offensive"]["negatif"]
         POSITIF = data_dict["phase_offensive"]["positif"]
         GUERISON = data_dict["phase_offensive"]["guerison"]
+        GUERISON_BONUS = data_dict["phase_defensive"]["guerison"]
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
+        ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
+        IMMOBILISATION_SUBI = data_dict["phase_defensive"]["immobilisation"]
         DRAIN = data_dict["phase_offensive"]["drain"]
+        DRAIN_SUBI = data_dict["phase_defensive"]["drain"]
         DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain_imparable"]
         DON_REI = data_dict["phase_offensive"]["don_rei"]
+        DON_REI_BONUS = data_dict["phase_defensive"]["don_reiryoku"]
         SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
+        ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
         DEFERLEMENT_REIRYOKU = data_dict["phase_offensive"]["deferlement_reiryoku"]
         TEXT_VALEURS_NEGATIVES = '[list][*][b]Valeurs négatives :[/b] '+ str(NEGATIF) + ' dommages '
         TEXT_VALEURS_POSITIVES = '[*][b]Valeurs positives :[/b] '+ str(POSITIF) + ' regen '
         if ENTRAVE != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(ENTRAVE) + ' entraves '
+        if ENTRAVE_SUBI != 0:
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(ENTRAVE_SUBI) + ' entraves '
         if IMMOBILISATION != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(IMMOBILISATION) + ' immobilisation '
+        if IMMOBILISATION_SUBI != 0:
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(IMMOBILISATION_SUBI) + ' immobilisation subie'
         if DRAIN != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DRAIN) + ' drain reiryoku '
+        if DRAIN_SUBI != 0:
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DRAIN_SUBI) + ' drain reiryoku subi '
         if GUERISON != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON) + ' guerison '
+        if GUERISON_BONUS != 0:
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON_BONUS) + ' guerison reçu '
         if DON_REI != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI) + ' don reiryoku '
+        if DON_REI_BONUS != 0:
+            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI_BONUS) + ' reiryoku reçu '
         if SACRIFICE != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
         if MULTICIBLES != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(MULTICIBLES) + ' dommages multicibles '
         if DEFERLEMENT_REIRYOKU != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DEFERLEMENT_REIRYOKU) + ' dommages déferlement reiryoku '
+        if ENTRAVE_SUBI != 0:
+            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(ENTRAVE_SUBI) + ' entrave subi '
         if DRAIN_IMPARABLE != 0:
             DRAIN_EP_ES = int(DRAIN_IMPARABLE) / 2
             DRAIN_EP_ES = int(DRAIN_EP_ES)
@@ -1257,6 +1301,11 @@ def clean_json_combat():
         data_dict["combo"]["combo_EP_fin"] = 0
         data_dict["combo"]["combo_ES_fin"] = 0
         data_dict["phase_defensive"]["EP_depenses"] = 0
+        data_dict["phase_defensive"]["entrave"] = 0
+        data_dict["phase_defensive"]["immobilisation"] = 0
+        data_dict["phase_defensive"]["guerison"] = 0
+        data_dict["phase_defensive"]["drain"] = 0
+        data_dict["phase_defensive"]["don_reiryoku"] = 0
         data_dict["phase_defensive"]["ES_depenses"] = 0
         data_dict["phase_offensive"]["EP_depenses"] = 0
         data_dict["phase_offensive"]["ES_depenses"] = 0
@@ -1265,6 +1314,7 @@ def clean_json_combat():
         data_dict["phase_offensive"]["degats_multicibles"] = 0
         data_dict["phase_offensive"]["drain_imparable"] = 0
         data_dict["phase_offensive"]["deferlement_reiryoku"] = 0
+        data_dict["phase_offensive"]["entrave_subi"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
