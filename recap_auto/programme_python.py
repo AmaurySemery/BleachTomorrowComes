@@ -125,13 +125,7 @@ def techniques_defensives():
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
-            DEFENDU = data_dict["synthese"]["total_defendu"]
-            if DEFENSE_INVESTI > 0:
-                IMMOBILISATION = int(IMMOBILISATION_SUBI) - int(DEFENSE_INVESTI)
-                if IMMOBILISATION < 0:
-                    IMMOBILISATION = 0
-            if DEFENSE_INVESTI == 0:
-                IMMOBILISATION = 0
+            IMMOBILISATION = int(IMMOBILISATION) + int(IMMOBILISATION_SUBI)
             data_dict["phase_defensive"]["immobilisation"] = IMMOBILISATION
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
@@ -481,7 +475,7 @@ def techniques_offensives():
                 DEPENSE_ES_FINAL = int(DEPENSE_ES) + int(DEPENSE_ES_INITIAL)
                 print('[*][b][Déferlement Reiryoku][/b]')
                 print('[u]Effets :[/u] '+str(DEFERLEMENT_DOMMAGES) +' dommages')
-                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_INITIAL)+' ES soit '+str(DEFERLEMENT_SEUIL) +' reiryokus dépensés')
+                print('[u]Dépense :[/u] '+str(DEPENSE_EP_FINAL)+' EP & '+str(DEPENSE_ES_FINAL)+' ES soit '+str(DEFERLEMENT_SEUIL) +' reiryokus dépensés')
                 print('\n')
             if DEFERLEMENT_SEUIL > 100 and DEFERLEMENT_SEUIL <= 200:
                 DEFERLEMENT_DOMMAGES = DEFERLEMENT_SEUIL * 2
@@ -811,11 +805,12 @@ def integration_phase_defensive():
         IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
         if IMMOBILISATION > 0:
             SOMME_DEFENDU = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
+            IMMOBILISATION_FINAL = int(IMMOBILISATION) - int(TOTAL_DEFENDU)
             if TOTAL_DEFENDU < IMMOBILISATION:
                 IMMOBILISATION = 0
             if SOMME_DEFENDU < 0:
                 SOMME_DEFENDU = 0
-            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(IMMOBILISATION) + " immobilisation subie"
+            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(IMMOBILISATION_FINAL) + " immobilisation subie"
             data_dict["synthese"]["total_defendu"] = SOMME_DEFENDU
             data_dict["synthese"]["immobilisation_subi"] = IMMOBILISATION
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
@@ -1347,6 +1342,7 @@ def clean_json_combat():
         data_dict["phase_offensive"]["drain_imparable"] = 0
         data_dict["phase_offensive"]["deferlement_reiryoku"] = 0
         data_dict["phase_offensive"]["entrave_subi"] = 0
+        data_dict["synthese"]["immobilisation_subi"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
