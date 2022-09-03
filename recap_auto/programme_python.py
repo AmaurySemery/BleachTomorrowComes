@@ -1047,6 +1047,37 @@ def calcul_defendu_phase_defensive():
         TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
     return TOTAL_DEFENDU
 
+def integration_immo_phase_defensive_defendu():
+    TOTAL_DEFENDU = calcul_defendu_phase_defensive()
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
+        SOMME_DEFENDU = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
+        if TOTAL_DEFENDU < IMMOBILISATION:
+            IMMOBILISATION = 0
+        if SOMME_DEFENDU < 0:
+            SOMME_DEFENDU = 0
+        data_dict["synthese"]["total_defendu"] = SOMME_DEFENDU
+        data_dict["synthese"]["immobilisation_subi"] = IMMOBILISATION
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
+    return SOMME_DEFENDU
+
+def integration_immo_phase_defensive_subi():
+    TOTAL_SUBI = calcul_subi_phase_defensive()
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        DEFENDU = data_dict["synthese"]["total_defendu"]
+        IMMOBILISATION_SUBI = data_dict["synthese"]["immobilisation_subi"]
+        SOMME_SUBI = int(TOTAL_SUBI) + IMMOBILISATION_SUBI
+        data_dict["synthese"]["total_subi"] = SOMME_SUBI
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
+    return SOMME_SUBI
 
 def calcul_PV_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
@@ -1368,8 +1399,8 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT)
     techniques_defensives()
     aptitudes(mode)
 
-    TOTAL_DEFENDU = calcul_defendu_phase_defensive()
-    TOTAL_SUBI = calcul_subi_phase_defensive()
+    TOTAL_DEFENDU = integration_immo_phase_defensive_defendu()
+    TOTAL_SUBI = integration_immo_phase_defensive_subi()
 
     print('[/list]')
     print('[u][b][color=#a2783c]Résumé phase défensive :[/color][/b][/u]')
