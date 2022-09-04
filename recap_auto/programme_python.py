@@ -135,16 +135,20 @@ def techniques_defensives():
     def entrave_subi(ENTRAVE_SUBI,DEFENSE_ENTRAVE):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
-            POSITIF = data_dict["phase_defensive"]["positif"]
+            SOMME_DEFENDU = data_dict["synthese"]["total_defendu"]
+            SOMME_SUBI = data_dict["synthese"]["total_subi"]
             data_dict["phase_defensive"]["entrave"] = ENTRAVE_SUBI
             SUBI = int(ENTRAVE_SUBI) - int(DEFENSE_ENTRAVE)
             if SUBI < 0:
                 SUBI = 0
-            POSITIF = int(POSITIF) - int(DEFENSE_ENTRAVE)
-            if POSITIF < 0:
-                POSITIF = 0
-            data_dict["phase_offensive"]["entrave_subi"] = POSITIF
-            data_dict["phase_defensive"]["positif"] = POSITIF
+            SOMME_DEFENDU = int(SOMME_DEFENDU) - int(DEFENSE_ENTRAVE)
+            if SOMME_DEFENDU < 0:
+                SOMME_DEFENDU = 0
+            SOMME_SUBI = int(SOMME_SUBI) + int(DEFENSE_ENTRAVE)
+            data_dict["phase_offensive"]["entrave_subi"] = SUBI
+            data_dict["phase_defensive"]["entrave_defendu"] = DEFENSE_ENTRAVE
+            data_dict["synthese"]["total_defendu"] = SOMME_DEFENDU
+            data_dict["synthese"]["total_subi"] = SOMME_SUBI
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -799,6 +803,7 @@ def integration_phase_defensive():
         data_dict = json.load(json_data)
         IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
         ENTRAVE = data_dict["phase_defensive"]["entrave"]
+        ENTRAVE_DEFENDU = data_dict["phase_defensive"]["entrave_defendu"]
         ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
         if IMMOBILISATION > 0:
             SOMME_DEFENDU_IMMO = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
@@ -815,7 +820,7 @@ def integration_phase_defensive():
             fichier.write(data_str)
             fichier.close()
         if ENTRAVE > 0:
-            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(ENTRAVE_SUBI) + "/"+ str(ENTRAVE)+" entrave subie"
+            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(ENTRAVE_DEFENDU) + "/"+ str(ENTRAVE)+" (défense appliquée sur l'entrave) "
         print(MESSAGE_DEFENDU)
 
     TOTAL_SUBI = calcul_subi_phase_defensive()
@@ -1340,6 +1345,7 @@ def clean_json_combat():
         data_dict["phase_offensive"]["deferlement_reiryoku"] = 0
         data_dict["phase_offensive"]["entrave_subi"] = 0
         data_dict["synthese"]["immobilisation_subi"] = 0
+        data_dict["phase_defensive"]["entrave_defendu"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
