@@ -775,6 +775,9 @@ def integration_phase_defensive():
         ENTRAVE = data_dict["phase_defensive"]["entrave"]
         ENTRAVE_DEFENDU = data_dict["phase_defensive"]["entrave_defendu"]
         ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
+        DRAIN = data_dict["phase_defensive"]["drain"]
+        DRAIN_DEFENDU = data_dict["phase_defensive"]["drain_defendu"]
+        DRAIN_SUBI = data_dict["phase_defensive"]["drain_subi"]
         if IMMOBILISATION > 0:
             SOMME_DEFENDU_IMMO = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
             IMMOBILISATION_FINAL = int(IMMOBILISATION) - int(TOTAL_DEFENDU)
@@ -791,6 +794,8 @@ def integration_phase_defensive():
             fichier.close()
         if ENTRAVE > 0:
             MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(ENTRAVE_DEFENDU) + "/"+ str(ENTRAVE)+" (défense appliquée sur l'entrave) "
+        if DRAIN > 0:
+            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(DRAIN_DEFENDU) + "/"+ str(DRAIN)+" (défense appliquée sur le drain) soit " + str(DRAIN_SUBI) + " reiryoku subi"
         print(MESSAGE_DEFENDU)
 
     TOTAL_SUBI = calcul_subi_phase_defensive()
