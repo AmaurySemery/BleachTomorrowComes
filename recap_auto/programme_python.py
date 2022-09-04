@@ -194,19 +194,24 @@ def techniques_defensives():
             fichier.write(data_str)
             fichier.close()
 
-    def don_reiryoku():
-        data = get_data(CHEMIN_ODS)
-        REIRYOKU_BONUS = data['Combat'][20][5]
+    def don_reiryoku_subi(REIRYOKU_BONUS):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
-            EP = data_dict["attributs"]["EP_fin"]
-            ES = data_dict["attributs"]["ES_fin"]
+            EP = data_dict["attributs"]["EP_debut"]
+            ES = data_dict["attributs"]["ES_debut"]
+            EP_TOTAL = data_dict["attributs"]["EP_total"]
+            ES_TOTAL = data_dict["attributs"]["ES_total"]
             EP_BONUS = int(REIRYOKU_BONUS) / 2
             ES_BONUS = int(REIRYOKU_BONUS) / 2
             SOMME_EP = int(EP) + int(EP_BONUS)
             SOMME_ES = int(ES) + int(ES_BONUS)
-            data_dict["attributs"]["EP_fin"] = SOMME_EP
-            data_dict["attributs"]["ES_fin"] = SOMME_ES
+            if SOMME_EP > EP_TOTAL:
+                SOMME_EP = EP_TOTAL
+            if SOMME_ES > ES_TOTAL:
+                SOMME_ES = ES_TOTAL
+            data_dict["phase_defensive"]["don_reiryoku"] = REIRYOKU_BONUS
+            data_dict["attributs"]["EP_debut"] = SOMME_EP
+            data_dict["attributs"]["ES_debut"] = SOMME_ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -306,7 +311,8 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     DEFENSE_DRAIN = data['Combat'][16][6]
     ID_GUERISON = data['Combat'][19][4]
     GUERISON_BONUS = data['Combat'][20][4]
-    DON_REIRYOKU = data['Combat'][19][5]
+    ID_DON_REIRYOKU = data['Combat'][19][5]
+    REIRYOKU_BONUS = data['Combat'][20][5]
     ID_ENTRAVE_SUBI = data['Combat'][14][5]
     ENTRAVE_SUBI = data['Combat'][15][5]
     DEFENSE_ENTRAVE = data['Combat'][16][5]
@@ -317,6 +323,8 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
 
     if ID_GUERISON == 1:
         guerison_subi(GUERISON_BONUS)
+    if ID_DON_REIRYOKU == 1:
+        don_reiryoku_subi(REIRYOKU_BONUS)
 
     calcul_pv_defense()
 
@@ -350,8 +358,6 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
         entrave_subi(ENTRAVE_SUBI,DEFENSE_ENTRAVE)
     if ID_DRAIN == 1:
         drain_subi(DRAIN_SUBI,DEFENSE_DRAIN)
-    if DON_REIRYOKU == 1:
-        don_reiryoku()
 
 def effet_off(EFFET,CODE_TYPE_EFFET):
     if CODE_TYPE_EFFET == 'att' or CODE_TYPE_EFFET == 'boostof':
@@ -781,8 +787,11 @@ def integration_phase_defensive():
         DRAIN_DEFENDU = data_dict["phase_defensive"]["drain_defendu"]
         DRAIN_SUBI = data_dict["phase_defensive"]["drain_subi"]
         GUERISON = data_dict["phase_defensive"]["guerison"]
+        DON_REI = data_dict["phase_defensive"]["don_reiryoku"]
         if GUERISON > 0:
             MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(GUERISON) + " bonus guérison "
+        if DON_REI > 0:
+            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(DON_REI) + " bonus reiryoku "
         if IMMOBILISATION > 0:
             SOMME_DEFENDU_IMMO = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
             IMMOBILISATION_FINAL = int(IMMOBILISATION) - int(TOTAL_DEFENDU)
@@ -830,7 +839,6 @@ def valeur_negatives_positives_somme():
         DRAIN_SUBI = data_dict["phase_defensive"]["drain"]
         DRAIN_IMPARABLE = data_dict["phase_offensive"]["drain_imparable"]
         DON_REI = data_dict["phase_offensive"]["don_rei"]
-        DON_REI_BONUS = data_dict["phase_defensive"]["don_reiryoku"]
         SACRIFICE = data_dict["phase_offensive"]["sacrifice"]
         MULTICIBLES = data_dict["phase_offensive"]["degats_multicibles"]
         ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
@@ -851,8 +859,6 @@ def valeur_negatives_positives_somme():
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON) + ' guerison '
         if DON_REI != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI) + ' don reiryoku '
-        if DON_REI_BONUS != 0:
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI_BONUS) + ' reiryoku reçu '
         if SACRIFICE != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(SACRIFICE) + ' PV sacrifiés '
         if MULTICIBLES != 0:
