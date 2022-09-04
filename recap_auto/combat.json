@@ -23,6 +23,8 @@
         "immobilisation": 0,
         "guerison": 0,
         "drain": 0,
+        "drain_subi": 0,
+        "drain_defendu": 0,
         "don_reiryoku": 0,
         "ES_depenses": 0,
         "positif": 0

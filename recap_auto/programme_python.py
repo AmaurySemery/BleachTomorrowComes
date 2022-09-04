@@ -22,6 +22,7 @@ MAINTENU_SOMME,NEGATIF_SOMME_DEBUT,POSITIF_SOMME_DEBUT):
         data_dict["attributs"]["EP_debut"] = EP_DEBUT
         data_dict["attributs"]["ES_debut"] = ES_DEBUT
         data_dict["attributs"]["PA_debut"] = PA_DEBUT
+        data_dict["attributs"]["PA_restants"] = PA_DEBUT
         data_dict["phase_defensive"]["maintenu"] = MAINTENU_SOMME
         data_dict["phase_defensive"]["negatif"] = NEGATIF_SOMME_DEBUT
         data_dict["phase_defensive"]["positif"] = POSITIF_SOMME_DEBUT
@@ -154,31 +155,31 @@ def techniques_defensives():
             fichier.write(data_str)
             fichier.close()
 
-    def drain():
-        data = get_data(CHEMIN_ODS)
-        DRAIN_SUBI = data['Combat'][15][4]
-        DEFENSE_INVESTI = data['Combat'][16][4]
+    def drain_subi(DRAIN_SUBI,DEFENSE_DRAIN):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
-            DRAIN = data_dict["phase_defensive"]["drain"]
-            POSITIF = data_dict["phase_defensive"]["positif"]
-            EP = data_dict["attributs"]["EP_fin"]
-            ES = data_dict["attributs"]["ES_fin"]
-            SUBI = int(DRAIN_SUBI) - int(DEFENSE_INVESTI)
+            SOMME_DEFENDU = data_dict["synthese"]["total_defendu"]
+            SOMME_SUBI = data_dict["synthese"]["total_subi"]
+            EP = data_dict["phase_defensive"]["EP_depenses"]
+            ES = data_dict["phase_defensive"]["ES_depenses"]
+            SUBI = int(DRAIN_SUBI) - int(DEFENSE_DRAIN)
             if SUBI < 0:
                 SUBI = 0
-            DRAIN = int(DRAIN) + int(SUBI)
+            SOMME_DEFENDU = int(SOMME_DEFENDU) - int(DEFENSE_DRAIN)
             EP_SUBI = int(SUBI) / 2
             ES_SUBI = int(SUBI) / 2
             SOMME_EP = int(EP) + int(EP_SUBI)
             SOMME_ES = int(ES) + int(ES_SUBI)
-            POSITIF = int(POSITIF) - int(DEFENSE_INVESTI)
-            if POSITIF < 0:
-                POSITIF = 0
-            data_dict["phase_defensive"]["drain"] = DRAIN
-            data_dict["phase_defensive"]["positif"] = POSITIF
-            data_dict["attributs"]["EP_fin"] = SOMME_EP
-            data_dict["attributs"]["ES_fin"] = SOMME_ES
+            if SOMME_DEFENDU < 0:
+                SOMME_DEFENDU = 0
+            SOMME_SUBI = int(SOMME_SUBI) + int(DEFENSE_DRAIN)
+            data_dict["phase_defensive"]["drain_subi"] = SUBI
+            data_dict["phase_defensive"]["drain"] = DRAIN_SUBI
+            data_dict["phase_defensive"]["drain_defendu"] = DEFENSE_DRAIN
+            data_dict["synthese"]["total_defendu"] = SOMME_DEFENDU
+            data_dict["synthese"]["total_subi"] = SOMME_SUBI
+            data_dict["phase_defensive"]["EP_depenses"] = SOMME_EP
+            data_dict["phase_defensive"]["ES_depenses"] = SOMME_ES
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -211,19 +212,6 @@ def techniques_defensives():
             SOMME_ES = int(ES) + int(ES_BONUS)
             data_dict["attributs"]["EP_fin"] = SOMME_EP
             data_dict["attributs"]["ES_fin"] = SOMME_ES
-            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
-            fichier = open(CHEMIN_COMBAT_JSON,'wt')
-            fichier.write(data_str)
-            fichier.close()
-
-    def technique_none():
-        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
-            data_dict = json.load(json_data)
-            PA_DEBUT = data_dict["attributs"]["PA_debut"]
-            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
-            PA_RESTANTS = data_dict["attributs"]["PA_restants"]
-            PA_RESTANTS = int(PA_DEBUT) - int(PA_RESTANTS)
-            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
             data_str = json.dumps(data_dict, sort_keys=False, indent=4)
             fichier = open(CHEMIN_COMBAT_JSON,'wt')
             fichier.write(data_str)
@@ -316,7 +304,9 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
     IMMOBILISATION = data['Combat'][14][4]
-    DRAIN = data['Combat'][14][6]
+    ID_DRAIN = data['Combat'][14][6]
+    DRAIN_SUBI = data['Combat'][15][6]
+    DEFENSE_DRAIN = data['Combat'][16][6]
     GUERISON = data['Combat'][19][4]
     DON_REIRYOKU = data['Combat'][19][5]
     ID_ENTRAVE_SUBI = data['Combat'][14][5]
@@ -326,7 +316,6 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     b = 0
     if NOMBRE_TECH == 0:
         full_encaisse()
-        technique_none()
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][0]
         ID_TECH = data['Combat'][a][1]
@@ -355,8 +344,8 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
         immobilisation()
     if ID_ENTRAVE_SUBI == 1:
         entrave_subi(ENTRAVE_SUBI,DEFENSE_ENTRAVE)
-    if DRAIN == 1:
-        drain()
+    if ID_DRAIN == 1:
+        drain_subi(DRAIN_SUBI,DEFENSE_DRAIN)
     if GUERISON == 1:
         guerison()
     if DON_REIRYOKU == 1:
@@ -505,22 +494,6 @@ def techniques_offensives():
             fichier.write(data_str)
             fichier.close()
 
-    def technique_none():
-        with open(CHEMIN_COMBAT_JSON,'r') as json_data:
-            data_dict = json.load(json_data)
-            PA_DEBUT = data_dict["attributs"]["PA_debut"]
-            PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
-            PA_RESTANTS = data_dict["attributs"]["PA_restants"]
-            if PA_RESTANTS != 0:
-                pass
-            if PA_RESTANTS == 0:
-                PA_RESTANTS = int(PA_DEBUT) - int(PA_RESTANTS)
-            data_dict["attributs"]["PA_restants"] = PA_RESTANTS
-            data_str = json.dumps(data_dict, sort_keys=False, indent=4)
-            fichier = open(CHEMIN_COMBAT_JSON,'wt')
-            fichier.write(data_str)
-            fichier.close()
-
     def print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA):
         print('[*][b][Niveau '+str(NIV_TECH)+'] '+str(NOM_TECH)+'[/b]')
@@ -595,9 +568,6 @@ def techniques_offensives():
     b = 0
     if DEFERLEMENT_REIRYOKU == 1:
         technique_deferlement_reiryoku()
-
-    if NOMBRE_TECH == 0:
-        technique_none()
 
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][7]
@@ -1346,6 +1316,8 @@ def clean_json_combat():
         data_dict["phase_offensive"]["entrave_subi"] = 0
         data_dict["synthese"]["immobilisation_subi"] = 0
         data_dict["phase_defensive"]["entrave_defendu"] = 0
+        data_dict["phase_defensive"]["drain_subi"] = 0
+        data_dict["phase_defensive"]["drain_defendu"] = 0
         data_str = json.dumps(data_dict, sort_keys=False, indent=4)
         fichier = open(CHEMIN_COMBAT_JSON,'wt')
         fichier.write(data_str)
