@@ -119,10 +119,7 @@ def optionnel_multicibles(EFFET,CODE_TYPE_EFFET,DEPENSE_EP,DEPENSE_ES):
                     fichier.close()
 
 def techniques_defensives():
-    def immobilisation():
-        data = get_data(CHEMIN_ODS)
-        IMMOBILISATION_SUBI = data['Combat'][15][4]
-        DEFENSE_INVESTI = data['Combat'][16][4]
+    def immobilisation_subi(IMMOBILISATION_SUBI,DEFENSE_IMMOBILISATION):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             IMMOBILISATION = data_dict["phase_defensive"]["immobilisation"]
@@ -185,9 +182,7 @@ def techniques_defensives():
             fichier.write(data_str)
             fichier.close()
 
-    def guerison():
-        data = get_data(CHEMIN_ODS)
-        GUERISON_BONUS = data['Combat'][20][4]
+    def guerison_subi(GUERISON_BONUS):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             POSITIF = data_dict["phase_defensive"]["positif"]
@@ -303,11 +298,14 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
 
     data = get_data(CHEMIN_ODS)
     NOMBRE_TECH = data['Combat'][0][1]
-    IMMOBILISATION = data['Combat'][14][4]
+    ID_IMMOBILISATION = data['Combat'][14][4]
+    IMMOBILISATION_SUBI = data['Combat'][15][4]
+    DEFENSE_IMMOBILISATION = data['Combat'][16][4]
     ID_DRAIN = data['Combat'][14][6]
     DRAIN_SUBI = data['Combat'][15][6]
     DEFENSE_DRAIN = data['Combat'][16][6]
-    GUERISON = data['Combat'][19][4]
+    ID_GUERISON = data['Combat'][19][4]
+    GUERISON_BONUS = data['Combat'][20][4]
     DON_REIRYOKU = data['Combat'][19][5]
     ID_ENTRAVE_SUBI = data['Combat'][14][5]
     ENTRAVE_SUBI = data['Combat'][15][5]
@@ -316,6 +314,12 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
     b = 0
     if NOMBRE_TECH == 0:
         full_encaisse()
+
+    if ID_GUERISON == 1:
+        guerison_subi(GUERISON_BONUS)
+
+    calcul_pv_defense()
+
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][0]
         ID_TECH = data['Combat'][a][1]
@@ -340,14 +344,12 @@ EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
             POSITION = int(c) + int(ID_TECH)
             integrate_value(NIV_TECH,POSITION)
         a += 1
-    if IMMOBILISATION == 1:
-        immobilisation()
+    if ID_IMMOBILISATION == 1:
+        immobilisation_subi(IMMOBILISATION_SUBI,DEFENSE_IMMOBILISATION)
     if ID_ENTRAVE_SUBI == 1:
         entrave_subi(ENTRAVE_SUBI,DEFENSE_ENTRAVE)
     if ID_DRAIN == 1:
         drain_subi(DRAIN_SUBI,DEFENSE_DRAIN)
-    if GUERISON == 1:
-        guerison()
     if DON_REIRYOKU == 1:
         don_reiryoku()
 
@@ -778,6 +780,9 @@ def integration_phase_defensive():
         DRAIN = data_dict["phase_defensive"]["drain"]
         DRAIN_DEFENDU = data_dict["phase_defensive"]["drain_defendu"]
         DRAIN_SUBI = data_dict["phase_defensive"]["drain_subi"]
+        GUERISON = data_dict["phase_defensive"]["guerison"]
+        if GUERISON > 0:
+            MESSAGE_DEFENDU = MESSAGE_DEFENDU + " & " + str(GUERISON) + " bonus guérison "
         if IMMOBILISATION > 0:
             SOMME_DEFENDU_IMMO = int(TOTAL_DEFENDU) - int(IMMOBILISATION)
             IMMOBILISATION_FINAL = int(IMMOBILISATION) - int(TOTAL_DEFENDU)
@@ -818,7 +823,6 @@ def valeur_negatives_positives_somme():
         NEGATIF = data_dict["phase_offensive"]["negatif"]
         POSITIF = data_dict["phase_offensive"]["positif"]
         GUERISON = data_dict["phase_offensive"]["guerison"]
-        GUERISON_BONUS = data_dict["phase_defensive"]["guerison"]
         ENTRAVE = data_dict["phase_offensive"]["entrave"]
         ENTRAVE_SUBI = data_dict["phase_offensive"]["entrave_subi"]
         IMMOBILISATION = data_dict["phase_offensive"]["immobilisation"]
@@ -845,8 +849,6 @@ def valeur_negatives_positives_somme():
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(DRAIN_SUBI) + ' drain reiryoku subi '
         if GUERISON != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON) + ' guerison '
-        if GUERISON_BONUS != 0:
-            TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(GUERISON_BONUS) + ' guerison reçu '
         if DON_REI != 0:
             TEXT_VALEURS_POSITIVES = TEXT_VALEURS_POSITIVES + ' & ' +str(DON_REI) + ' don reiryoku '
         if DON_REI_BONUS != 0:
@@ -1051,7 +1053,21 @@ def calcul_defendu_phase_defensive():
         TOTAL_DEFENDU = data_dict["synthese"]["total_defendu"]
     return TOTAL_DEFENDU
 
-
+def calcul_pv_defense():
+    with open(CHEMIN_COMBAT_JSON,'r') as json_data:
+        data_dict = json.load(json_data)
+        TOTAL_SUBI = data_dict["synthese"]["total_subi"]
+        POSITIF = data_dict["phase_defensive"]["positif"]
+        PV_DEBUT = data_dict["attributs"]["PV_debut"]
+        PV_TOTAL = data_dict["attributs"]["PV_total"]
+        PV_FIN = int(PV_DEBUT) + int(POSITIF)
+        if PV_FIN > PV_TOTAL:
+            PV_FIN = int(PV_TOTAL)
+        data_dict["attributs"]["PV_debut"] = PV_FIN
+        data_str = json.dumps(data_dict, sort_keys=False, indent=4)
+        fichier = open(CHEMIN_COMBAT_JSON,'wt')
+        fichier.write(data_str)
+        fichier.close()
 
 def calcul_PV_fin():
     with open(CHEMIN_COMBAT_JSON,'r') as json_data:
