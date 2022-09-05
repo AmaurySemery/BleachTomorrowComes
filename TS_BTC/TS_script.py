@@ -10,8 +10,6 @@ CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
 chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/TS_BTC/classement_BTC.CSV'
 
-# Chemin à éditer
-# chemin_csv = 'C:\Users\amaur\Documents\python\BTC\TS_BTC\classement_BTC.csv'
 
 # Liste joueurs à éditer suivant le groupe
 LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome']
@@ -111,4 +109,4 @@ if __name__=='__main__':
 
     print("BTC compte", len(Votes),"votants pour cette session.")
     print('\n')
-    print("Merci à vous et bon jeu sur BTC !")
+    print("[h2]Merci et bon jeu sur BTC ![/h2]")
