@@ -81,23 +81,23 @@ if __name__=='__main__':
         b = int(row['Total'])
         Name.append(a)
         Votes.append(b)
-        if b > 0:
+        if b < 50:
+            result = 0
+        if b >= 50 and b < 100:
             result = 3
-        # if b < 50:
-        #     result = 0
-        # if b >= 50 and b < 100:
-        #     result = 3
-        # if b >= 100 and b < 150:
-        #     result = 6
-        # if b >= 150:
-        #     result = 9
+        if b >= 100 and b < 150:
+            result = 6
+        if b >= 150:
+            result = 9
         XP.append(result)
 
     current_date = date.today()
     old_date = current_date - timedelta(7)
 
-    print("[center][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/center]")
+    print("[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]")
+    print('\n')
     print("Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b].")
+    print('\n')
     print("Les récompensés sont donc les suivants :[list=1]")
 
     for x,y in zip(Name,XP):
@@ -110,4 +110,5 @@ if __name__=='__main__':
     print("[/list]")
 
     print("BTC compte", len(Votes),"votants pour cette session.")
+    print('\n')
     print("Merci à vous et bon jeu sur BTC !")
