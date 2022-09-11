@@ -12,9 +12,9 @@ chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/TS_BTC/classement_BTC.
 
 
 # Liste joueurs à éditer suivant le groupe
-LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome']
-LISTE_MEMBRES_ACUERDO = ['Farasha']
-LISTE_MEMBRES_ULTIMA_NECAT = ['Orias','Kichigai Ganryu','Akashiya Recca']
+LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome','Shiro Mayuri','Kyokusei Kenshiro','Kyriu Shinjiro','Chibiko Daestra','Igarashi Sora','Yane Yoru','Hinotori Mamoru','Yuko Seiichi','Sabaiba Yoko','Shunsho Hiro']
+LISTE_MEMBRES_ACUERDO = ['Farasha','Yubel','Borick','Delila Scarlatti','Aviela Garaitz']
+LISTE_MEMBRES_ULTIMA_NECAT = ['Orias','Kichigai Ganryu','Akashiya Recca','Connor Austins']
 LISTE_MEMBRES_INDEP = []
 
 def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep):
@@ -51,6 +51,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Shunsho Hiro'
         if membre == 'Kiryû':
             membre = 'Kiryu Shinjiro'
+        if membre == 'Yoko':
+            membre = 'Sabaiba Yoko'
         if membre in liste_membre_gotei:
             data = '[*][b]' + str(COLOR_GOTEI_13) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_acuerdo:
@@ -97,13 +99,15 @@ if __name__=='__main__':
     print("Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b].")
     print('\n')
     print("Les récompensés sont donc les suivants :[list=1]")
-
     for x,y in zip(Name,XP):
         a = x
         b = y
         Final.append(a)
         Final.append(b)
-        print(change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée")
+        if b == 0:
+            pass
+        if b > 0:
+            print(change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée")
 
     print("[/list]")
 
