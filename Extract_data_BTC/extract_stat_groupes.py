@@ -1,6 +1,9 @@
 import requests
 import requests
 from bs4 import BeautifulSoup
+import html5lib
+import re
+import urllib3
 
 url = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
 
@@ -66,34 +69,47 @@ def get_renommee(RENOMMEE):
     # for i in LONGUEUR_LISTE:
     #     if str
 
+http = urllib3.PoolManager()
 
-page = requests.get(url)
-soup = BeautifulSoup(page.content, 'html.parser')
-MEMBRES_GOTEI_13 = soup.find_all('strong')
-LISTE_GOTEI_13 = []
-for name in MEMBRES_GOTEI_13:
-    name = str(name)
-    replace_strong_1 = name.replace("<strong>","")
-    replace_strong_2 = replace_strong_1.replace("</strong>","")
-    if replace_strong_2 != "Gotei 13" and replace_strong_2 != "Reiō" and replace_strong_2 != '<a href="https://www.forumactif.com" target="_blank">Créer un forum</a>' and replace_strong_2 != '<a href="https://www.forumactif.com/forum-gratuit" target="_blank">Forum gratuit</a>':
-        LISTE_GOTEI_13.append(replace_strong_2)
-        result_id = gotei_13_id_profil(replace_strong_2)
+url = 'https://www.before-tomorrow-comes.fr/u36'
+resp = http.request('GET', url,headers=headers)
+# print(resp.data.decode('utf-8'))
+print(resp.data)
 
-        url_profil = "https://www.before-tomorrow-comes.fr/" + str(result_id)
-        print(url_profil)
-        request_profil = requests.get(url_profil)
-        soup_profil = BeautifulSoup(request_profil.content, 'html.parser')
-        RENOMMEE = soup_profil.find_all("div",class_="field_uneditable")
-
-        get_renommee(RENOMMEE)
-
-        RENOMMEE = str(RENOMMEE[0])
-        REPLACE_RENOMMEE_1 = RENOMMEE.replace('<div class="field_uneditable">',"")
-        REPLACE_RENOMMEE_2 = REPLACE_RENOMMEE_1.replace('</div>',"")
-
-
-        print(soup_profil_gotei_13("field_id-13"))
-
-
-
-
+# page = requests.get(url)
+# soup = BeautifulSoup(page.content, 'html.parser')
+# MEMBRES_GOTEI_13 = soup.find_all('strong')
+# LISTE_GOTEI_13 = []
+# for name in MEMBRES_GOTEI_13:
+#     name = str(name)
+#     replace_strong_1 = name.replace("<strong>","")
+#     replace_strong_2 = replace_strong_1.replace("</strong>","")
+#     if replace_strong_2 != "Gotei 13" and replace_strong_2 != "Reiō" and replace_strong_2 != '<a href="https://www.forumactif.com" target="_blank">Créer un forum</a>' and replace_strong_2 != '<a href="https://www.forumactif.com/forum-gratuit" target="_blank">Forum gratuit</a>':
+#         LISTE_GOTEI_13.append(replace_strong_2)
+#         result_id = gotei_13_id_profil(replace_strong_2)
+#
+#         url_profil = "https://www.before-tomorrow-comes.fr/" + str(result_id)
+#         print(url_profil)
+#         request_profil = requests.get(url_profil)
+#         soup_profil = BeautifulSoup(request_profil.content, 'html5lib')
+#         PROFIL = str(soup_profil.prettify())
+#         print(soup_profil.find_all('dt'))
+        # print(soup_profil.get_text())
+        # PROFIL = str(soup_profil)
+        # print(PROFIL.title.string)
+        #
+        #
+        # # print(PROFIL)
+        # found = re.search('<dl id="field_id-13" class="profil-infos" style="width: 100%;"><dt>Renommée : </dt><dd><div class="field_uneditable">(.+?)</div>', PROFIL).group(1)
+        #
+        # print(found)
+        # RENOMMEE = PROFIL.find("dl",id="field_id-13",class_="profil-infos")
+        #
+        # get_renommee(RENOMMEE)
+        #
+        # RENOMMEE = str(RENOMMEE[0])
+        # REPLACE_RENOMMEE_1 = RENOMMEE.replace('<div class="field_uneditable">',"")
+        # REPLACE_RENOMMEE_2 = REPLACE_RENOMMEE_1.replace('</div>',"")
+        #
+        #
+        # print(soup_profil_gotei_13("field_id-13"))
