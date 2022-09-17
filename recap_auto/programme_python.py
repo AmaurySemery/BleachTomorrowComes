@@ -243,7 +243,7 @@ def techniques_defensives():
             PA_DEPENSES = data_dict["attributs"]["PA_depenses"]
             EP = data_dict["phase_defensive"]["EP_depenses"]
             ES = data_dict["phase_defensive"]["ES_depenses"]
-            CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
+            CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][12]
             POSITIF = int(POSITIF) + int(EFFET)
             TOTAL_DEFENDU = int(POSITIF)
             if int(TOTAL_DEFENDU) < 0 :
@@ -294,8 +294,8 @@ def techniques_defensives():
         DEPENSE_ES = data['Liste_techniques'][POSITION][7]
         DEPENSE_PV = data['Liste_techniques'][POSITION][8]
         DESCRIPTION = data['Liste_techniques'][POSITION][9]
-        COUT_PA = data['Liste_techniques'][POSITION][12]
-        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
+        COUT_PA = data['Liste_techniques'][POSITION][10]
+        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][12]
         print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
 EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
         save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET)
@@ -553,9 +553,8 @@ def techniques_offensives():
         DEPENSE_ES = data['Liste_techniques'][POSITION][7]
         DEPENSE_PV = data['Liste_techniques'][POSITION][8]
         DESCRIPTION = data['Liste_techniques'][POSITION][9]
-        BONUS = data['Liste_techniques'][POSITION][10]
-        COUT_PA = data['Liste_techniques'][POSITION][12]
-        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][14]
+        COUT_PA = data['Liste_techniques'][POSITION][10]
+        CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][12]
         print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
         save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET)
@@ -646,7 +645,7 @@ def second_liberation(mode):
     COUT_ES = data['Sysco'][17][10]
     TYPE_SECOND_LIBERATION = data['Liste_techniques'][20][4]
     EFFET = data['Liste_techniques'][20][5]
-    CODE_TYPE_EFFET = data['Liste_techniques'][20][14]
+    CODE_TYPE_EFFET = data['Liste_techniques'][20][12]
     if ETAT == 0:
         pass
     elif ETAT == 1:
