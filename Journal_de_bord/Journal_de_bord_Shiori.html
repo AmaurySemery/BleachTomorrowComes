@@ -6,14 +6,6 @@
 </head>
 
 <style>
-    *{
-    font-family: Avenir, helvetica;
-    padding: 0px;
-    margin:0px;
-    text-align:justify;
-    box-sizing: border-box;
-    color: rgb(150, 190, 251);
-    }
     body{
         background: #ededed;
         width: 710px; 
@@ -35,7 +27,7 @@
         border-right: 2px solid rgb(190, 244, 248);
         border-left: 2px solid rgb(190, 244, 248);
         border-bottom: 2px solid rgb(190, 244, 248);
-        height: 90px;
+        height: 120px;
         width: 710px;
     }
     header h1{
@@ -76,14 +68,14 @@
         text-align: center;
     }
     .portrait-shiori img{
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border: 3px solid rgb(150, 190, 251);
         box-shadow: 0px 0px 10px rgb(190, 244, 248);
         border-radius: 50%;
-        margin-top: -40px;
+        margin-top: -60px;
     }
-    .relations{
+    .enrobage{
         border-top: 2px solid rgb(190, 244, 248);
         border-right: 2px solid rgb(190, 244, 248);
         border-left: 2px solid rgb(190, 244, 248);
@@ -96,6 +88,16 @@
         background-color: #10133d;
         box-shadow: 0px 0px 10px rgb(190, 244, 248);
         border-radius: 5px;
+    }
+    .enrobage h2{
+        text-align: center;
+        vertical-align: middle;
+        height: 50px;
+        width: 710px;
+        color: rgb(150, 190, 251);
+        font-style: bold;
+        font-size: 200%;
+        border-bottom: 1px solid rgb(150, 190, 251);
     }
     .chronologie{
         border-bottom: 2px dashed #ccc;
@@ -126,7 +128,7 @@
         flex-flow: row wrap;
         padding-bottom: 10px;
         margin-bottom: 10px;
-        padding: 1.8em;
+        padding: 0em 5em 1em;
         display: flex;
         vertical-align: middle;
     }
@@ -138,13 +140,14 @@
         flex: 0 0 25%;
         max-width: 100px;
         padding-right: 10px;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
     }
     .relationship-logo h3{
         text-align: center;
         vertical-align: middle;
         height: 50px;
         width: 100px;
+        color: rgb(150, 190, 251);
     }
     .relationship img{
         width: 100px;
@@ -173,8 +176,8 @@
         <div class="portrait-shiori">
             <img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shiori-portrait.png">
         </div>
-        <h2>Mes relations</h2>
-        <div class="relations">
+        <div class="enrobage">
+            <h2>Mes relations</h2>
             <div class="relationship">
                 <div class="relationship-logo">
                     <h3>Asano Shirahime</h3>
@@ -208,7 +211,7 @@
         </div>
     </div>
     <div class="section">
-        <div class="chronologie"><h2>Chronologie</h2>
+        <div class="enrobage"><h2>Chronologie</h2>
             <div class="RP">
                 <p>RP 1 : </p>
                 <p>Description</p>
