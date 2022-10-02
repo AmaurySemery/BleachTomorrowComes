@@ -46,20 +46,26 @@
         color: rgb(150, 190, 251)
     }
     section{
+        border-top: 2px solid rgb(190, 244, 248);
+        border-right: 2px solid rgb(190, 244, 248);
+        border-left: 2px solid rgb(190, 244, 248);
+        border-bottom: 2px solid rgb(190, 244, 248);
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
-        width: 100%;
         padding-bottom: 20px;
         margin: 20px auto;
         box-shadow: 0px 0px 10px #bbb;
         background-color: #fff;
+        height: 90px;
+        width: 710px;
     }
     section h2{
         margin: 20px 0;
         width: 90%;
     }
     section h3{
+        text-align: center;
         margin: 20px 0;
         width: 80%;
     }
@@ -70,28 +76,39 @@
         text-align: center;
     }
     .portrait-shiori img{
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         border: 3px solid rgb(150, 190, 251);
         box-shadow: 0px 0px 10px rgb(190, 244, 248);
         border-radius: 50%;
         margin-top: -40px;
     }
     .relations{
-        border-bottom: 2px dashed #ccc;
+        border-top: 2px solid rgb(190, 244, 248);
+        border-right: 2px solid rgb(190, 244, 248);
+        border-left: 2px solid rgb(190, 244, 248);
+        border-bottom: 2px solid rgb(190, 244, 248);
+        display: block;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto 30px auto;
+        color: #fff;
+        background-color: #10133d;
+        box-shadow: 0px 0px 10px rgb(190, 244, 248);
+        border-radius: 5px;
     }
     .chronologie{
         border-bottom: 2px dashed #ccc;
     }
     .chronologie a{
-    display: block;
-    text-align: center;
-    padding: 10px;
-    margin: 10px auto 30px auto;
-    color: #fff;
-    background-color: #10133d;
-    box-shadow: 0px 0px 10px rgb(190, 244, 248);
-    border-radius: 5px;
+        display: block;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto 30px auto;
+        color: #fff;
+        background-color: #10133d;
+        box-shadow: 0px 0px 10px rgb(190, 244, 248);
+        border-radius: 5px;
     }
     .RP{
         display: flex;
@@ -107,9 +124,11 @@
     .relationship{
         display: flex;
         flex-flow: row wrap;
-        border-bottom: 1px solid #bbb;
         padding-bottom: 10px;
         margin-bottom: 10px;
+        padding: 1.8em;
+        display: flex;
+        vertical-align: middle;
     }
     .relationship-info{
         display: flex;
@@ -118,7 +137,14 @@
     .relationship-logo{
         flex: 0 0 25%;
         max-width: 100px;
-
+        padding-right: 10px;
+        padding-bottom: 5px;
+    }
+    .relationship-logo h3{
+        text-align: center;
+        vertical-align: middle;
+        height: 50px;
+        width: 100px;
     }
     .relationship img{
         width: 100px;
@@ -147,13 +173,36 @@
         <div class="portrait-shiori">
             <img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shiori-portrait.png">
         </div>
-        <div class="relations"><h2>Mes relations</h2>
+        <h2>Mes relations</h2>
+        <div class="relations">
             <div class="relationship">
                 <div class="relationship-logo">
-                    <a href="https://www.before-tomorrow-comes.fr/u26"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shirahime.png" alt="Shirahime"></a>
+                    <h3>Asano Shirahime</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u26"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shirahime.png"></a>
                 </div>
                 <div class="relationship-logo">
-                    <a href="https://www.before-tomorrow-comes.fr/u26"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shirahime.png" alt="Shirahime"></a>
+                    <h3>Hinotori Mamoru</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u11"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\mamoru.png"></a>
+                </div>
+                <div class="relationship-logo">
+                    <h3>Tomoe Nozomi</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u3"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\nozomi.png"></a>
+                </div>
+                <div class="relationship-logo">
+                    <h3>Yuta</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u22"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\yuta.png"></a>
+                </div>
+                <div class="relationship-logo">
+                    <h3>Igarashi Sora</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u5"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\sora.png"></a>
+                </div>
+                <div class="relationship-logo">
+                    <h3>Yane Yoru</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u38"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\yane.png"></a>
+                </div>
+                <div class="relationship-logo">
+                    <h3>Chibiko Daestra</h3>
+                    <a href="https://www.before-tomorrow-comes.fr/u34"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\daestra.png"></a>
                 </div>
             </div>
         </div>
