@@ -31,10 +31,11 @@
         width: 710px;
     }
     header h1{
-        font-size: 30px;
+        font-size: 50px;
         width: 100%;
         margin: 0 auto;
         text-align: center;
+        text-shadow: 0px 0px 15px rgb(71, 17, 17);
         color: rgb(150, 190, 251)
     }
     section{
@@ -97,31 +98,14 @@
         color: rgb(150, 190, 251);
         font-style: bold;
         font-size: 200%;
-        border-bottom: 1px solid rgb(150, 190, 251);
+        text-shadow: 0px 0px 15px rgb(71, 17, 17);
+        border-bottom: 3px solid rgb(150, 190, 251);
     }
-    .chronologie{
-        border-bottom: 2px dashed #ccc;
-    }
-    .chronologie a{
+    .enrobage a{
         display: block;
         text-align: center;
-        padding: 10px;
-        margin: 10px auto 30px auto;
-        color: #fff;
+        color: rgb(150, 190, 251);
         background-color: #10133d;
-        box-shadow: 0px 0px 10px rgb(190, 244, 248);
-        border-radius: 5px;
-    }
-    .RP{
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-    }
-    .RP p:first-child{
-        flex: 0 0 40%;
-    }
-    .RP p:last-child{
-        flex: 0 0 60%;
     }
     .relationship{
         display: flex;
@@ -156,6 +140,25 @@
         box-shadow: 0px 0px 10px rgb(190, 244, 248);
         border-radius: 50%;
         margin-top: 0px;
+    }
+    .RP{
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+    .RP p:first-child{
+        flex: 0 0 40%;
+    }
+    .RP p:first-child img{
+        width: 100px;
+        height: 100px;
+        border: 3px solid rgb(150, 190, 251);
+        box-shadow: 0px 0px 10px rgb(190, 244, 248);
+        border-radius: 50%;
+        margin-top: 0px;
+    }
+    .RP p:last-child{
+        flex: 0 0 60%;
     }
     .box{
         float:left;
@@ -213,8 +216,10 @@
     <div class="section">
         <div class="enrobage"><h2>Chronologie</h2>
             <div class="RP">
-                <p>RP 1 : </p>
-                <p>Description</p>
+                <p>
+                    <a href="https://www.before-tomorrow-comes.fr/u26"><img src="C:\Users\amaur\Documents\python\BTC\Journal_de_bord\shirahime.png"></a>
+                </p>
+                <p><h3><a href="https://www.before-tomorrow-comes.fr/t353-trouble-maker-shiori">trouble maker</a>(terminé)</h3></p>
             </div>
             <div class="RP">
                 <p>RP 2 : </p>
