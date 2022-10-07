@@ -579,7 +579,11 @@ def techniques_offensives():
     for i in range(int(NOMBRE_TECH)):
         NIV_TECH = data['Combat'][a][7]
         ID_TECH = data['Combat'][a][8]
-        if NIV_TECH == 1:
+        if NIV_TECH == 0:
+            c = b + 49
+            POSITION = int(c) + int(ID_TECH)
+            integrate_value(NIV_TECH,POSITION)
+        elif NIV_TECH == 1:
             c = b + 0
             POSITION = int(c) + int(ID_TECH)
             integrate_value(NIV_TECH,POSITION)
