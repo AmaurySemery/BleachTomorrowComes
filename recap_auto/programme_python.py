@@ -517,7 +517,7 @@ def techniques_offensives():
         print('[spoiler="Descriptif RP"]'+str(DESCRIPTION)+'[/spoiler]')
         print('\n')
 
-    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET):
+    def save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET):
         with open(CHEMIN_COMBAT_JSON,'r') as json_data:
             data_dict = json.load(json_data)
             POSITIF = data_dict["phase_offensive"]["positif"]
@@ -557,7 +557,7 @@ def techniques_offensives():
         CODE_TYPE_EFFET = data['Liste_techniques'][POSITION][12]
         print_for_reca(NIV_TECH,NOM_TECH,BRANCHE_PRINCIPALE_TECH,BRANCHE_SECONDAIRE_TECH,TYPE,
     EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,DESCRIPTION,COUT_PA)
-        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,BONUS,CODE_TYPE_EFFET)
+        save_depense_effet(EFFET,DEPENSE_EP,DEPENSE_ES,DEPENSE_PV,COUT_PA,CODE_TYPE_EFFET)
         effet_off(EFFET,CODE_TYPE_EFFET)
         effet_regen(EFFET,CODE_TYPE_EFFET)
         effet_guerison(EFFET,CODE_TYPE_EFFET)
@@ -846,8 +846,6 @@ def valeur_negatives_positives_somme():
         TEXT_VALEURS_POSITIVES = '[*][b]Valeurs positives :[/b] '+ str(POSITIF) + ' regen '
         if ENTRAVE != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(ENTRAVE) + ' entraves infligés '
-        if ENTRAVE_SUBI != 0:
-            TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(ENTRAVE_SUBI) + ' entraves subis '
         if IMMOBILISATION != 0:
             TEXT_VALEURS_NEGATIVES = TEXT_VALEURS_NEGATIVES + ' & ' +str(IMMOBILISATION) + ' immobilisation '
         if DRAIN != 0:
