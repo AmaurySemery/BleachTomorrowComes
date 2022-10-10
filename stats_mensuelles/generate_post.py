@@ -42,36 +42,79 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         data = '[*][b]' + str(membre) + '[/b]'
     return data
 
+def add_liste_somme(membre,value,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep,GOTEI,ACUERDO,UN,INDEP):
+    ADD = (value)
+    if membre in liste_membre_gotei:
+        GOTEI.append(ADD)
+    elif membre in liste_membre_acuerdo:
+        ACUERDO.append(ADD)
+    elif membre in liste_membre_UN:
+        UN.append(ADD)
+    elif membre in liste_membre_indep:
+        INDEP.append(ADD)
+
 if __name__=='__main__':
     url_gotei_groupe = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
     url_acuerdo_groupe = "https://www.before-tomorrow-comes.fr/g4-acuerdo"
     url_UN_groupe = "https://www.before-tomorrow-comes.fr/g5-ultima-necat"
     url_indep_groupe = "https://www.before-tomorrow-comes.fr/g6-independants"
 
-    LISTE_MEMBRES_GOTEI_13 = web_scraping(url_gotei_groupe,"Gotei 13")
-    LISTE_MEMBRES_ACUERDO = web_scraping(url_acuerdo_groupe,"Acuerdo")
-    LISTE_MEMBRES_ULTIMA_NECAT = web_scraping(url_UN_groupe,"Ultima Necat")
-    LISTE_MEMBRES_INDEP = web_scraping(url_UN_groupe,"Indépendants")
-    print(LISTE_MEMBRES_GOTEI_13)
-    print(LISTE_MEMBRES_ACUERDO)
-    print(LISTE_MEMBRES_ULTIMA_NECAT)
-    print(LISTE_MEMBRES_INDEP)
+    LISTE_MEMBRES_GOTEI_13 = web_scraping(url_gotei_groupe,'Gotei 13')
+    LISTE_MEMBRES_ACUERDO = web_scraping(url_acuerdo_groupe,'Acuerdo')
+    LISTE_MEMBRES_ULTIMA_NECAT = web_scraping(url_UN_groupe,'Ultima Necat')
+    LISTE_MEMBRES_INDEP = web_scraping(url_indep_groupe,'Indépendants')
 
-    # with open(chemin_csv, 'r',encoding='utf-8') as csvfile:
-    #     spamreader = csv.reader(csvfile, delimiter=',')
-    #     for row in spamreader:
-    #         ADD = (row[0],int(row[1]))
-    #         LISTE_JOUEUR.append(ADD)
-    #     LISTE_JOUEUR = sorted(LISTE_JOUEUR,key=lambda x: x[1],reverse=True)
-    #     COUNT = 0
-    #     print('[center][img]https://www.toria.fr/btc/moiniv.png[/img][/center]')
-    #     print('\n')
-    #     print('[h3][b]Classement de Renommée par personnage[/b][/h3]')
-    #     print('[spoiler][list=1]')
-    #     for i in LISTE_JOUEUR:
-    #         membre = i[0]
-    #         print(change(membre,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),':',str(i[1]),'Renommée')
-    #         if COUNT == 9:
-    #             print('\n')
-    #         COUNT += 1
-    #     print('[/list][/spoiler]')
+    LISTE_JOUEUR = []
+    GOTEI = []
+    ACUERDO = []
+    UN = []
+    INDEP = []
+
+    with open(chemin_csv, 'r',encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',')
+        for row in spamreader:
+            ADD = (row[0],int(row[1]))
+            LISTE_JOUEUR.append(ADD)
+        LISTE_JOUEUR = sorted(LISTE_JOUEUR,key=lambda x: x[1],reverse=True)
+        COUNT = 0
+        print('[center][img]https://www.toria.fr/btc/moiniv.png[/img][/center]')
+        print('\n')
+        print('[h3][b]Classement de Renommée par personnage[/b][/h3]')
+        print('[spoiler][list=1]')
+        for i in LISTE_JOUEUR:
+            membre = i[0]
+            print(change(membre,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),':','[b]'+ str(i[1])+'[/b]','Reno')
+            if COUNT == 9:
+                print('\n')
+            add_liste_somme(membre,i[1],LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP,GOTEI,ACUERDO,UN,INDEP)
+            COUNT += 1
+        print('[/list][/spoiler]')
+        print('\n')
+
+        print('[h3][b]Classement des factions[/b][/h3]')
+        print('[list=1]')
+
+        mean_gotei = sum(GOTEI) / len(GOTEI)
+        mean_acuerdo = sum(ACUERDO) / len(ACUERDO)
+        mean_UN = sum(UN) / len(UN)
+        mean_indep = sum(INDEP) / len(INDEP)
+
+        if len(GOTEI) <= 1:
+            print('[*][b][color=#344b99]Gotei 13[/color] :', str(len(GOTEI)),'[/b]membre pour[b]',str(sum(GOTEI)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_gotei,2)),'[/b]Renommée par membre)')
+        if len(GOTEI) > 1:
+            print('[*][b][color=#344b99]Gotei 13[/color] :', str(len(GOTEI)),'[/b]membres pour[b]',str(sum(GOTEI)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_gotei,2)),'[/b]Renommée par membre)')
+        if len(ACUERDO) <= 1:
+            print('[*][b][color=#929291]Acuerdo[/color] :', str(len(ACUERDO)),'[/b]membre pour[b]',str(sum(ACUERDO)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_acuerdo,2)),'[/b]Renommée par membre)')
+        if len(ACUERDO) > 1:
+            print('[*][b][color=#929291]Acuerdo[/color] :', str(len(ACUERDO)),'[/b]membres pour[b]',str(sum(ACUERDO)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_acuerdo,2)),'[/b]Renommée par membre)')
+        if len(UN) <= 1:
+            print('[*][b][color=#a23d3c]Ultima Necat[/color] :', str(len(UN)),'[/b]membre pour[b]',str(sum(UN)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_UN,2)),'[/b]Renommée par membre)')
+        if len(UN) > 1:
+            print('[*][b][color=#a23d3c]Ultima Necat[/color] :', str(len(UN)),'[/b]membres pour[b]',str(sum(UN)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_UN,2)),'[/b]Renommée par membre)')
+        if len(INDEP) <= 1:
+            print('[*][b][color=#a2783c]Indépendants[/color] :', str(len(INDEP)),'[/b]membre pour[b]',str(sum(INDEP)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_indep,2)),'[/b]Renommée par membre)')
+        if len(INDEP) > 1:
+            print('[*][b][color=#a2783c]Indépendants[/color] :', str(len(INDEP)),'[/b]membres pour[b]',str(sum(INDEP)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_indep,2)),'[/b]Renommée par membre)')
+        print('[/list]')
+        print('[h2]Merci et bon jeu sur BTC ![/h2]')
+
