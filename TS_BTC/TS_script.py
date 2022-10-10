@@ -41,9 +41,7 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Chibiko Daestra'
         if membre == 'Seiichi':
             membre = 'Yuko Seiichi'
-        if membre == 'Kuso':
-            membre = 'Keshinohana Kuso'
-        if membre == 'kuso':
+        if membre == 'Kuso' or membre == 'kuso':
             membre = 'Keshinohana Kuso'
         if membre == 'Recca':
             membre = 'Akashiya Recca'
