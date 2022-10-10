@@ -114,4 +114,3 @@ if __name__=='__main__':
             print('[*][b][color=#a2783c]Indépendants[/color] :', str(len(INDEP)),'[/b]membres pour[b]',str(sum(INDEP)),'[/b]Renommée (soit une moyenne de[b]',str(round(mean_indep,2)),'[/b]Renommée par membre)')
         print('[/list]')
         print('[h2]Merci et bon jeu sur BTC ![/h2]')
-
