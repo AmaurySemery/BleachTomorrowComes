@@ -2,8 +2,9 @@
 # coding: utf8
 
 import csv
-import pandas as pd
 import os
+import requests
+from bs4 import BeautifulSoup
 
 __file__ = 'statistiques.csv'
 CHEMIN = os.path.dirname(os.path.realpath(__file__))
@@ -11,11 +12,18 @@ CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
 chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/stats_mensuelles/statistiques.csv'
 
-# Liste joueurs à éditer suivant le groupe
-LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome','Shiro Mayuri','Kyokusei Kenshiro','Kyriu Shinjiro','Chibiko Daestra','Igarashi Sora','Yane Yoru','Hinotori Mamoru','Yuko Seiichi','Sabaiba Yoko','Shunsho Hiro','Shimizu Kano','Keshinohana Kuso','Yuta']
-LISTE_MEMBRES_ACUERDO = ['Farasha','Yubel','Borick','Delila Scarlatti','Aviela Garaitz','Cimeries Alastor',"Artemio Vittoria"]
-LISTE_MEMBRES_ULTIMA_NECAT = ['Orias','Kichigai Ganryu','Akashiya Recca','Connor Austins','Kisaragi Ryo','Matsui Junichiro','Hasegawa Kimiko']
-LISTE_MEMBRES_INDEP = ['Spavento']
+def web_scraping(url,header):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    MEMBRES = soup.find_all('strong')
+    LISTE = []
+    for name in MEMBRES:
+        name = str(name)
+        replace_strong_1 = name.replace("<strong>","")
+        replace_strong_2 = replace_strong_1.replace("</strong>","")
+        if replace_strong_2 != header and replace_strong_2 != "Reiō" and replace_strong_2 != '<a href="https://www.forumactif.com" target="_blank">Créer un forum</a>' and replace_strong_2 != '<a href="https://www.forumactif.com/forum-gratuit" target="_blank">Forum gratuit</a>':
+            LISTE.append(replace_strong_2)
+    return LISTE
 
 def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep):
     COLOR_GOTEI_13 = '[color=#344b99]'
@@ -35,22 +43,35 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
     return data
 
 if __name__=='__main__':
-    LISTE_JOUEUR = []
-    with open(chemin_csv, 'r',encoding='utf-8') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',')
-        for row in spamreader:
-            ADD = (row[0],int(row[1]))
-            LISTE_JOUEUR.append(ADD)
-        LISTE_JOUEUR = sorted(LISTE_JOUEUR,key=lambda x: x[1],reverse=True)
-        COUNT = 0
-        print('[center][img]https://www.toria.fr/btc/moiniv.png[/img][/center]')
-        print('\n')
-        print('[h3][b]Classement de Renommée par personnage[/b][/h3]')
-        print('[spoiler][list=1]')
-        for i in LISTE_JOUEUR:
-            membre = i[0]
-            print(change(membre,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),':',str(i[1]),'Renommée')
-            if COUNT == 9:
-                print('\n')
-            COUNT += 1
-        print('[/list][/spoiler]')
+    url_gotei_groupe = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
+    url_acuerdo_groupe = "https://www.before-tomorrow-comes.fr/g4-acuerdo"
+    url_UN_groupe = "https://www.before-tomorrow-comes.fr/g5-ultima-necat"
+    url_indep_groupe = "https://www.before-tomorrow-comes.fr/g6-independants"
+
+    LISTE_MEMBRES_GOTEI_13 = web_scraping(url_gotei_groupe,"Gotei 13")
+    LISTE_MEMBRES_ACUERDO = web_scraping(url_acuerdo_groupe,"Acuerdo")
+    LISTE_MEMBRES_ULTIMA_NECAT = web_scraping(url_UN_groupe,"Ultima Necat")
+    LISTE_MEMBRES_INDEP = web_scraping(url_UN_groupe,"Indépendants")
+    print(LISTE_MEMBRES_GOTEI_13)
+    print(LISTE_MEMBRES_ACUERDO)
+    print(LISTE_MEMBRES_ULTIMA_NECAT)
+    print(LISTE_MEMBRES_INDEP)
+
+    # with open(chemin_csv, 'r',encoding='utf-8') as csvfile:
+    #     spamreader = csv.reader(csvfile, delimiter=',')
+    #     for row in spamreader:
+    #         ADD = (row[0],int(row[1]))
+    #         LISTE_JOUEUR.append(ADD)
+    #     LISTE_JOUEUR = sorted(LISTE_JOUEUR,key=lambda x: x[1],reverse=True)
+    #     COUNT = 0
+    #     print('[center][img]https://www.toria.fr/btc/moiniv.png[/img][/center]')
+    #     print('\n')
+    #     print('[h3][b]Classement de Renommée par personnage[/b][/h3]')
+    #     print('[spoiler][list=1]')
+    #     for i in LISTE_JOUEUR:
+    #         membre = i[0]
+    #         print(change(membre,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),':',str(i[1]),'Renommée')
+    #         if COUNT == 9:
+    #             print('\n')
+    #         COUNT += 1
+    #     print('[/list][/spoiler]')
