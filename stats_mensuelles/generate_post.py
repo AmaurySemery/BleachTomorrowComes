@@ -2,6 +2,7 @@ import csv
 import os
 import requests
 from bs4 import BeautifulSoup
+import time
 
 __file__ = 'statistiques.csv'
 CHEMIN = os.path.dirname(os.path.realpath(__file__))
@@ -67,6 +68,9 @@ if __name__=='__main__':
     UN = []
     INDEP = []
 
+    FormatDate = '%d / %m / %y'
+    Date = time.strftime(FormatDate)
+
     with open(chemin_csv, 'r',encoding='utf-8') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         for row in spamreader:
@@ -75,7 +79,7 @@ if __name__=='__main__':
         LISTE_JOUEUR = sorted(LISTE_JOUEUR,key=lambda x: x[1],reverse=True)
         COUNT = 0
         print('[center][img]https://www.toria.fr/btc/moiniv.png[/img][/center]')
-        print('\n')
+        print('[h2]'+str(Date)+'[/h2]')
         print('[h3][b]Classement de Renommée par personnage[/b][/h3]')
         print('[spoiler][list=1]')
         for i in LISTE_JOUEUR:
