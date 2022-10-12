@@ -12,8 +12,8 @@ chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/TS_BTC/classement_BTC.
 
 
 # Liste joueurs à éditer suivant le groupe
-LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome','Shiro Mayuri','Kyokusei Kenshiro','Kyriu Shinjiro','Chibiko Daestra','Igarashi Sora','Yane Yoru','Hinotori Mamoru','Yuko Seiichi','Sabaiba Yoko','Shunsho Hiro','Shimizu Kano']
-LISTE_MEMBRES_ACUERDO = ['Farasha','Yubel','Borick','Delila Scarlatti','Aviela Garaitz','Cimeries Alastor']
+LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome','Shiro Mayuri','Kyokusei Kenshiro','Kyriu Shinjiro','Chibiko Daestra','Igarashi Sora','Yane Yoru','Hinotori Mamoru','Yuko Seiichi','Sabaiba Yoko','Shunsho Hiro','Shimizu Kano','Keshinohana Kuso','Yuta']
+LISTE_MEMBRES_ACUERDO = ['Farasha','Yubel','Borick','Delila Scarlatti','Aviela Garaitz','Cimeries Alastor',"Artemio Vittoria"]
 LISTE_MEMBRES_ULTIMA_NECAT = ['Orias','Kichigai Ganryu','Akashiya Recca','Connor Austins','Kisaragi Ryo','Matsui Junichiro','Hasegawa Kimiko']
 LISTE_MEMBRES_INDEP = []
 
@@ -41,6 +41,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Chibiko Daestra'
         if membre == 'Seiichi':
             membre = 'Yuko Seiichi'
+        if membre == 'Kuso' or membre == 'kuso':
+            membre = 'Keshinohana Kuso'
         if membre == 'Recca':
             membre = 'Akashiya Recca'
         if membre == 'Delila':
@@ -94,7 +96,32 @@ if __name__=='__main__':
         XP.append(result)
 
     current_date = date.today()
+    current_date = current_date - timedelta(1)
     old_date = current_date - timedelta(7)
+
+    day_current = current_date.day
+    month_current = current_date.month
+    year_current = current_date.year
+
+    if day_current < 10:
+        day_current = '0' + str(day_current)
+    if month_current < 10:
+        month_current = '0' + str(month_current)
+    if year_current < 10:
+        year_current = '0' + str(year_current)
+    current_date = str(day_current) + '/' +str(month_current)+'/'+  str(year_current)
+
+    day_old = old_date.day
+    month_old = old_date.month
+    year_old = old_date.year
+
+    if day_old < 10:
+        day_old = '0' + str(day_old)
+    if month_old < 10:
+        month_old = '0' + str(month_old)
+    if year_old < 10:
+        year_old = '0' + str(year_old)
+    old_date = str(day_old) + '/' +str(month_old)+'/'+  str(year_old)
 
     print("[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]")
     print('\n')
