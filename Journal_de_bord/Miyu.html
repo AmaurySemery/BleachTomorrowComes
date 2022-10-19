@@ -6,6 +6,65 @@
 </head>
 
 <style>
+    @keyframes spin3D{
+        from {transform: rotateY(0deg)}
+        to {transform: rotateY(360deg)}
+    }
+    @keyframes spinning{
+        from {transform: rotate(0deg)}
+        to {transform: rotate(360deg)}
+    }
+    .tooltip{
+        display: inline;
+        position: relative;
+    }
+    .tooltip:hover:after{
+        background: #333;
+        background: rgba(0,0,0,.8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 220px;
+    }
+    .tooltip:hover:before{
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: "";
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+    }
+    a span{	
+        display:none;
+        color:rgb(255, 182, 182);
+        background:rgba(51,51,51,0.75);
+        padding:5px;
+        border-radius:4px;
+        box-shadow: 0px 0px 10px rgb(255, 182, 182);
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        width:100px;
+        text-align:center;
+        position: absolute;
+        z-index:10;
+    }
+    a { 
+        display: inline-block;
+    }
+    a:hover span{ 
+        display:block; 
+    }
+    span.blue{
+        background: #282828;
+        border: 2px solid rgb(255, 182, 182);
+    }
     body{
         background: #282828 url('https://toria.fr/btc/background.jpg') top left fixed;
         width: 710px; 
@@ -76,6 +135,13 @@
         border-radius: 50%;
         margin-top: -60px;
     }
+    .portrait-shiori img:hover{
+        animation-name: spin3D;
+        animation-duration: 2s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
+    }
     .enrobage{
         border-top: 2px solid rgb(255, 182, 182);
         border-right: 2px solid rgb(255, 182, 182);
@@ -106,6 +172,9 @@
         text-align: center;
         color: rgb(255, 182, 182);
         background-color: #282828;
+    }
+    .enrobage a:hover{
+        color: rgb(253, 174, 174);
     }
     .relationship{
         display: flex;
@@ -141,6 +210,13 @@
         border-radius: 50%;
         margin-top: 0px;
     }
+    .relationship img:hover {
+        animation-name: spinning;
+        animation-duration: 1s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
+    }
     .RP{
         display: flex;
         flex-flow: row wrap;
@@ -156,6 +232,13 @@
         box-shadow: 0px 0px 10px rgb(255, 182, 182);
         border-radius: 50%;
         margin-top: 0px;
+    }
+    .RP p:first-child img:hover{
+        animation-name: spinning;
+        animation-duration: 1s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
     }
     .RP p:last-child{
         flex: 0 0 60%;
@@ -191,20 +274,16 @@
             <h2>Mes relations</h2>
             <div class="relationship">
                 <div class="relationship-logo">
-                    <h3>Ikeda Hanae</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"><span class="blue">Ikeda Hanae</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Akashiya Recca</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t134-akashiya-recca-pres"><img src="https://i34.servimg.com/u/f34/15/23/87/82/recca10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t134-akashiya-recca-pres"><img src="https://i34.servimg.com/u/f34/15/23/87/82/recca10.png"><span class="blue">Akashiya Recca</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Connor Autins</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t186-connor-austins-two-of-clubs-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/connor10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t186-connor-austins-two-of-clubs-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/connor10.png"><span class="blue">Connor Autins</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Mickael B. Diamonds</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t157-mickael-b-diamond-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mickae10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t157-mickael-b-diamond-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mickae10.png"><span class="blue">Mickael B. Diamonds</span></a>
                 </div>
             </div>
         </div>
@@ -213,7 +292,7 @@
         <div class="enrobage"><h2>Temps présent</h2>
             <div class="RP">
                 <p>
-                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"><span class="blue">Ikeda Hanae</span></a>
                 </p>
                 <p><h3><a href="https://www.before-tomorrow-comes.fr/t552-behind-the-curtains-miyu">Behind the curtains</a></h3>
                         <em><p>Rencontre avec la Jack of Cups avant départ de mission au HM.</p></em>
@@ -221,10 +300,10 @@
             </div>
             <div class="RP">
                 <p>
-                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"></a>
-                    <a href="https://www.before-tomorrow-comes.fr/t134-akashiya-recca-pres"><img src="https://i34.servimg.com/u/f34/15/23/87/82/recca10.png"></a>
-                    <a href="https://www.before-tomorrow-comes.fr/t186-connor-austins-two-of-clubs-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/connor10.png"></a>
-                    <a href="https://www.before-tomorrow-comes.fr/t157-mickael-b-diamond-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mickae10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t141-ikeda-hanae"><img src="https://i88.servimg.com/u/f88/18/85/03/67/ikeda10.png"><span class="blue">Ikeda Hanae</span></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t134-akashiya-recca-pres"><img src="https://i34.servimg.com/u/f34/15/23/87/82/recca10.png"><span class="blue">Akashiya Recca</span></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t186-connor-austins-two-of-clubs-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/connor10.png"><span class="blue">Austins Connor</span></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t157-mickael-b-diamond-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mickae10.png"><span class="blue">Mickael B. Diamond</span></a>
                 </p>
                 <p><h3><a href="https://www.before-tomorrow-comes.fr/t567-here-we-go">Here we go</a></h3>
                     <em><p>Passage dans le Garganta pour étudier l'anomalie dans la zone de la Grande Cataracte.</p></em>
