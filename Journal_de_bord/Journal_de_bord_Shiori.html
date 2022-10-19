@@ -6,6 +6,10 @@
 </head>
 
 <style>
+    @keyframes spin3D{
+        from {transform: rotateY(0deg)}
+        to {transform: rotateY(360deg)}
+    }
     @keyframes spinning{
         from {transform: rotate(0deg)}
         to {transform: rotate(360deg)}
@@ -81,7 +85,7 @@
         margin-top: -60px;
     }
     .portrait-shiori img:hover{
-        animation-name: spinning;
+        animation-name: spin3D;
         animation-duration: 2s;
         animation-iteration-count: linear;
         border: 3px solid rgb(238, 105, 105);
