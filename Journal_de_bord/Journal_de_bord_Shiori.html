@@ -14,6 +14,56 @@
         from {transform: rotate(0deg)}
         to {transform: rotate(360deg)}
     }
+    .tooltip{
+        display: inline;
+        position: relative;
+    }
+    .tooltip:hover:after{
+        background: #333;
+        background: rgba(0,0,0,.8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 220px;
+    }
+    .tooltip:hover:before{
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: "";
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+    }
+    a span{	
+        display:none;
+        color:#fff;
+        background:rgba(51,51,51,0.75);
+        padding:5px;
+        border-radius:4px;
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        width:100px;
+        text-align:center;
+        position: absolute;
+        z-index:10;
+    }
+    a { 
+        display: inline-block;
+    }
+    a:hover span{ 
+        display:block; 
+    }
+    span.blue{
+        background: #282828;
+        border: 2px solid rgb(190, 244, 248);
+    }
     body{
         background: #282828 url('https://toria.fr/btc/background.jpg') top left fixed;
         width: 710px; 
@@ -159,7 +209,7 @@
         border-radius: 50%;
         margin-top: 0px;
     }
-    .relationship img:hover{
+    .relationship img:hover {
         animation-name: spinning;
         animation-duration: 1s;
         animation-iteration-count: linear;
@@ -222,44 +272,34 @@
             <h2>Mes relations</h2>
             <div class="relationship">
                 <div class="relationship-logo">
-                    <h3>Asano Shirahime</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t171-asano-shirah10-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/shirah10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t171-asano-shirah10-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/shirah10.png"><span class="blue">Asano Shirahime</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Sabaiba Yoko</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t142-sabaiba-yoko10-troisieme-siege-de-la-deuxieme-division-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yoko10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t142-sabaiba-yoko10-troisieme-siege-de-la-deuxieme-division-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yoko10.png"><span class="blue">Sabaiba Yoko</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Furihata Tetsu</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t155-furihata-tetsu10-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/tetsu10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t155-furihata-tetsu10-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/tetsu10.png"><span class="blue">Furihata Tetsu</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Hinotori Mamoru</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t178-hinotori-mamoru11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mamoru11.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t178-hinotori-mamoru11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/mamoru11.png"><span class="blue">Hinotori Mamoru</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Tomoe Nozomi</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t126-tomoe-nozomi11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/nozomi11.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t126-tomoe-nozomi11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/nozomi11.png"><span class="blue">Tomoe Nozomi</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Yuta</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t163-yuta10-11eme-siege-de-la-11eme-division-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yuta10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t163-yuta10-11eme-siege-de-la-11eme-division-terminee"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yuta10.png"><span class="blue">Yuta</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Igarashi Sora</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t146-igarashi-sora10"><img src="https://i34.servimg.com/u/f34/15/23/87/82/sora10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t146-igarashi-sora10"><img src="https://i34.servimg.com/u/f34/15/23/87/82/sora10.png"><span class="blue">Igarashi Sora</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Yane Yoru</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t158-yane10-yoru-commandante-en-second-du-kidoshu"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yane10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t158-yane10-yoru-commandante-en-second-du-kidoshu"><img src="https://i34.servimg.com/u/f34/15/23/87/82/yane10.png"><span class="blue">Yane Yoru</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Chibiko Daestra</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t165-chibiko-daestra11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/daestr11.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t165-chibiko-daestra11-termine"><img src="https://i34.servimg.com/u/f34/15/23/87/82/daestr11.png"><span class="blue">Chibiko Daestra</span></a>
                 </div>
                 <div class="relationship-logo">
-                    <h3>Hisaishi Shumei</h3>
-                    <a href="https://www.before-tomorrow-comes.fr/t328-hisaishi-shumei10-troisieme-siege-de-la-septieme-division"><img src="https://i34.servimg.com/u/f34/15/23/87/82/shumei10.png"></a>
+                    <a href="https://www.before-tomorrow-comes.fr/t328-hisaishi-shumei10-troisieme-siege-de-la-septieme-division"><img src="https://i34.servimg.com/u/f34/15/23/87/82/shumei10.png"><span class="blue">Hisaishi Shumei</span></a>
                 </div>
             </div>
         </div>
