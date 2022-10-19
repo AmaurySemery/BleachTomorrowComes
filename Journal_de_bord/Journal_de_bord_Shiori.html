@@ -6,6 +6,10 @@
 </head>
 
 <style>
+    @keyframes spinning{
+        from {transform: rotate(0deg)}
+        to {transform: rotate(360deg)}
+    }
     body{
         background: #282828 url('https://toria.fr/btc/background.jpg') top left fixed;
         width: 710px; 
@@ -76,6 +80,13 @@
         border-radius: 50%;
         margin-top: -60px;
     }
+    .portrait-shiori img:hover{
+        animation-name: spinning;
+        animation-duration: 2s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
+    }
     .enrobage{
         border-top: 2px solid rgb(190, 244, 248);
         border-right: 2px solid rgb(190, 244, 248);
@@ -106,6 +117,9 @@
         text-align: center;
         color: rgb(150, 190, 251);
         background-color: #282828;
+    }
+    .enrobage a:hover{
+        color: rgb(253, 174, 174);
     }
     .relationship{
         display: flex;
@@ -141,6 +155,13 @@
         border-radius: 50%;
         margin-top: 0px;
     }
+    .relationship img:hover{
+        animation-name: spinning;
+        animation-duration: 1s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
+    }
     .RP{
         display: flex;
         flex-flow: row wrap;
@@ -157,6 +178,13 @@
         border-radius: 50%;
         margin-top: 0px;
     }
+    .RP p:first-child img:hover{
+        animation-name: spinning;
+        animation-duration: 1s;
+        animation-iteration-count: linear;
+        border: 3px solid rgb(238, 105, 105);
+        box-shadow: 0px 0px 10px rgb(253, 174, 174);
+    }
     .RP p:last-child{
         flex: 0 0 60%;
         padding-left: 100px;
@@ -167,7 +195,6 @@
     .RP p:last-child h1{
         white-space : normal;
         vertical-align: middle;
-
         text-align: justify;
         height: 10px;
         width: 710px;
