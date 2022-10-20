@@ -83,8 +83,6 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
 
 def write_csv(data):
     csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
-    f = open(csv,"w")
-    f.close()
     with open(csv, 'a', newline='',encoding='UTF-8') as f_object:
         writer_object = writer(f_object)
         writer_object.writerow(data)
@@ -92,6 +90,9 @@ def write_csv(data):
 
 if __name__=='__main__':
     csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
+
+    f = open(csv,"w")
+    f.close()
 
     url_gotei_groupe = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
     url_acuerdo_groupe = "https://www.before-tomorrow-comes.fr/g4-acuerdo"
