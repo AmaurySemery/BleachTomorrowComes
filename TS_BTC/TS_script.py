@@ -5,12 +5,12 @@ from datetime import timedelta
 import requests
 from bs4 import BeautifulSoup
 import os
+import pandas as pd
+import urllib
 
 __file__ = 'classement_BTC.csv'
 CHEMIN = os.path.dirname(os.path.realpath(__file__))
 CHEMIN_CONVERT = CHEMIN.replace('\\','/')
-
-chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/TS_BTC/classement_BTC.CSV'
 
 def web_scraping(url,header):
     page = requests.get(url)
@@ -95,27 +95,34 @@ if __name__=='__main__':
     LISTE_MEMBRES_ULTIMA_NECAT = web_scraping(url_UN_groupe,'Ultima Necat')
     LISTE_MEMBRES_INDEP = web_scraping(url_indep_groupe,'Indépendants')
 
-    f=open(chemin_csv,'r')
-    r = csv.DictReader(filter(lambda row: row[0]!='#',f), fieldnames = ["Pseudo", "Classement", "IDmark", "IDmark2", "Total"], delimiter = ";")
+    data = pd.read_csv('https://toria.fr/top-booster/resultats/temp/classement_temp.csv',encoding='latin-1',sep=';',names=["Pseudo", "Classement", "IDmark", "IDmark2", "Total"],skiprows=7)
+
+
+    PSEUDO = data.Pseudo.T.reset_index().values.tolist()
+    VOTES = data.Total.T.reset_index().values.tolist()
+    LISTE_PSEUDO = list(PSEUDO)
+    LISTE_VOTES = list(VOTES)
 
     Name = []
     Votes = []
     XP = []
     Final = []
-    for row in r:
-        a = row['Pseudo']
-        b = int(row['Total'])
-        Name.append(a)
-        Votes.append(b)
-        if b < 50:
+    i = 0
+    for row in PSEUDO:
+        NOM = LISTE_PSEUDO[i][1]
+        TOTAL = int(LISTE_VOTES[i][1])
+        Name.append(NOM)
+        Votes.append(TOTAL)
+        if TOTAL < 50:
             result = 0
-        if b >= 47 and b < 97:
+        if TOTAL >= 47 and TOTAL < 97:
             result = 3
-        if b >= 97 and b < 147:
+        if TOTAL >= 97 and TOTAL < 147:
             result = 6
-        if b >= 147:
+        if TOTAL >= 147:
             result = 9
         XP.append(result)
+        i += 1
 
     current_date = date.today()
     current_date = current_date - timedelta(1)
