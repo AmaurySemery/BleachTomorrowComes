@@ -1,4 +1,5 @@
 import csv
+from csv import writer
 import pandas as pd
 from datetime import date
 from datetime import timedelta
@@ -7,10 +8,6 @@ from bs4 import BeautifulSoup
 import os
 import pandas as pd
 import urllib
-
-__file__ = 'classement_BTC.csv'
-CHEMIN = os.path.dirname(os.path.realpath(__file__))
-CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
 def web_scraping(url,header):
     page = requests.get(url)
@@ -84,7 +81,18 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         print('erreur change')
         pass
 
+def write_csv(data):
+    csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
+    f = open(csv,"w")
+    f.close()
+    with open(csv, 'a', newline='',encoding='UTF-8') as f_object:
+        writer_object = writer(f_object)
+        writer_object.writerow(data)
+        f_object.close()
+
 if __name__=='__main__':
+    csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
+
     url_gotei_groupe = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
     url_acuerdo_groupe = "https://www.before-tomorrow-comes.fr/g4-acuerdo"
     url_UN_groupe = "https://www.before-tomorrow-comes.fr/g5-ultima-necat"
@@ -153,10 +161,15 @@ if __name__=='__main__':
     old_date = str(day_old) + '/' +str(month_old)+'/'+  str(year_old)
 
     print("[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]")
+    write_csv(["[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]"])
     print('\n')
+    write_csv([None])
     print("Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b].")
+    write_csv(["Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b]."])
     print('\n')
+    write_csv([None])
     print("Les récompensés sont donc les suivants :[list=1]")
+    write_csv(["Les récompensés sont donc les suivants :[list=1]"])
     for x,y in zip(Name,XP):
         a = x
         b = y
@@ -166,9 +179,21 @@ if __name__=='__main__':
             pass
         if b > 0:
             print(change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée")
+            write_csv([change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée"])
 
     print("[/list]")
+    write_csv(["[/list]"])
 
     print("BTC compte", len(Votes),"votants pour cette session.")
+    write_csv(["BTC compte", len(Votes),"votants pour cette session."])
     print('\n')
+    write_csv([None])
     print("[h2]Merci et bon jeu sur BTC ![/h2]")
+    write_csv(["[h2]Merci et bon jeu sur BTC ![/h2]"])
+
+    text = open(csv, "r",encoding='utf-8')
+    text = ''.join([i for i in text]).replace(",", " ")
+    text = ''.join([i for i in text]).replace('"', '')
+    x = open(csv,"w",encoding='utf-8')
+    x.writelines(text)
+    x.close()
