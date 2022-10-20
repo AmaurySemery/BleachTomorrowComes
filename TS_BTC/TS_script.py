@@ -2,6 +2,8 @@ import csv
 import pandas as pd
 from datetime import date
 from datetime import timedelta
+import requests
+from bs4 import BeautifulSoup
 import os
 
 __file__ = 'classement_BTC.csv'
@@ -10,12 +12,18 @@ CHEMIN_CONVERT = CHEMIN.replace('\\','/')
 
 chemin_csv = str(CHEMIN_CONVERT) + '/Documents/python/BTC/TS_BTC/classement_BTC.CSV'
 
-
-# Liste joueurs à éditer suivant le groupe
-LISTE_MEMBRES_GOTEI_13 = ['Tomoe Nozomi','Naoki Shiori','Kiryu Shinjiro','Nagatsuki Aizome','Shiro Mayuri','Kyokusei Kenshiro','Kyriu Shinjiro','Chibiko Daestra','Igarashi Sora','Yane Yoru','Hinotori Mamoru','Yuko Seiichi','Sabaiba Yoko','Shunsho Hiro','Shimizu Kano','Keshinohana Kuso','Yuta']
-LISTE_MEMBRES_ACUERDO = ['Farasha','Yubel','Borick','Delila Scarlatti','Aviela Garaitz','Cimeries Alastor',"Artemio Vittoria"]
-LISTE_MEMBRES_ULTIMA_NECAT = ['Orias','Kichigai Ganryu','Akashiya Recca','Connor Austins','Kisaragi Ryo','Matsui Junichiro','Hasegawa Kimiko','Serizawa Miyu','Jabberwock']
-LISTE_MEMBRES_INDEP = []
+def web_scraping(url,header):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    MEMBRES = soup.find_all('strong')
+    LISTE = []
+    for name in MEMBRES:
+        name = str(name)
+        replace_strong_1 = name.replace("<strong>","")
+        replace_strong_2 = replace_strong_1.replace("</strong>","")
+        if replace_strong_2 != header and replace_strong_2 != "Reiō" and replace_strong_2 != '<a href="https://www.forumactif.com" target="_blank">Créer un forum</a>' and replace_strong_2 != '<a href="https://www.forumactif.com/forum-gratuit" target="_blank">Forum gratuit</a>':
+            LISTE.append(replace_strong_2)
+    return LISTE
 
 def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_membre_indep):
     try:
@@ -36,7 +44,7 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         if membre == 'Yurei Karasu':
             membre = 'Yane Yoru'
         if membre == 'Kyoakusei Kenshiro':
-            membre = 'Kyokusei Kenshiro'
+            membre = 'Kyōakusei Kenshirō'
         if membre == 'Barbe':
             membre = 'Chibiko Daestra'
         if membre == 'Seiichi':
@@ -50,13 +58,17 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         if membre == 'Kano':
             membre = 'Shimizu Kano'
         if membre == 'Hiro':
-            membre = 'Shunsho Hiro'
-        if membre == 'Kiryû':
-            membre = 'Kiryu Shinjiro'
+            membre = 'Shunshō Hirō'
+        if membre == 'Kiryû' or membre == 'Kiryu Shinjiro':
+            membre = 'Kiryū Shinjiro'
         if membre == 'Yoko':
             membre = 'Sabaiba Yoko'
         if membre == 'Hinotori mamoru':
             membre = "Hinotori Mamoru"
+        if membre == 'Kichigai Ganryu':
+            membre = 'Kichigai Ganryū'
+        if membre == 'Cimeries Alastor':
+            membre = 'Cimériès Alastor'
         if membre in liste_membre_gotei:
             data = '[*][b]' + str(COLOR_GOTEI_13) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_acuerdo:
@@ -73,6 +85,16 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         pass
 
 if __name__=='__main__':
+    url_gotei_groupe = "https://www.before-tomorrow-comes.fr/g3-gotei-13"
+    url_acuerdo_groupe = "https://www.before-tomorrow-comes.fr/g4-acuerdo"
+    url_UN_groupe = "https://www.before-tomorrow-comes.fr/g5-ultima-necat"
+    url_indep_groupe = "https://www.before-tomorrow-comes.fr/g6-independants"
+
+    LISTE_MEMBRES_GOTEI_13 = web_scraping(url_gotei_groupe,'Gotei 13')
+    LISTE_MEMBRES_ACUERDO = web_scraping(url_acuerdo_groupe,'Acuerdo')
+    LISTE_MEMBRES_ULTIMA_NECAT = web_scraping(url_UN_groupe,'Ultima Necat')
+    LISTE_MEMBRES_INDEP = web_scraping(url_indep_groupe,'Indépendants')
+
     f=open(chemin_csv,'r')
     r = csv.DictReader(filter(lambda row: row[0]!='#',f), fieldnames = ["Pseudo", "Classement", "IDmark", "IDmark2", "Total"], delimiter = ";")
 
