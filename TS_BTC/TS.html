@@ -1,22 +1,18 @@
 <html>
+<head>
+<script src="/brython.js"></script>
+</head>
+<body onload="brython()">
+<script type="text/python">
+from browser import document
+from browser.widgets.dialog import InfoDialog
 
-        <head>
-            <script type="text/javascript" src="/path/to/brython.js"></script>
-        </head>
+def click(ev):
+    InfoDialog("Hello", f"Hello, {document['zone'].value} !")
 
-        <body onload="brython()">
-
-            <script type="text/python">
-            from browser import document, alert
-
-            def echo(event):
-                alert(document["zone"].value)
-
-            document["mybutton"].bind("click", echo)
-            </script>
-
-            <input id="zone"><button id="mybutton">click !</button>
-
-        </body>
-
-    </html>
+# bind event 'click' on button to function echo
+document["echo"].bind("click", click)</script>
+<input id="zone">
+<button id="echo">click !</button>
+</body>
+</html>
