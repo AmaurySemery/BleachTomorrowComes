@@ -20,12 +20,12 @@
         if(isset($_POST['button1'])) {
             usleep(5000000);
             $fp = fopen ( "/var/www/html/affichage.csv" , "r" );
-            while (( $data = fgetcsv ( $fp , 1000 , "," )) !== FALSE ) {
+            while (( $data = fgetcsv ( $fp , 1000 , ";" )) !== FALSE ) {
             $i = 0;
             echo "<tr>";
             foreach($data as $row) {
-            echo "<div>" . $row . "</div>";
-            $i++ ;
+                echo "<div>" . $row . "</div>";
+                $i++ ;
             }
             echo "<tr>";
             }
