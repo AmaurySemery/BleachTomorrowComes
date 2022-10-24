@@ -163,14 +163,15 @@ if __name__=='__main__':
 
     print("[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]")
     write_csv(["[h3][b]Récompenses du "+str(old_date)+" au "+str(current_date)+"[/b][/h3]"])
-    print('\n')
-    write_csv([None])
+    print('')
+    write_csv([''])
     print("Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b].")
     write_csv(["Comme chaque semaine voici le classement des votes sur nos différents top-sites. Pour rappel, si vous franchissez la barre des [b]50/100/150 votes[/b], vous pouvez gagner jusqu'à [b]3/6/9 de Renommée[/b]."])
-    print('\n')
-    write_csv([None])
+    print('')
+    write_csv([''])
     print("Les récompensés sont donc les suivants :[list=1]")
     write_csv(["Les récompensés sont donc les suivants :[list=1]"])
+    i = 0
     for x,y in zip(Name,XP):
         a = x
         b = y
@@ -179,16 +180,21 @@ if __name__=='__main__':
         if b == 0:
             pass
         if b > 0:
+            if i != 0:
+                if XP[i] != XP[i-1]:
+                    print("")
+                    write_csv([''])
             print(change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée")
             write_csv([change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP)+" : "+ str(y)+ " Renommée"])
+        i += 1
 
     print("[/list]")
     write_csv(["[/list]"])
 
     print("BTC compte ", len(Votes)," votants pour cette session.")
     write_csv(["BTC compte " + str(len(Votes)) +" votants pour cette session."])
-    print('\n')
-    write_csv([None])
+    print("")
+    write_csv([''])
     print("[h2]Merci et bon jeu sur BTC ![/h2]")
     write_csv(["[h2]Merci et bon jeu sur BTC ![/h2]"])
 
