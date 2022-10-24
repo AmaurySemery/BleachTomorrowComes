@@ -180,20 +180,19 @@ if __name__=='__main__':
             pass
         if b > 0:
             print(change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée")
-            write_csv([change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP),":", y,"Renommée"])
+            write_csv([change(x,LISTE_MEMBRES_GOTEI_13,LISTE_MEMBRES_ACUERDO,LISTE_MEMBRES_ULTIMA_NECAT,LISTE_MEMBRES_INDEP)+" : "+ str(y)+ " Renommée"])
 
     print("[/list]")
     write_csv(["[/list]"])
 
-    print("BTC compte", len(Votes),"votants pour cette session.")
-    write_csv(["BTC compte", len(Votes),"votants pour cette session."])
+    print("BTC compte ", len(Votes)," votants pour cette session.")
+    write_csv(["BTC compte " + str(len(Votes)) +" votants pour cette session."])
     print('\n')
     write_csv([None])
     print("[h2]Merci et bon jeu sur BTC ![/h2]")
     write_csv(["[h2]Merci et bon jeu sur BTC ![/h2]"])
 
     text = open(csv, "r",encoding='utf-8')
-    text = ''.join([i for i in text]).replace(",", " ")
     text = ''.join([i for i in text]).replace('"', '')
     x = open(csv,"w",encoding='utf-8')
     x.writelines(text)
