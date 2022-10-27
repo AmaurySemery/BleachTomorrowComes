@@ -169,12 +169,11 @@
         <h1>Classement TopSites</h1>
     </header>
     <div class="section">
-    <br>Le classement se met à jour tous les lundis à partir de 12h (nécessite la manip' top-booster en premier lieu)</br>
+    <center><br>Le classement se met à jour toutes les minutes</br>
+    <br>Nécessite la manip' top-booster pour que l'actualisation soit prise en compte</br></center>
     <h3><a href="http://toria.fr/top-booster/index.php">Lien vers top-booster</a></h3>
     <br></br>
-        <center><form method="post">  
-            <input type="submit" name="button2"
-                    value="Mettre à jour les logs"/>        
+        <center><form method="post">         
             <input type="submit" name="button1"
                     value="Sortir le classement"/>
         </form></center>
@@ -195,11 +194,6 @@
             echo "<tr>";
             }
             fclose ( $fp );
-        }
-        if(isset($_POST['button2'])) {
-            usleep(5000000);
-            $output = shell_exec('sh TS.sh');
-            echo "<pre>$output</pre>";
         }
     ?>
         </div>
