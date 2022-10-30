@@ -143,7 +143,7 @@ if __name__=='__main__':
 
     HOST_NAME = "fic-ex-machina.fr"
     USER_NAME = "amaury"
-    PASSWORD_DB = "XXXXX"
+    PASSWORD_DB = "XXXX"
     DB_NAME = "PJ"
 
     connection = pymysql.connect(host=HOST_NAME,
