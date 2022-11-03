@@ -153,6 +153,7 @@ def insert_techniques(connection,personnage):
     data = get_data(CHEMIN_ODS)
     result = cursor.fetchall()
     NOMBRE_TECH = len(result)
+    NOMBRE_TECH_DOC = data['techniques'][1][19]
     a = 1
     b = 0
 
@@ -170,23 +171,25 @@ def insert_techniques(connection,personnage):
             cout_PA = data['techniques'][a][9]
             type_main = data['techniques'][a][10]
             type_opt = data['techniques'][a][11]
-            if str(niveau) == str(result[b][2]) and str(nom == str(result[b][3]) and str(branche_principale) == str(result[b][4]) and str(branche_secondaire) == str(result[b][5]) and str(depense_EP) == str(result[b][6]) and str(depense_ES) == str(result[b][7]) and str(descriptions) == str(result[b][8]) and str(PT_main) == result[b][9]) and str(PT_opt) == str(result[b][10]) and str(cout_PA) == str(result[b][11]) and str(type_main) == str(result[b][12]) and str(type_opt) == str(result[b][13]):
-                print("ok")
+            if str(niveau) == str(result[b][2]) and str(nom) == str(result[b][3]) and str(branche_principale) == str(result[b][4]) and str(branche_secondaire) == str(result[b][5]) and str(depense_EP) == str(result[b][6]) and str(depense_ES) == str(result[b][7]) and str(descriptions) == str(result[b][8]) and str(PT_main) == str(result[b][9]) and str(PT_opt) == str(result[b][10]) and str(cout_PA) == str(result[b][11]) and str(type_main) == str(result[b][12]) and str(type_opt) == str(result[b][13]):
+                pass
             else:
                 print("edit")
                 request = ('UPDATE `techniques` SET `niveau` = '+ str(niveau) +
-                ', `nom` = ' + str(nom) +
-                ', `branche_principale` = ' + str(branche_principale) +
-                ', `branche_secondaire` = ' + str(branche_secondaire) +
-                ', `depense_EP` = ' + str(depense_EP) +
+                ', `nom` = "' + str(nom) +
+                '", `branche_principale` = "' + str(branche_principale) +
+                '", `branche_secondaire` = "' + str(branche_secondaire) +
+                '", `depense_EP` = ' + str(depense_EP) +
                 ', `depense_ES` = ' + str(depense_ES) +
-                ', `descriptions` = ' + str(descriptions) +
-                ', `PT_main` = ' + str(PT_main) +
+                ', `descriptions` = "' + str(descriptions) +
+                '", `PT_main` = ' + str(PT_main) +
                 ', `PT_opt` = ' + str(PT_opt) +
                 ', `cout_PA` = ' + str(cout_PA) +
                 ', `type_main` = ' + str(type_main) +
                 ', `type_opt` = ' + str(type_opt) +
                 ' WHERE `id` = "' + str(result[b][0])+ '"')
+                response = cursor.execute(request)
+                connection.commit()
 
             a += 1
             b += 1
@@ -225,6 +228,44 @@ def insert_techniques(connection,personnage):
             response = cursor.execute(request)
             connection.commit()
             a += 1
+
+    elif int(NOMBRE_TECH) < int(NOMBRE_TECH_DOC):
+        a = 1
+        for i in range(int(NOMBRE_TECH_DOC)):
+            if a > int(NOMBRE_TECH):
+                niveau = data['techniques'][a][0]
+                nom = data['techniques'][a][1]
+                branche_principale = data['techniques'][a][2]
+                branche_secondaire = data['techniques'][a][3]
+                depense_EP = data['techniques'][a][4]
+                depense_ES = data['techniques'][a][5]
+                descriptions = data['techniques'][a][6]
+                PT_main = data['techniques'][a][7]
+                PT_opt = data['techniques'][a][8]
+                cout_PA = data['techniques'][a][9]
+                type_main = data['techniques'][a][10]
+                type_opt = data['techniques'][a][11]
+                request = ('INSERT INTO `techniques`(`personnage`,`niveau`,`nom`,`branche_principale`,`branche_secondaire`,`depense_EP`,`depense_ES`,`descriptions`,`PT_main`,`PT_opt`,`cout_PA`,`type_main`,`type_opt`) VALUES ("'+
+                    str(personnage) + '",' +
+                    str(niveau) + ',"' +
+                    str(nom) + '","' +
+                    str(branche_principale) + '","' +
+                    str(branche_secondaire) + '",' +
+                    str(depense_EP) + ',' +
+                    str(depense_ES) + ',"' +
+                    str(descriptions) + '",' +
+                    str(PT_main) + ',' +
+                    str(PT_opt) + ',' +
+                    str(cout_PA) + ',' +
+                    str(type_main) + ',' +
+                    str(type_opt) +')')
+
+                response = cursor.execute(request)
+                connection.commit()
+            else:
+                pass
+            a += 1
+
 
 if __name__=='__main__':
 
