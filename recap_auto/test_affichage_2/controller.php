@@ -3,7 +3,7 @@
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $host = "fic-ex-machina.fr";
     $username = "amaury";
-    $password = "****";
+    $password = "SvgW58";
     $database = "PJ";
 
     $personnage = $_POST["personnage"]; 
