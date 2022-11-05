@@ -1,23 +1,30 @@
 body{
-    background: #67BE4B;
+    background: #282828 url('https://toria.fr/btc/background.jpg') top left fixed;
    }
    #container{
     width:400px;
     margin:0 auto;
     margin-top:10%;
+    color: rgb(150, 190, 251);
+    text-shadow: 0px 0px 15px rgb(71, 17, 17);
    }
    /* Bordered form */
    form {
     width:100%;
     padding: 30px;
     border: 1px solid #f1f1f1;
-    background: #fff;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background: #282828;
+    border-top: 2px solid rgb(190, 244, 248);
+    border-right: 2px solid rgb(190, 244, 248);
+    border-left: 2px solid rgb(190, 244, 248);
+    border-bottom: 2px solid rgb(190, 244, 248);
+    box-shadow: 0px 0px 10px #bbb;
    }
    #container h1{
     width: 38%;
     margin: 0 auto;
     padding-bottom: 10px;
+    
    }
    
    /* Full-width inputs */
@@ -32,7 +39,7 @@ body{
    
    /* Set a style for all buttons */
    input[type=submit] {
-    background-color: #53af57;
+    background-color: rgb(150, 190, 251);
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -41,7 +48,7 @@ body{
     width: 100%;
    }
    input[type=submit]:hover {
-    background-color: white;
-    color: #53af57;
-    border: 1px solid #53af57;
+    background-color: rgb(71, 17, 17);
+    color: rgb(253, 174, 174);
+    border: 1px solid rgb(238, 105, 105);
    }
