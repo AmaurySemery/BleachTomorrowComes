@@ -4,13 +4,13 @@
     $name = $_POST["name"]; 
     $email = $_POST["email"];
     
-    if (!isset($name)){
-      die("S'il vous plaît entrez votre nom");
+    if (!isset($personnage)){
+      die("Nom de votre personnage");
     }
-    if (!isset($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
-      die("S'il vous plaît entrez votre adresse e-mail");
+    if (!isset($password)){
+      die("Mot de passe");
     }
     
-    print "Salut " . $name . "!, votre adresse e-mail est ". $email;
+    print "Salut " . $name . "!, votre mot de passe est ". $password;
   }
 ?>
