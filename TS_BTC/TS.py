@@ -67,6 +67,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Kichigai Ganryū'
         if membre == 'Cimeries Alastor':
             membre = 'Cimériès Alastor'
+        if membre == 'Ogasawara Koga':
+            membre = 'Ogasawara Kōga'
         if membre in liste_membre_gotei:
             data = '[*][b]' + str(COLOR_GOTEI_13) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_acuerdo:
