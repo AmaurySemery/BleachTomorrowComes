@@ -8,7 +8,20 @@
 <link href='styles/mef.css' rel='stylesheet' type='text/css' />
 <script language="javascript" type="text/javascript">
 
+var b_civilite=false; var b_nom=false; var b_prenom=false; var b_date=false; var b_mail=false; var b_mp=false;
 
+function envoyer()
+{
+if(personnage==true && b_mp==true)
+{
+document.getElementById('message').innerText = 'Envoi serveur';
+//document.getElementById('inscription').submit();
+}
+else
+{
+document.getElementById('message').innerText = 'Le formulaire est incomplet';
+}
+}
 
 </script>
 <script language="javascript" src="js/v_inscr.js"></script>
@@ -46,15 +59,16 @@
 				</div>
 					<form id="inscription" name="inscription" method="post" action="formulaire-inscription.html">				
 						<div class="div_input_form">
-						<input type="text" name="personnage" id="personnage" maxlength="50" class="input_form" value='Nom complet de votre personnage' />
+						Nom complet de votre personnage<br />
+						<input type="text" name="personnage" id="personnage" maxlength="50" class="input_form" value='' />
 						</div>
 						<div class="div_input_form">
-						Votre mot de passe : entre 5 et 10 caractères<br />
-						<input type="password" name="mp_inscr" id="mp_inscr" maxlength="10" class="input_form" value="Mot de passe"  />
+						Mot de passe<br />
+						<input type="password" name="mp_inscr" id="mp_inscr" maxlength="10" class="input_form" value=""  />
 						</div>
 						<div class="div_input_form">
-						Confirmer le mot de passe :<br />
-						<input type="password" name="mp_conf" id="mp_conf" maxlength="10" class="input_form" value="Confirmer MP"  />
+						Confirmation du mot de passe<br />
+						<input type="password" name="mp_conf" id="mp_conf" maxlength="10" class="input_form" value=""  />
 						</div>							
 						<div class="div_input_form">
 						<input type="button" name="valid_inscr" id="valid_inscr" class="input_form" value="Valider" />
