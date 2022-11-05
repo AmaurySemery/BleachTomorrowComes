@@ -3,10 +3,10 @@ session_start();
 if(isset($_POST['username']) && isset($_POST['password']))
 {
  // connexion à la base de données
- $db_username = 'root';
- $db_password = 'mot_de_passe_bdd';
- $db_name = 'nom_bdd';
- $db_host = 'localhost';
+ $db_username = 'amaury';
+ $db_password = 'SvgW58';
+ $db_name = 'PJ';
+ $db_host = 'fic-ex-machina.fr';
  $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
  or die('could not connect to database');
  
@@ -17,8 +17,8 @@ if(isset($_POST['username']) && isset($_POST['password']))
  
  if($username !== "" && $password !== "")
  {
- $requete = "SELECT count(*) FROM utilisateur where 
- nom_utilisateur = '".$username."' and mot_de_passe = '".$password."' ";
+ $requete = "SELECT count(*) FROM `personnages` WHERE 
+ `personnage` = '".$username."' AND `password` = '".$password."' ";
  $exec_requete = mysqli_query($db,$requete);
  $reponse = mysqli_fetch_array($exec_requete);
  $count = $reponse['count(*)'];
