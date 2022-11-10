@@ -66,6 +66,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Kichigai Ganryū'
         if membre == 'Cimeries Alastor':
             membre = 'Cimériès Alastor'
+        if membre == 'Ogasawara Koga':
+            membre = 'Ogasawara Kōga'
         if membre in liste_membre_gotei:
             data = '[*][b]' + str(COLOR_GOTEI_13) + str(membre) + '[/color][/b]'
         elif membre in liste_membre_acuerdo:
@@ -82,14 +84,14 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         pass
 
 def write_csv(data):
-    csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
+    csv = "/var/www/html/affichage.csv"
     with open(csv, 'a', newline='',encoding='UTF-8') as f_object:
         writer_object = writer(f_object)
         writer_object.writerow(data)
         f_object.close()
 
 if __name__=='__main__':
-    csv = "C:/Users/amaur/Documents/python/BTC/TS_BTC/affichage.csv"
+    csv = "/var/www/html/affichage.csv"
 
     f = open(csv,"w")
     f.close()
