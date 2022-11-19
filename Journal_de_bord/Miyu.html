@@ -6,10 +6,6 @@
 </head>
 
 <style>
-    @keyframes spin3D{
-        from {transform: rotateY(0deg)}
-        to {transform: rotateY(360deg)}
-    }
     @keyframes spinning{
         from {transform: rotate(0deg)}
         to {transform: rotate(360deg)}
@@ -17,16 +13,13 @@
     @keyframes slidein {
         from {
             margin-left: 150%;
-            width: 21%;
-            
+            width: 21%;   
         }
-
         to {
             margin-right: 100%;
             width: 20%;
-            
         }
-        }
+    }
     .tooltip{
         display: inline;
         position: relative;
@@ -138,10 +131,10 @@
     section > div{
         width: 90%;
     }
-    .portrait-shiori{
+    .portrait-miyu{
         text-align: center;
     }
-    .portrait-shiori img{
+    .portrait-miyu img{
         width: 200px;
         height: 200px;
         border: 3px solid rgb(255, 182, 182);
@@ -149,8 +142,8 @@
         border-radius: 50%;
         margin-top: -60px;
     }
-    .portrait-shiori img:hover{
-        animation-name: spin3D;
+    .portrait-miyu img:hover{
+        animation-name: spinning;
         animation-duration: 2s;
         animation-iteration-count: linear;
         border: 3px solid rgb(238, 105, 105);
@@ -163,10 +156,15 @@
         width: 120.6px;
         height: 177.6px;
         margin-top: 0px;
-        animation-duration: 2s;
+        animation-delay: revert;
+        animation-duration: 1.35s;
         animation-name: slidein;
-        animation-iteration-count: infinite;
+        animation-iteration-count: 22;
         animation-direction: alternate;
+    }
+    .chibi-miyu img:nth-child(1){
+        animation-fill-mode: both;
+        animation-delay: 1.3s;
     }
     .enrobage{
         border-top: 2px solid rgb(255, 182, 182);
@@ -295,7 +293,7 @@
         </div>
     </header>
     <div class="section">
-        <div class="portrait-shiori">
+        <div class="portrait-miyu">
             <a href="https://www.before-tomorrow-comes.fr/t543-serizawa-miyu"><img src="https://i88.servimg.com/u/f88/18/85/03/67/miyu10.png"></a>
         </div>
         <center><audio controls preload="auto" autoplay>
