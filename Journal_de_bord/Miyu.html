@@ -10,6 +10,10 @@
         from {transform: rotate(0deg)}
         to {transform: rotate(360deg)}
     }
+    @keyframes spin3D{
+        from {transform: rotateY(0deg)}
+        to {transform: rotateY(360deg)}
+    }
     @keyframes slidein {
         from {
             margin-left: 150%;
@@ -17,6 +21,20 @@
         }
         to {
             margin-right: 100%;
+            width: 20%;
+        }
+    }
+    @keyframes rotate {
+        0% {
+            margin-left: 150%;
+            width: 21%;   
+        }
+        80% {
+            margin-right: 100%;
+            width: 20%;
+        }
+        100% {
+            transform: rotateY(160deg);
             width: 20%;
         }
     }
@@ -141,6 +159,13 @@
         box-shadow: 0px 0px 10px rgb(255, 182, 182);
         border-radius: 50%;
         margin-top: -60px;
+
+        animation-fill-mode: both;
+        animation-delay: 64s;
+        animation-iteration-count: 20;
+        animation-name: spin3D;
+        animation-duration: 1s;
+        animation-direction: alternate;   
     }
     .portrait-miyu img:hover{
         animation-name: spinning;
@@ -156,16 +181,27 @@
         width: 120.6px;
         height: 177.6px;
         margin-top: 0px;
-        animation-delay: revert;
-        animation-duration: 1.35s;
-        animation-name: slidein;
-        animation-iteration-count: 22;
-        animation-direction: alternate;
-    }
-    .chibi-miyu img:nth-child(1){
         animation-fill-mode: both;
         animation-delay: 1.3s;
+        animation-iteration-count: 22;
+        animation-name: slidein;
+        animation-duration: 1.32s;
+        animation-direction: alternate;    
     }
+    .chibi-miyu2{
+        text-align: right;
+    }
+    .chibi-miyu2 img{
+        width: 120.6px;
+        height: 177.6px;
+        margin-top: 0px;
+        animation-fill-mode: both;
+        animation-delay: 32s;
+        animation-name: rotate;
+        animation-duration: 1.32s; 
+            
+    }
+
     .enrobage{
         border-top: 2px solid rgb(255, 182, 182);
         border-right: 2px solid rgb(255, 182, 182);
@@ -289,6 +325,9 @@
     <header>
         <h1>Journal : Sekizawa Miyu</h1>
         <div class="chibi-miyu">
+            <img src="https://i34.servimg.com/u/f34/15/23/87/82/miyu-c10.png"></a>
+        </div>
+        <div class="chibi-miyu2">
             <img src="https://i34.servimg.com/u/f34/15/23/87/82/miyu-c10.png"></a>
         </div>
     </header>
