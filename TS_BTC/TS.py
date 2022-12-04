@@ -31,6 +31,28 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         COLOR_INDEP = '[color=#a2783c]'
         if membre == 'Sora':
             membre = 'Igarashi Sora'
+        if membre == 'Aviela+Garaitz':
+            membre = 'Aviela Garaitz'
+        if membre == 'Tomoe+Nozomi':
+            membre = 'Tomoe Nozomi'
+        if membre == 'Akashiya+Recca':
+            membre = 'Akashiya Recca'
+        if membre == 'Nagatsuki+Aizome':
+            membre = 'Nagatsuki Aizome'
+        if membre == 'Kyoakusei+Kenshiro':
+            membre = 'Kyōakusei Kenshirō'
+        if membre == 'Connor+Austins':
+            membre = 'Connor Austins'
+        if membre == 'Hinotori+Mamoru':
+            membre = 'Hinotori Mamoru'
+        if membre == 'Shiro+Mayuri':
+            membre = 'Shiro Mayuri'
+        if membre == 'Sadako+Takezo':
+            membre = 'Sadako Takezo'
+        if membre == 'Ogasawara+Koga':
+            membre = 'Ogasawara Kōga'
+        if membre == 'Tsunayashiro+Rei':
+            membre = 'Tsunayashiro Rei'
         if membre == 'Hanae':
             membre = 'Ikeda Hanae'
         if membre == 'Shirahime':
