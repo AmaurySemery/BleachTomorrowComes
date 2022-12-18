@@ -28,8 +28,7 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         COLOR_ACUERDO = '[color=#929291]'
         COLOR_ULTIMA_NECAT = '[color=#a23d3c]'
         COLOR_INDEP = '[color=#a2783c]'
-        if '+' in membre:
-            membre.replace("+"," ")
+        membre = membre.replace("+"," ")
         if membre == "Katsuo":
             membre = "Shinken Katsuo"
         if membre == 'Sora':
@@ -49,7 +48,7 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         if membre == 'Barbe':
             membre = 'Chibiko Daestra'
         if membre == 'Seiichi':
-            membre = 'Yuko Seiichi'
+            membre = 'Yūko Seiichi'
         if membre == 'Kuso' or membre == 'kuso':
             membre = 'Keshinohana Kuso'
         if membre == 'Recca':
