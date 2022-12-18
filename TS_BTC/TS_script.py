@@ -28,6 +28,10 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
         COLOR_ACUERDO = '[color=#929291]'
         COLOR_ULTIMA_NECAT = '[color=#a23d3c]'
         COLOR_INDEP = '[color=#a2783c]'
+        if '+' in membre:
+            membre.replace("+"," ")
+        if membre == "Katsuo":
+            membre = "Shinken Katsuo"
         if membre == 'Sora':
             membre = 'Igarashi Sora'
         if membre == 'Hanae':
