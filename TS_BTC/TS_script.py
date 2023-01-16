@@ -43,6 +43,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Kichigai Ganryu'
         if membre == 'Yurei Karasu':
             membre = 'Yane Yoru'
+        if membre == 'Liao':
+            membre = 'Liao Valentine'
         if membre == 'Kyoakusei Kenshiro':
             membre = 'Kyōakusei Kenshirō'
         if membre == 'Barbe':
