@@ -129,11 +129,11 @@ if __name__=='__main__':
         TOTAL = int(LISTE_VOTES[i][1])
         Name.append(NOM)
         Votes.append(TOTAL)
-        # if TOTAL < 50:
-        #     result = 0
-        # if TOTAL >= 47 and TOTAL < 97:
-            # result = 3
-        if TOTAL >= 1 and TOTAL < 147:
+        if TOTAL < 50:
+            result = 0
+        if TOTAL >= 47 and TOTAL < 97:
+            result = 3
+        if TOTAL >= 97 and TOTAL < 147:
             result = 6
         if TOTAL >= 147:
             result = 9
