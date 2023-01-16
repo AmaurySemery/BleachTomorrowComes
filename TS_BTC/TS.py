@@ -39,6 +39,8 @@ def change(membre,liste_membre_gotei,liste_membre_acuerdo,liste_membre_UN,liste_
             membre = 'Aviela Garaitz'
         if membre == 'Tomoe+Nozomi':
             membre = 'Tomoe Nozomi'
+        if membre == 'Liao':
+            membre = 'Liao Valentine'
         if membre == 'Akashiya+Recca':
             membre = 'Akashiya Recca'
         if membre == 'Nagatsuki+Aizome':
